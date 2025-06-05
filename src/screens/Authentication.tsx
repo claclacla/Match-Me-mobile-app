@@ -3,11 +3,8 @@ import { Layout, Text, Button, Input } from '@ui-kitten/components';
 import { StyleSheet } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-import { ApplicationScreensList } from '../screensList/ApplicationScreensList';
-
-type MainScreenNavigationProp = NativeStackNavigationProp<ApplicationScreensList, 'Main'>;
+import { MainScreenNavigationProp } from '../nativeStackNavigationProp/MainScreenNavigationProp';
 
 const AuthenticationScreen = () => {
     const navigation = useNavigation<MainScreenNavigationProp>();

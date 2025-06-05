@@ -3,14 +3,11 @@ import { Layout, Text, Button } from '@ui-kitten/components';
 import { StyleSheet } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-import { ApplicationScreensList } from '../screensList/ApplicationScreensList';
-
-type AuthenticationScreenProps = NativeStackScreenProps<ApplicationScreensList, 'Authentication'>;
+import { AuthenticationScreenProp } from '../nativeStackScreenProp/AuthenticationScreenProps';
 
 const MainScreen = () => {
-    const navigation = useNavigation<AuthenticationScreenProps['navigation']>();
+    const navigation = useNavigation<AuthenticationScreenProp['navigation']>();
 
     const goBack = () => {
         navigation.goBack();
