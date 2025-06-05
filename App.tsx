@@ -1,25 +1,31 @@
 import React from 'react';
 import * as eva from '@eva-design/eva';
-import { ApplicationProvider, Layout } from '@ui-kitten/components'; 
+import { ApplicationProvider } from '@ui-kitten/components';
 import { StyleSheet } from 'react-native';
 
-import MyTextAreaButtonScreen from './MyTextAreaButtonScreen';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+import LoginScreen from './src/screens/Login';
+import MainScreen from './src/screens/Main';
+
+const Stack = createNativeStackNavigator();
 
 export default function App(): React.ReactElement {
-  return (
-    <ApplicationProvider {...eva} theme={eva.light}>
-      <Layout style={styles.container}>
-        <MyTextAreaButtonScreen />
-      </Layout>
-    </ApplicationProvider>
-  );
+    return (
+        <ApplicationProvider {...eva} theme={eva.light}>
+            <NavigationContainer>
+                <Stack.Navigator initialRouteName="Login">
+                    <Stack.Screen name="Login" component={LoginScreen} options={{headerShown: false}} />
+                    <Stack.Screen name="Main" component={MainScreen} options={{headerShown: false}} />
+                </Stack.Navigator>
+            </NavigationContainer>
+        </ApplicationProvider>
+    );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-  },
+    container: {
+        flex: 1,
+    },
 });
