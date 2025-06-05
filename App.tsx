@@ -6,7 +6,7 @@ import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import LoginScreen from './src/screens/Login';
+import AuthenticationScreen from './src/screens/Authentication';
 import MainScreen from './src/screens/Main';
 
 const Stack = createNativeStackNavigator();
@@ -15,8 +15,8 @@ export default function App(): React.ReactElement {
     return (
         <ApplicationProvider {...eva} theme={eva.light}>
             <NavigationContainer>
-                <Stack.Navigator initialRouteName="Login">
-                    <Stack.Screen name="Login" component={LoginScreen} options={{headerShown: false}} />
+                <Stack.Navigator initialRouteName="Authentication">
+                    <Stack.Screen name="Authentication" component={AuthenticationScreen} options={{headerShown: false}} />
                     <Stack.Screen name="Main" component={MainScreen} options={{headerShown: false}} />
                 </Stack.Navigator>
             </NavigationContainer>

@@ -5,15 +5,12 @@ import { StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-type RootStackParamList = {
-    Main: undefined;
-    Login: undefined;
-};
+import { ApplicationScreensList } from '../screensList/ApplicationScreensList';
 
-type LoginScreenProps = NativeStackScreenProps<RootStackParamList, 'Login'>;
+type AuthenticationScreenProps = NativeStackScreenProps<ApplicationScreensList, 'Authentication'>;
 
 const MainScreen = () => {
-    const navigation = useNavigation<LoginScreenProps['navigation']>();
+    const navigation = useNavigation<AuthenticationScreenProps['navigation']>();
 
     const goBack = () => {
         navigation.goBack();
