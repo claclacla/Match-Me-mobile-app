@@ -1,6 +1,7 @@
 # Match me! (Mobile app)
 
-The app has been initialized using Expo, and the user interface is built with UI Kitten.
+The app has been initialized using `Expo`, and the user interface is built with `UI Kitten`.
+The state management is based on `Zustand`.
 
 --------------------------------------------------------------------------------
 

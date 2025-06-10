@@ -3,68 +3,29 @@ import { Layout, Text, Button, Input } from '@ui-kitten/components';
 import { StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-import { signIn, signOut, fetchAuthSession } from '@aws-amplify/auth';
-
 import { MainScreenNavigationProp } from '../../nativeStackNavigationProp/MainScreenNavigationProp';
 
-import useAuthenticationStore from '../../repositories/localStorage/useAuthenticationStore';
+import { useAuthentication } from './hooks/useAuthentication';
 
 const AuthenticationScreen = () => {
     const navigation = useNavigation<MainScreenNavigationProp>();
 
-    const setKey = useAuthenticationStore((state: any) => state.setKey);
-    const unsetKey = useAuthenticationStore((state: any) => state.unsetKey);
+    const { signIn, signOut } = useAuthentication();
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
     const handleSignIn = async () => {
         try {
-            await signIn({
-                username,
-                password,
-                options: {
-                    authFlowType: 'USER_PASSWORD_AUTH'
-                }
-            });
-
-            const session = await fetchAuthSession();
-            const key = session.tokens?.idToken?.toString();
-
-            if (key === undefined) {
-                unsetKey();
-                return;
-            }
-            else {
-                setKey(key);
-                navigation.navigate('Main');
-            }
+            await signIn({ username, password });
+            navigation.navigate('Main');
         } catch (error: any) {
-            let errorMessage = 'Error';
-
-            if (error.name === 'UserNotFoundException') {
-                errorMessage = 'Username not found!';
-            } else if (error.name === 'NotAuthorizedException') {
-                errorMessage = 'Username or password error!';
-            } else if (error.name === 'UserNotConfirmedException') {
-                errorMessage = 'User not confirmed. Check your email!';
-            } else {
-                errorMessage = error.message || errorMessage;
-            }
-
             console.error('Error:', error);
         }
     };
 
     const handleSignOut = async () => {
-        try {
-            await signOut();
-
-            //setUsername('');
-            //setPassword('');
-        } catch (error: any) {
-            console.error('Sign out error:', error);
-        }
+        await signOut();
     };
 
     return (
