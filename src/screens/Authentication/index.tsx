@@ -10,10 +10,29 @@ import { useAuthentication } from './hooks/useAuthentication';
 const AuthenticationScreen = () => {
     const navigation = useNavigation<MainScreenNavigationProp>();
 
-    const { signIn, signOut } = useAuthentication();
+    const { signUp, confirmSignUp, signIn, signOut } = useAuthentication();
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+
+    const [confirmationCode, setConfirmationCode] = useState('');
+
+    const handleSignUp = async () => {
+        try {
+            await signUp({ username, password });
+            //navigation.navigate('Main');
+        } catch (error: any) {
+            console.error('Error:', error);
+        }
+    };
+
+    const handleConfirmationCode = async () => {
+        try {
+            await confirmSignUp({ username, confirmationCode });
+        } catch (error: any) {
+
+        }
+    };
 
     const handleSignIn = async () => {
         try {
@@ -47,11 +66,33 @@ const AuthenticationScreen = () => {
                 secureTextEntry
             />
 
+            <Input
+                style={styles.input}
+                placeholder='Confirmation code'
+                value={confirmationCode}
+                onChangeText={setConfirmationCode}
+                secureTextEntry
+            />
+
+            <Button
+                style={styles.button}
+                onPress={handleSignUp}
+            >
+                Sign up
+            </Button>
+
+            <Button
+                style={styles.button}
+                onPress={handleConfirmationCode}
+            >
+                Send confirmation code
+            </Button>
+
             <Button
                 style={styles.button}
                 onPress={handleSignIn}
             >
-                Accedi
+                Sign in
             </Button>
 
             <Button
@@ -60,7 +101,7 @@ const AuthenticationScreen = () => {
                 style={styles.button}
                 status='danger'
             >
-                Disconnetti (Test)
+                Sign out
             </Button>
         </Layout>
     );
