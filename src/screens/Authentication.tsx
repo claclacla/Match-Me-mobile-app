@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Layout, Text, Button, Input } from '@ui-kitten/components';
 import { StyleSheet } from 'react-native';
-
 import { useNavigation } from '@react-navigation/native';
 
-import { signIn, signOut } from '@aws-amplify/auth';
+import { signIn, signOut, fetchAuthSession } from '@aws-amplify/auth';
 
 import { MainScreenNavigationProp } from '../nativeStackNavigationProp/MainScreenNavigationProp';
+
+import { findSimilarUsersById } from '../repositories/api/findSimilarUsersById';
 
 const AuthenticationScreen = () => {
     const navigation = useNavigation<MainScreenNavigationProp>();
@@ -23,7 +24,23 @@ const AuthenticationScreen = () => {
                     authFlowType: 'USER_PASSWORD_AUTH'
                 }
             });
-            navigation.navigate('Main');
+
+            const session = await fetchAuthSession();
+
+            
+            const key = session.tokens?.idToken?.toString();
+
+            if(key === undefined) {
+                return;
+            }
+            
+            console.log(key);
+
+            const response: string = await findSimilarUsersById({ key });
+
+            console.log(response);
+
+            //navigation.navigate('Main');
         } catch (error: any) {
             let errorMessage = 'Error';
 
@@ -45,8 +62,8 @@ const AuthenticationScreen = () => {
         try {
             await signOut();
 
-            setUsername('');
-            setPassword('');
+            //setUsername('');
+            //setPassword('');
         } catch (error: any) {
             console.error('Sign out error:', error);
         }
