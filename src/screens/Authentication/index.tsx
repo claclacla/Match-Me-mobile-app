@@ -5,12 +5,15 @@ import { useNavigation } from '@react-navigation/native';
 
 import { signIn, signOut, fetchAuthSession } from '@aws-amplify/auth';
 
-import { MainScreenNavigationProp } from '../nativeStackNavigationProp/MainScreenNavigationProp';
+import { MainScreenNavigationProp } from '../../nativeStackNavigationProp/MainScreenNavigationProp';
 
-import { findSimilarUsersById } from '../repositories/api/findSimilarUsersById';
+import useAuthenticationStore from '../../repositories/localStorage/useAuthenticationStore';
 
 const AuthenticationScreen = () => {
     const navigation = useNavigation<MainScreenNavigationProp>();
+
+    const setKey = useAuthenticationStore((state: any) => state.setKey);
+    const unsetKey = useAuthenticationStore((state: any) => state.unsetKey);
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -26,21 +29,16 @@ const AuthenticationScreen = () => {
             });
 
             const session = await fetchAuthSession();
-
-            
             const key = session.tokens?.idToken?.toString();
 
-            if(key === undefined) {
+            if (key === undefined) {
+                unsetKey();
                 return;
             }
-            
-            console.log(key);
-
-            const response: string = await findSimilarUsersById({ key });
-
-            console.log(response);
-
-            //navigation.navigate('Main');
+            else {
+                setKey(key);
+                navigation.navigate('Main');
+            }
         } catch (error: any) {
             let errorMessage = 'Error';
 

@@ -11,13 +11,14 @@ import MainScreen from './src/screens/Main';
 
 import { Amplify } from 'aws-amplify';
 import awsconfig from './src/aws-exports';
-import { getCurrentUser } from '@aws-amplify/auth';
+//import { getCurrentUser } from '@aws-amplify/auth';
 
 Amplify.configure(awsconfig);
 
 const Stack = createNativeStackNavigator();
 
 export default function App(): React.ReactElement {
+    /*
     const [isSignedIn, setIsSignedIn] = useState<boolean | undefined>(undefined);
 
     useEffect(() => {
@@ -43,11 +44,13 @@ export default function App(): React.ReactElement {
             </ApplicationProvider>
         );
     }
+    */
 
     return (
         <ApplicationProvider {...eva} theme={eva.light}>
             <NavigationContainer>
-                <Stack.Navigator initialRouteName={isSignedIn ? "Main" : "Authentication"}>
+                {/*<Stack.Navigator initialRouteName={isSignedIn ? "Main" : "Authentication"}>*/}
+                <Stack.Navigator initialRouteName={"Authentication"}>
                     <Stack.Screen name="Authentication" component={AuthenticationScreen} options={{ headerShown: false }} />
                     <Stack.Screen name="Main" component={MainScreen} options={{ headerShown: false }} />
                 </Stack.Navigator>
