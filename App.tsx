@@ -6,7 +6,8 @@ import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import AuthenticationScreen from './src/screens/Authentication';
+import SigninScreen from './src/screens/Signin';
+import SignupScreen from './src/screens/Signup';
 import MainScreen from './src/screens/Main';
 
 import { Amplify } from 'aws-amplify';
@@ -50,8 +51,9 @@ export default function App(): React.ReactElement {
         <ApplicationProvider {...eva} theme={eva.light}>
             <NavigationContainer>
                 {/*<Stack.Navigator initialRouteName={isSignedIn ? "Main" : "Authentication"}>*/}
-                <Stack.Navigator initialRouteName={"Authentication"}>
-                    <Stack.Screen name="Authentication" component={AuthenticationScreen} options={{ headerShown: false }} />
+                <Stack.Navigator initialRouteName={"Signin"}>
+                    <Stack.Screen name="Signin" component={SigninScreen} options={{ headerShown: false }} />
+                    <Stack.Screen name="Signup" component={SignupScreen} options={{ headerShown: false }} />
                     <Stack.Screen name="Main" component={MainScreen} options={{ headerShown: false }} />
                 </Stack.Navigator>
             </NavigationContainer>

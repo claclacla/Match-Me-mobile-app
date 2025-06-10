@@ -5,34 +5,15 @@ import { useNavigation } from '@react-navigation/native';
 
 import { MainScreenNavigationProp } from '../../nativeStackNavigationProp/MainScreenNavigationProp';
 
-import { useAuthentication } from './hooks/useAuthentication';
+import { useAuthentication } from '../../hooks/useAuthentication';
 
 const AuthenticationScreen = () => {
     const navigation = useNavigation<MainScreenNavigationProp>();
 
-    const { signUp, confirmSignUp, signIn, signOut } = useAuthentication();
+    const { signIn, signOut } = useAuthentication();
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-
-    const [confirmationCode, setConfirmationCode] = useState('');
-
-    const handleSignUp = async () => {
-        try {
-            await signUp({ username, password });
-            //navigation.navigate('Main');
-        } catch (error: any) {
-            console.error('Error:', error);
-        }
-    };
-
-    const handleConfirmationCode = async () => {
-        try {
-            await confirmSignUp({ username, confirmationCode });
-        } catch (error: any) {
-
-        }
-    };
 
     const handleSignIn = async () => {
         try {
@@ -53,7 +34,7 @@ const AuthenticationScreen = () => {
 
             <Input
                 style={styles.input}
-                placeholder='Nome Utente'
+                placeholder='Username'
                 value={username}
                 onChangeText={setUsername}
                 autoCapitalize='none'
@@ -66,33 +47,18 @@ const AuthenticationScreen = () => {
                 secureTextEntry
             />
 
-            <Input
-                style={styles.input}
-                placeholder='Confirmation code'
-                value={confirmationCode}
-                onChangeText={setConfirmationCode}
-                secureTextEntry
-            />
-
-            <Button
-                style={styles.button}
-                onPress={handleSignUp}
-            >
-                Sign up
-            </Button>
-
-            <Button
-                style={styles.button}
-                onPress={handleConfirmationCode}
-            >
-                Send confirmation code
-            </Button>
-
             <Button
                 style={styles.button}
                 onPress={handleSignIn}
             >
                 Sign in
+            </Button>
+
+            <Button
+                style={styles.button}
+                onPress={() => navigation.navigate('Signup')}
+            >
+                Go to sign up
             </Button>
 
             <Button

@@ -4,7 +4,7 @@ import {
     fetchAuthSession as amplifyFetchAuthSession
 } from '@aws-amplify/auth';
 
-import useAuthenticationStore from '../../../repositories/localStorage/useAuthenticationStore';
+import useAuthenticationStore from '../repositories/localStorage/useAuthenticationStore';
 
 export function useAuthentication() {
     const setKey = useAuthenticationStore((state: any) => state.setKey);

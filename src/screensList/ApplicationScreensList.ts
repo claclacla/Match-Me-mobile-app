@@ -1,4 +1,5 @@
 export type ApplicationScreensList = {
-    Authentication: undefined;
+    Signin: undefined;
+    Signup: undefined;
     Main: undefined;
 };
