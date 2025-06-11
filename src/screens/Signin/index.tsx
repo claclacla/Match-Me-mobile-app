@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
 import { Layout, Text, Button, Input } from '@ui-kitten/components';
 import { StyleSheet } from 'react-native';
+
+import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 
-import { MainScreenNavigationProp } from '../../nativeStackNavigationProp/MainScreenNavigationProp';
+import { ApplicationScreensList } from '../../screensList/ApplicationScreensList';
 
 import { useAuthentication } from '../../hooks/useAuthentication';
 
-const AuthenticationScreen = () => {
-    const navigation = useNavigation<MainScreenNavigationProp>();
+type SigninNavigationProp = StackNavigationProp<ApplicationScreensList, 'Signin'>;
+
+const SigninScreen = () => {
+    const navigation = useNavigation<SigninNavigationProp>();
 
     const { signIn, signOut } = useAuthentication();
 
@@ -56,7 +60,7 @@ const AuthenticationScreen = () => {
 
             <Button
                 style={styles.button}
-                onPress={() => navigation.navigate('Signup')}
+                onPress={() => navigation.navigate('SignupNavigator', { screen: "SignupMain" })}
             >
                 Go to sign up
             </Button>
@@ -97,4 +101,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default AuthenticationScreen;
+export default SigninScreen;

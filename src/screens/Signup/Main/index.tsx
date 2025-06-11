@@ -1,16 +1,23 @@
 import React, { useState } from 'react';
 import { Layout, Text, Button, Input } from '@ui-kitten/components';
 import { StyleSheet } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { CompositeNavigationProp, useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 
-import { SignupScreenNavigationProp } from '../../nativeStackNavigationProp/SignupScreenNavigationProp';
+import { ApplicationScreensList } from '../../../screensList/ApplicationScreensList';
+import { SignupScreensList } from '../../../screensList/SignupScreensList';
 
-import { useAuthentication } from '../../hooks/useAuthentication';
+import { useAuthentication } from '../../../hooks/useAuthentication';
 
-const AuthenticationScreen = () => {
-    const navigation = useNavigation<SignupScreenNavigationProp>();
+type SignupMainScreenNavigationProp = CompositeNavigationProp<
+    StackNavigationProp<SignupScreensList, 'SignupMain'>,
+    StackNavigationProp<ApplicationScreensList>
+>;
 
-    const { signUp, confirmSignUp} = useAuthentication();
+const SignupMainScreen = () => {
+    const navigation = useNavigation<SignupMainScreenNavigationProp>();
+
+    const { signUp, confirmSignUp } = useAuthentication();
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -109,4 +116,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default AuthenticationScreen;
+export default SignupMainScreen;

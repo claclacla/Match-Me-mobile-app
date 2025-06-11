@@ -2,17 +2,15 @@ import React, { useEffect } from 'react';
 import { Layout, Text, Button } from '@ui-kitten/components';
 import { StyleSheet } from 'react-native';
 
-import { useNavigation } from '@react-navigation/native';
-
-import { AuthenticationScreenProp } from '../../nativeStackScreenProp/AuthenticationScreenProps';
+//import { useNavigation } from '@react-navigation/native';
+//import { SigninScreenProp } from '../../nativeStackScreenProp/SigninScreenProps';
 
 import { findSimilarUsersById } from '../../repositories/api/findSimilarUsersById';
 
 import useAuthenticationStore from '../../repositories/localStorage/useAuthenticationStore';
 
 const MainScreen = () => {
-    const navigation = useNavigation<AuthenticationScreenProp['navigation']>();
-
+    //const navigation = useNavigation<SigninScreenProp['navigation']>();
     const key = useAuthenticationStore((state: any) => state.key);
 
     useEffect(() => {

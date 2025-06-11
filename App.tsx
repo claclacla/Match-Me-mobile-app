@@ -4,10 +4,12 @@ import { ApplicationProvider, Layout, Text } from '@ui-kitten/components';
 import { StyleSheet } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createStackNavigator } from '@react-navigation/stack';
+
+import { ApplicationScreensList } from './src/screensList/ApplicationScreensList';
 
 import SigninScreen from './src/screens/Signin';
-import SignupScreen from './src/screens/Signup';
+import SignupNavigator from './src/screens/Signup/Navigator';
 import MainScreen from './src/screens/Main';
 
 import { Amplify } from 'aws-amplify';
@@ -16,7 +18,7 @@ import awsconfig from './src/aws-exports';
 
 Amplify.configure(awsconfig);
 
-const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator<ApplicationScreensList>();
 
 export default function App(): React.ReactElement {
     /*
@@ -53,7 +55,7 @@ export default function App(): React.ReactElement {
                 {/*<Stack.Navigator initialRouteName={isSignedIn ? "Main" : "Authentication"}>*/}
                 <Stack.Navigator initialRouteName={"Signin"}>
                     <Stack.Screen name="Signin" component={SigninScreen} options={{ headerShown: false }} />
-                    <Stack.Screen name="Signup" component={SignupScreen} options={{ headerShown: false }} />
+                    <Stack.Screen name="SignupNavigator" component={SignupNavigator} options={{ headerShown: false }} />
                     <Stack.Screen name="Main" component={MainScreen} options={{ headerShown: false }} />
                 </Stack.Navigator>
             </NavigationContainer>
