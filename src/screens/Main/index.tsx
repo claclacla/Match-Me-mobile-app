@@ -9,6 +9,8 @@ import { findSimilarUsersById } from '../../repositories/api/findSimilarUsersByI
 
 import useAuthenticationStore from '../../repositories/localStorage/useAuthenticationStore';
 
+import styles from '../../styles';
+
 const MainScreen = () => {
     //const navigation = useNavigation<SigninScreenProp['navigation']>();
     const key = useAuthenticationStore((state: any) => state.key);
@@ -42,21 +44,5 @@ const MainScreen = () => {
         </Layout>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: 20,
-    },
-    title: {
-        marginBottom: 20,
-    },
-    button: {
-        marginTop: 30,
-        width: '80%',
-    }
-});
 
 export default MainScreen;
