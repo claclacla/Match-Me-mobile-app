@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Layout, Text, Button, Input } from '@ui-kitten/components';
-import { StyleSheet } from 'react-native';
 import { CompositeNavigationProp, useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 
@@ -8,6 +7,8 @@ import { ApplicationScreensList } from '../../../screensList/ApplicationScreensL
 import { SignupScreensList } from '../../../screensList/SignupScreensList';
 
 import { useAuthentication } from '../../../hooks/useAuthentication';
+
+import styles from '../../../styles';
 
 type SignupMainScreenNavigationProp = CompositeNavigationProp<
     StackNavigationProp<SignupScreensList, 'SignupMain'>,
@@ -17,33 +18,23 @@ type SignupMainScreenNavigationProp = CompositeNavigationProp<
 const SignupMainScreen = () => {
     const navigation = useNavigation<SignupMainScreenNavigationProp>();
 
-    const { signUp, confirmSignUp } = useAuthentication();
+    const { signUp } = useAuthentication();
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
-    const [confirmationCode, setConfirmationCode] = useState('');
-
     const handleSignUp = async () => {
         try {
             await signUp({ username, password });
-            //navigation.navigate('Main');
+            navigation.navigate('SignupConfirmation', { username });
         } catch (error: any) {
             console.error('Error:', error);
         }
     };
 
-    const handleConfirmationCode = async () => {
-        try {
-            await confirmSignUp({ username, confirmationCode });
-        } catch (error: any) {
-
-        }
-    };
-
     return (
         <Layout style={styles.container}>
-            <Text category='h3' style={styles.title}>Access Match Me!</Text>
+            <Text category='h3' style={styles.title}>Sign up</Text>
 
             <Input
                 style={styles.input}
@@ -60,26 +51,11 @@ const SignupMainScreen = () => {
                 secureTextEntry
             />
 
-            <Input
-                style={styles.input}
-                placeholder='Confirmation code'
-                value={confirmationCode}
-                onChangeText={setConfirmationCode}
-                secureTextEntry
-            />
-
             <Button
                 style={styles.button}
                 onPress={handleSignUp}
             >
                 Sign up
-            </Button>
-
-            <Button
-                style={styles.button}
-                onPress={handleConfirmationCode}
-            >
-                Send confirmation code
             </Button>
 
             <Button
@@ -91,29 +67,5 @@ const SignupMainScreen = () => {
         </Layout>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: 20,
-        width: '100%',
-    },
-    title: {
-        marginBottom: 30,
-    },
-    input: {
-        width: '100%',
-        marginBottom: 15,
-    },
-    button: {
-        width: '100%',
-        marginTop: 10,
-    },
-    ghostButton: {
-        marginTop: 10,
-    }
-});
 
 export default SignupMainScreen;
