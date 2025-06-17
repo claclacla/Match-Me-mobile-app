@@ -22,7 +22,7 @@ const SignupConfirmationScreen = () => {
     const route = useRoute<SignupConfirmationScreenProps['route']>();
     const username = route.params?.username;
 
-    const [confirmationCode, setConfirmationCode] = useState('');
+    const [confirmationCode, setConfirmationCode] = useState<string>('');
 
     const { confirmSignUp } = useAuthentication();
 
@@ -36,7 +36,7 @@ const SignupConfirmationScreen = () => {
 
     return (
         <Layout style={styles.container}>
-            <Text category='h3' style={styles.title}>Send your confirmation code</Text>
+            <Text category='h3' style={styles.title}>Enter your confirmation code</Text>
 
             <Input
                 style={styles.input}
@@ -50,7 +50,7 @@ const SignupConfirmationScreen = () => {
                 style={styles.button}
                 onPress={handleConfirmationCode}
             >
-                Send confirmation code
+                Enter confirmation code
             </Button>
 
             <Button

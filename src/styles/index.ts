@@ -15,6 +15,17 @@ const styles = StyleSheet.create({
         width: '100%',
         marginBottom: 15,
     },
+    multiLineInput: {
+        width: '100%',
+        marginBottom: 15,
+        minHeight: 120,
+        //paddingTop: 10,
+        //paddingBottom: 10
+    },
+    select: {
+        width: "100%",
+        marginVertical: 8,
+    },
     button: {
         width: '100%',
         marginTop: 10,

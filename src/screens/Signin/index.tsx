@@ -9,6 +9,8 @@ import { ApplicationScreensList } from '../../screensList/ApplicationScreensList
 
 import { useAuthentication } from '../../hooks/useAuthentication';
 
+import styles from '../../styles';
+
 type SigninNavigationProp = StackNavigationProp<ApplicationScreensList, 'Signin'>;
 
 const SigninScreen = () => {
@@ -16,13 +18,13 @@ const SigninScreen = () => {
 
     const { signIn, signOut } = useAuthentication();
 
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const [username, setUsername] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
 
     const handleSignIn = async () => {
         try {
             await signIn({ username, password });
-            navigation.navigate('Main');
+            navigation.navigate('Profile');
         } catch (error: any) {
             console.error('Error:', error);
         }
@@ -76,29 +78,5 @@ const SigninScreen = () => {
         </Layout>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: 20,
-        width: '100%',
-    },
-    title: {
-        marginBottom: 30,
-    },
-    input: {
-        width: '100%',
-        marginBottom: 15,
-    },
-    button: {
-        width: '100%',
-        marginTop: 10,
-    },
-    ghostButton: {
-        marginTop: 10,
-    }
-});
 
 export default SigninScreen;
