@@ -4,35 +4,26 @@ import { Layout, Text, Button, Input, Select, SelectItem, IndexPath } from '@ui-
 //import { useNavigation } from '@react-navigation/native';
 //import { SigninScreenProp } from '../../nativeStackScreenProp/SigninScreenProps';
 
-import { findSimilarUsersById } from '../../repositories/api/findSimilarUsersById';
+import { insertUser } from '../../repositories/api/insertUser';
 
 import useAuthenticationStore from '../../repositories/localStorage/useAuthenticationStore';
 
+import { GENDER_OPTIONS, User, UserGender } from '../../repositories/globalEntities/User';
+
 import styles from '../../styles';
 
-export type UserGender = 'male' | 'female' | 'not_binary' | 'prefer_not_to_say';
-
-export const GENDER_OPTIONS = [
-    { label: 'Uomo', value: 'male' as UserGender },
-    { label: 'Donna', value: 'female' as UserGender },
-    { label: 'Non binario', value: 'non_binary' as UserGender },
-    { label: 'Preferisco non specificare', value: 'prefer_not_to_say' as UserGender },
-];
-
-export const DEFAULT_GENDER: UserGender = 'prefer_not_to_say';
-
-const MainScreen = () => {
+const ProfileScreen = () => {
     //const navigation = useNavigation<SigninScreenProp['navigation']>();
     const key = useAuthenticationStore((state: any) => state.key);
 
-    const [name, setName] = useState<string>("");
+    const [name, setName] = useState<string | undefined>(undefined);
     const [age, setAge] = useState<number | undefined>(undefined);
 
     const [selectedGenderIndex, setSelectedGenderIndex] = useState<IndexPath | undefined>(undefined);
     const [selectedGenderValue, setSelectedGenderValue] = useState<UserGender | undefined>(undefined);
 
-    const [location, setLocation] = useState<string>("");
-    const [bio, setBio] = useState<string>("");
+    const [location, setLocation] = useState<string | undefined>(undefined);
+    const [bio, setBio] = useState<string | undefined>(undefined);
 
     const handleAgeChange = (text: string) => {
         const filteredText = text.replace(/[^0-9]/g, '');
@@ -48,8 +39,23 @@ const MainScreen = () => {
         setSelectedGenderValue(selectedOption.value);
     };
 
-    const handleInsertUser = () => {
+    const handleInsertUser = async () => {
+        if (name === undefined || age === undefined ||
+            selectedGenderValue === undefined || location === undefined || bio === undefined) {
+            return;
+        }
 
+        const user: User = {
+            id: "",
+            name,
+            age,
+            gender: selectedGenderValue,
+            location,
+            bio
+        };
+
+        console.log(key, user);
+        await insertUser({ key, user });
     };
 
     /*
@@ -134,4 +140,4 @@ const MainScreen = () => {
     );
 };
 
-export default MainScreen;
+export default ProfileScreen;

@@ -84,6 +84,7 @@ export function useAuthentication() {
 
             const session = await amplifyFetchAuthSession();
             const key = session.tokens?.idToken?.toString();
+            console.log(key);
 
             if (key === undefined) {
                 unsetKey();

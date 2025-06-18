@@ -10,7 +10,7 @@ import { ApplicationScreensList } from './src/screensList/ApplicationScreensList
 
 import SigninScreen from './src/screens/Signin';
 import SignupNavigator from './src/screens/Signup/Navigator';
-import MainScreen from './src/screens/Profile';
+import ProfileScreen from './src/screens/Profile';
 
 import { Amplify } from 'aws-amplify';
 import awsconfig from './src/aws-exports';
@@ -56,7 +56,7 @@ export default function App(): React.ReactElement {
                 <Stack.Navigator initialRouteName={"Signin"}>
                     <Stack.Screen name="Signin" component={SigninScreen} options={{ headerShown: false }} />
                     <Stack.Screen name="SignupNavigator" component={SignupNavigator} options={{ headerShown: false }} />
-                    <Stack.Screen name="Profile" component={MainScreen} options={{ headerShown: false }} />
+                    <Stack.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }} />
                 </Stack.Navigator>
             </NavigationContainer>
         </ApplicationProvider>
