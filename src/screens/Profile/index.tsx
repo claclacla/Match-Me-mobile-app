@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Layout, Text, Button, Input, Select, SelectItem, IndexPath } from '@ui-kitten/components';
+import { Audio } from 'expo-av';
 
 //import { useNavigation } from '@react-navigation/native';
 //import { SigninScreenProp } from '../../nativeStackScreenProp/SigninScreenProps';
@@ -12,8 +13,80 @@ import { GENDER_OPTIONS, User, UserGender } from '../../repositories/globalEntit
 
 import styles from '../../styles';
 
+const recordingOptions = {
+    android: {
+        extension: '.m4a',
+        outputFormat: 2, // MPEG_4 = 2
+        audioEncoder: 3, // AAC = 3
+        sampleRate: 44100,
+        numberOfChannels: 2,
+        bitRate: 128000,
+    },
+    ios: {
+        extension: '.caf',
+        audioQuality: 127, // AUDIO_QUALITY_HIGH = 127
+        sampleRate: 44100,
+        numberOfChannels: 2,
+        bitRate: 128000,
+        linearPCMBitDepth: 16,
+        linearPCMIsBigEndian: false,
+        linearPCMIsFloat: false,
+    },
+    web: {
+        // Puoi lasciare vuoto o mettere opzioni base per web (non serve per iOS/Android)
+        mimeType: 'audio/webm',
+        bitsPerSecond: 128000,
+    },
+};
+
 const ProfileScreen = () => {
+    const [isRecording, setIsRecording] = useState<Audio.Recording | null>(null);
+    const [recordingUri, setRecordingUri] = useState<string | null>(null);
+
+    useEffect(() => {
+        // Request microphone permissions on mount
+        (async () => {
+            const response = await Audio.requestPermissionsAsync();
+            if (response.status !== 'granted') {
+                alert('Please grant audio recording permission!');
+            }
+        })();
+    }, []);
+
+    const startRecording = async () => {
+        try {
+            await Audio.setAudioModeAsync({
+                allowsRecordingIOS: true,
+                playsInSilentModeIOS: true,
+            });
+
+            const { recording } = await Audio.Recording.createAsync(
+                recordingOptions
+            );
+
+            setIsRecording(recording);
+            setRecordingUri(null);
+        } catch (err) {
+            console.error('Failed to start recording', err);
+        }
+    };
+
+    const stopRecording = async () => {
+        if (!isRecording) return;
+
+        try {
+            await isRecording.stopAndUnloadAsync();
+            const uri = isRecording.getURI();
+            setRecordingUri(uri);
+            setIsRecording(null);
+            console.log('Recording stopped and stored at', uri);
+        } catch (err) {
+            console.error('Failed to stop recording', err);
+        }
+    };
     //const navigation = useNavigation<SigninScreenProp['navigation']>();
+
+    /*
     const key = useAuthenticationStore((state: any) => state.key);
 
     const [name, setName] = useState<string | undefined>(undefined);
@@ -57,6 +130,7 @@ const ProfileScreen = () => {
         console.log(key, user);
         await insertUser({ key, user });
     };
+    */
 
     /*
     - findSimilarUsersByIdWithKey IMPLEMENTATION
@@ -81,8 +155,9 @@ const ProfileScreen = () => {
     //    navigation.goBack();
     //};
 
-    const selectedGenderLabel = selectedGenderIndex ? GENDER_OPTIONS[selectedGenderIndex.row].label : undefined;
+    //const selectedGenderLabel = selectedGenderIndex ? GENDER_OPTIONS[selectedGenderIndex.row].label : undefined;
 
+    /*
     return (
         <Layout style={styles.container}>
             <Text category='h3' style={styles.title}>Profile</Text>
@@ -136,6 +211,24 @@ const ProfileScreen = () => {
             >
                 Send
             </Button>
+        </Layout>
+    );
+    */
+
+    return (
+        <Layout style={styles.container}>
+            <Text category='h3' style={styles.title}>What about you?</Text>
+
+            <Button style={styles.button} onPress={isRecording ? stopRecording : startRecording}>
+                {isRecording ? '🛑 Stop' : '🎤 Rec'}
+            </Button>
+
+            {recordingUri && (
+                <>
+                    <Text style={{ marginTop: 20 }}>Recorded file URI:</Text>
+                    <Text selectable>{recordingUri}</Text>
+                </>
+            )}
         </Layout>
     );
 };
