@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Layout, Text, Button, Input } from '@ui-kitten/components';
-import { StyleSheet } from 'react-native';
 
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
@@ -24,7 +23,7 @@ const SigninScreen = () => {
     const handleSignIn = async () => {
         try {
             await signIn({ username, password });
-            navigation.navigate('Profile');
+            navigation.replace('Onboarding');
         } catch (error: any) {
             console.error('Error:', error);
         }

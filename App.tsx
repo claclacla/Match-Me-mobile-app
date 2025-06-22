@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
 import * as eva from '@eva-design/eva';
-import { ApplicationProvider, Layout, Text } from '@ui-kitten/components';
+import { ApplicationProvider } from '@ui-kitten/components';
 import { StyleSheet } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
@@ -10,10 +9,11 @@ import { ApplicationScreensList } from './src/screensList/ApplicationScreensList
 
 import SigninScreen from './src/screens/Signin';
 import SignupNavigator from './src/screens/Signup/Navigator';
-import ProfileScreen from './src/screens/Profile';
+import OnboardingScreen from './src/screens/Onboarding';
 
 import { Amplify } from 'aws-amplify';
 import awsconfig from './src/aws-exports';
+import MainNavigator from './src/screens/Main/Navigator';
 //import { getCurrentUser } from '@aws-amplify/auth';
 
 Amplify.configure(awsconfig);
@@ -56,7 +56,8 @@ export default function App(): React.ReactElement {
                 <Stack.Navigator initialRouteName={"Signin"}>
                     <Stack.Screen name="Signin" component={SigninScreen} options={{ headerShown: false }} />
                     <Stack.Screen name="SignupNavigator" component={SignupNavigator} options={{ headerShown: false }} />
-                    <Stack.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }} />
+                    <Stack.Screen name="Onboarding" component={OnboardingScreen} options={{ headerShown: false }} />
+                    <Stack.Screen name="Main" component={MainNavigator} options={{ headerShown: false }} />
                 </Stack.Navigator>
             </NavigationContainer>
         </ApplicationProvider>

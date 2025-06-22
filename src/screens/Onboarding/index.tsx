@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { Layout, Text, Button, Input, Select, SelectItem, IndexPath } from '@ui-kitten/components';
 
-//import { useNavigation } from '@react-navigation/native';
-//import { SigninScreenProp } from '../../nativeStackScreenProp/SigninScreenProps';
+import { StackNavigationProp } from '@react-navigation/stack';
+
+import { useNavigation } from '@react-navigation/native';
+
+import { ApplicationScreensList } from '../../screensList/ApplicationScreensList';
 
 import { insertUser } from '../../repositories/api/insertUser';
 
@@ -12,8 +15,11 @@ import { GENDER_OPTIONS, User, UserGender } from '../../repositories/globalEntit
 
 import styles from '../../styles';
 
-const ProfileScreen = () => {
-    //const navigation = useNavigation<SigninScreenProp['navigation']>();
+type OnboardingNavigationProp = StackNavigationProp<ApplicationScreensList, 'Onboarding'>;
+
+const OnboardingScreen = () => {
+    const navigation = useNavigation<OnboardingNavigationProp>();
+
     const key = useAuthenticationStore((state: any) => state.key);
 
     const [name, setName] = useState<string | undefined>(undefined);
@@ -56,6 +62,8 @@ const ProfileScreen = () => {
 
         console.log(key, user);
         await insertUser({ key, user });
+
+        navigation.replace('Main');
     };
 
     /*
@@ -140,4 +148,4 @@ const ProfileScreen = () => {
     );
 };
 
-export default ProfileScreen;
+export default OnboardingScreen;

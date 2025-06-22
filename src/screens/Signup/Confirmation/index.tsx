@@ -29,7 +29,7 @@ const SignupConfirmationScreen = () => {
     const handleConfirmationCode = async () => {
         try {
             await confirmSignUp({ username, confirmationCode });
-            navigation.navigate('Signin');
+            navigation.replace('Signin');
         } catch (error: any) {
 
         }

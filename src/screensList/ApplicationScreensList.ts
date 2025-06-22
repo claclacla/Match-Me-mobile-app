@@ -5,5 +5,6 @@ import { SignupScreensList } from './SignupScreensList';
 export type ApplicationScreensList = {
     Signin: undefined;
     SignupNavigator: NavigatorScreenParams<SignupScreensList>;
-    Profile: undefined;
+    Onboarding: undefined;
+    Main: undefined;
 };
