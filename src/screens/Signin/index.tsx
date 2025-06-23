@@ -1,24 +1,17 @@
 import React, { useState } from 'react';
 import { Layout, Text, Button, Input } from '@ui-kitten/components';
-
-import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 
-import { ApplicationScreensList } from '../../screensList/ApplicationScreensList';
-
 import { useAuthentication } from '../../hooks/useAuthentication';
+import { useHandleSignInUserFlow } from '../../hooks/useHandleSignInUserFlow';
 
-import { getUser } from '../../repositories/api/getUser';
-import { User } from '../../repositories/globalEntities/User';
+import { ApplicationNavigationProp } from '../../stackNavigationProps/ApplicationNavigationProp';
 
 import styles from '../../styles';
 
-type SigninNavigationProp = StackNavigationProp<ApplicationScreensList, 'Signin'>;
-
 const SigninScreen = () => {
-    const navigation = useNavigation<SigninNavigationProp>();
-
-    const { signIn, signOut } = useAuthentication();
+    const navigation = useNavigation<ApplicationNavigationProp>();
+    const { signIn } = useAuthentication();
 
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
@@ -33,21 +26,10 @@ const SigninScreen = () => {
                 return;
             }
 
-            const user: User | undefined = await getUser({ key });
-
-            if (user === undefined) {
-                navigation.replace('Onboarding');
-            }
-            else {
-                navigation.replace("Main");
-            }
+            useHandleSignInUserFlow({ navigation, key });
         } catch (error: any) {
             console.error('Error:', error);
         }
-    };
-
-    const handleSignOut = async () => {
-        await signOut();
     };
 
     return (
@@ -81,15 +63,6 @@ const SigninScreen = () => {
                 onPress={() => navigation.navigate('SignupNavigator', { screen: "SignupMain" })}
             >
                 Go to sign up
-            </Button>
-
-            <Button
-                appearance='outline'
-                onPress={handleSignOut}
-                style={styles.button}
-                status='danger'
-            >
-                Sign out
             </Button>
         </Layout>
     );

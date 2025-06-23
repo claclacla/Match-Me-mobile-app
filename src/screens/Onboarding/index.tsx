@@ -63,7 +63,7 @@ const OnboardingScreen = () => {
         console.log(key, user);
         await insertUser({ key, user });
 
-        navigation.replace('Main');
+        navigation.replace('MainNavigator', { screen: "MainProfile" });
     };
 
     /*

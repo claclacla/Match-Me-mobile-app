@@ -111,6 +111,27 @@ export function useAuthentication() {
         }
     }
 
+    async function getIdTokenIfSignedIn(): Promise<string | undefined> {
+        try {
+            const session = await amplifyFetchAuthSession();
+            const key = session.tokens?.idToken?.toString();
+
+            console.log("User key:" + key);
+
+            if (key === undefined) {
+                unsetKey();
+                return;
+            }
+            else {
+                setKey(key);
+                return key;
+            }
+        } catch (error) {
+            console.error("Error fetching session:", error);
+            throw new Error('Error: ' + error);
+        }
+    }
+
     async function signOut() {
         try {
             await amplifySignOut();
@@ -123,6 +144,7 @@ export function useAuthentication() {
         signUp,
         confirmSignUp,
         signIn,
+        getIdTokenIfSignedIn,
         signOut
     }
 }
