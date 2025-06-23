@@ -72,7 +72,7 @@ export function useAuthentication() {
         }
     }
 
-    async function signIn({ username, password }: { username: string, password: string }) {
+    async function signIn({ username, password }: { username: string, password: string }): Promise<string | undefined> {
         try {
             await amplifySignIn({
                 username,
@@ -92,6 +92,7 @@ export function useAuthentication() {
             }
             else {
                 setKey(key);
+                return key;
             }
         } catch (error: any) {
             let errorMessage = 'Error';

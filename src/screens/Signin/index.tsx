@@ -9,6 +9,7 @@ import { ApplicationScreensList } from '../../screensList/ApplicationScreensList
 import { useAuthentication } from '../../hooks/useAuthentication';
 
 import styles from '../../styles';
+import { getUser } from '../../repositories/api/getUser';
 
 type SigninNavigationProp = StackNavigationProp<ApplicationScreensList, 'Signin'>;
 
@@ -22,8 +23,17 @@ const SigninScreen = () => {
 
     const handleSignIn = async () => {
         try {
-            await signIn({ username, password });
-            navigation.replace('Onboarding');
+            const key = await signIn({ username, password });
+
+            // TO DO: Handle the case when key is undefined 
+
+            if(key === undefined) {
+                return;
+            }
+
+            await getUser({ key });
+
+            //navigation.replace('Onboarding');
         } catch (error: any) {
             console.error('Error:', error);
         }
