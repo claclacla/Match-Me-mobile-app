@@ -2,7 +2,7 @@ import { API } from "../../config/config.json";
 
 import { User } from "../globalEntities/User";
 
-// TO DO: Configure the API.ADDRESS 
+// TO DO: Add the API input and output parameters
 
 export async function insertUser({ key, user }: { key: string, user: User }) {
     const response = await fetch(

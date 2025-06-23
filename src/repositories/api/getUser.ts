@@ -2,9 +2,9 @@ import { API } from "../../config/config.json";
 
 import { User } from "../globalEntities/User";
 
-// TO DO: Configure the API.ADDRESS 
+// TO DO: Add the API input and output parameters
 
-export async function getUser({ key }: { key: string }) {
+export async function getUser({ key }: { key: string }): Promise<undefined | User> {
     const response = await fetch(
         API.ADDRESS + '/user',
         {
@@ -16,8 +16,22 @@ export async function getUser({ key }: { key: string }) {
         }
     );
 
+    if (response.status === 404) {
+        console.warn("User not found.");
+        return undefined;
+    }
+
     const jsonResponse = await response.json();
     console.log(jsonResponse);
 
-    return jsonResponse;
+    const user: User = {
+        id: jsonResponse.id,
+        name: jsonResponse.name,
+        gender: jsonResponse.gender,
+        location: jsonResponse.location,
+        age: jsonResponse.age,
+        bio: jsonResponse.bio
+    }
+
+    return user;
 }

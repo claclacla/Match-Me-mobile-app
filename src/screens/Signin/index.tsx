@@ -8,8 +8,10 @@ import { ApplicationScreensList } from '../../screensList/ApplicationScreensList
 
 import { useAuthentication } from '../../hooks/useAuthentication';
 
-import styles from '../../styles';
 import { getUser } from '../../repositories/api/getUser';
+import { User } from '../../repositories/globalEntities/User';
+
+import styles from '../../styles';
 
 type SigninNavigationProp = StackNavigationProp<ApplicationScreensList, 'Signin'>;
 
@@ -27,13 +29,18 @@ const SigninScreen = () => {
 
             // TO DO: Handle the case when key is undefined 
 
-            if(key === undefined) {
+            if (key === undefined) {
                 return;
             }
 
-            await getUser({ key });
+            const user: User | undefined = await getUser({ key });
 
-            //navigation.replace('Onboarding');
+            if (user === undefined) {
+                navigation.replace('Onboarding');
+            }
+            else {
+                navigation.replace("Main");
+            }
         } catch (error: any) {
             console.error('Error:', error);
         }
