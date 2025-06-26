@@ -1,5 +1,3 @@
-import { useNavigation } from "@react-navigation/native";
-
 import { ApplicationNavigationProp } from "../stackNavigationProps/ApplicationNavigationProp";
 
 import { User } from "../repositories/globalEntities/User";
@@ -11,7 +9,7 @@ export async function useHandleSignInUserFlow({ navigation, key }: { navigation:
     const user: User | undefined = await getUser({ key });
 
     if (user === undefined) {
-        navigation.replace('Onboarding');
+        navigation.replace('OnboardingNavigator', { screen: "OnboardingPersonalInformation" });
     }
     else {
         navigation.replace("MainNavigator", { screen: "MainProfile" });

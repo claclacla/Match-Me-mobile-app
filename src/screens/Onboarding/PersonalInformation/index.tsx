@@ -1,24 +1,21 @@
 import React, { useState } from 'react';
 import { Layout, Text, Button, Input, Select, SelectItem, IndexPath } from '@ui-kitten/components';
 
-import { StackNavigationProp } from '@react-navigation/stack';
-
 import { useNavigation } from '@react-navigation/native';
 
-import { ApplicationScreensList } from '../../screensList/ApplicationScreensList';
+import { ApplicationNavigationProp } from '../../../stackNavigationProps/ApplicationNavigationProp';
 
-import { insertUser } from '../../repositories/api/insertUser';
+import { insertUser } from '../../../repositories/api/insertUser';
 
-import useAuthenticationStore from '../../repositories/localStorage/useAuthenticationStore';
+import useAuthenticationStore from '../../../repositories/localStorage/useAuthenticationStore';
 
-import { GENDER_OPTIONS, User, UserGender } from '../../repositories/globalEntities/User';
+import { GENDER_OPTIONS, User, UserGender } from '../../../repositories/globalEntities/User';
 
-import styles from '../../styles';
+import styles from '../../../styles';
 
-type OnboardingNavigationProp = StackNavigationProp<ApplicationScreensList, 'Onboarding'>;
 
-const OnboardingScreen = () => {
-    const navigation = useNavigation<OnboardingNavigationProp>();
+const OnboardingPersonalInformationScreen = () => {
+    const navigation = useNavigation<ApplicationNavigationProp>();
 
     const key = useAuthenticationStore((state: any) => state.key);
 
@@ -29,7 +26,6 @@ const OnboardingScreen = () => {
     const [selectedGenderValue, setSelectedGenderValue] = useState<UserGender | undefined>(undefined);
 
     const [location, setLocation] = useState<string | undefined>(undefined);
-    const [bio, setBio] = useState<string | undefined>(undefined);
 
     const handleAgeChange = (text: string) => {
         const filteredText = text.replace(/[^0-9]/g, '');
@@ -47,7 +43,7 @@ const OnboardingScreen = () => {
 
     const handleInsertUser = async () => {
         if (name === undefined || age === undefined ||
-            selectedGenderValue === undefined || location === undefined || bio === undefined) {
+            selectedGenderValue === undefined || location === undefined) {
             return;
         }
 
@@ -57,7 +53,8 @@ const OnboardingScreen = () => {
             age,
             gender: selectedGenderValue,
             location,
-            bio
+            insights: [""],
+            narrative: ""
         };
 
         console.log(key, user);
@@ -128,15 +125,6 @@ const OnboardingScreen = () => {
                 value={location}
                 onChangeText={setLocation}
             />
-            <Input
-                style={styles.multiLineInput}
-                placeholder='Bio'
-                value={bio}
-                onChangeText={setBio}
-                multiline={true}
-                numberOfLines={4}
-                textAlignVertical='top'
-            />
 
             <Button
                 style={styles.button}
@@ -148,4 +136,4 @@ const OnboardingScreen = () => {
     );
 };
 
-export default OnboardingScreen;
+export default OnboardingPersonalInformationScreen;

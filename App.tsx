@@ -10,7 +10,7 @@ import { ApplicationScreensList } from './src/screensList/ApplicationScreensList
 import InitScreen from './src/screens/InitScreen';
 import SigninScreen from './src/screens/Signin';
 import SignupNavigator from './src/screens/Signup/Navigator';
-import OnboardingScreen from './src/screens/Onboarding';
+import OnboardingNavigator from './src/screens/Onboarding/Navigator';
 
 import { Amplify } from 'aws-amplify';
 import awsconfig from './src/aws-exports';
@@ -28,7 +28,7 @@ export default function App(): React.ReactElement {
                     <Stack.Screen name="Init" component={InitScreen} options={{ headerShown: false }} />
                     <Stack.Screen name="Signin" component={SigninScreen} options={{ headerShown: false }} />
                     <Stack.Screen name="SignupNavigator" component={SignupNavigator} options={{ headerShown: false }} />
-                    <Stack.Screen name="Onboarding" component={OnboardingScreen} options={{ headerShown: false }} />
+                    <Stack.Screen name="OnboardingNavigator" component={OnboardingNavigator} options={{ headerShown: false }} />
                     <Stack.Screen name="MainNavigator" component={MainNavigator} options={{ headerShown: false }} />
                 </Stack.Navigator>
             </NavigationContainer>

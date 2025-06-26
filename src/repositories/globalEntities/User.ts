@@ -17,5 +17,6 @@ export interface User {
     gender: UserGender;
     location: string;
     age: number;
-    bio: string;
+    insights: string[];
+    narrative: string; 
 }
