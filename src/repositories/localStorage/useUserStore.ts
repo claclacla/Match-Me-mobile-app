@@ -5,9 +5,9 @@ import { User } from '../globalEntities/User';
 const useUserStore = create((set) => ({
     user: undefined,
     setUser: (user: User) => set((state: any) => ({ user })),
-    setUserInsight: (insight: string) =>
+    setUserInsights: (insights: string[]) =>
         set((state: any) => ({
-            user: { ...state.user, insights: [...state.user.insights, insight] }
+            user: { ...state.user, insights }
         })),
     unsetUser: () => set((state: any) => ({ user: undefined }))
 }));
