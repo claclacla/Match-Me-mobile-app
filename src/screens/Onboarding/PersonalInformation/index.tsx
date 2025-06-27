@@ -57,7 +57,7 @@ const OnboardingPersonalInformationScreen = () => {
         console.log(user);
         setUser(user);
 
-        navigation.replace('OnboardingNavigator', { screen: "OnboardingInsights" });
+        navigation.replace('OnboardingNavigator', { screen: "OnboardingInsightsCover" });
     };
 
     /*
