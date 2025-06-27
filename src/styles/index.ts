@@ -32,7 +32,17 @@ const styles = StyleSheet.create({
     },
     ghostButton: {
         marginTop: 10,
-    }
+    },
+
+    // Insights
+
+    insightsQuestion: {
+        marginBottom: 32,
+        textAlign: 'center',
+    },
+    insightsOption: {
+        marginBottom: 12,
+    },
 });
 
 export default styles;
