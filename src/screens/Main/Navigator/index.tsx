@@ -31,9 +31,9 @@ const MainNavigator = () => (
             tabBarInactiveTintColor: 'gray',
             headerShown: false
         })}>
-        <Tab.Screen name="MainMatch" component={MatchStatusScreen} />
-        <Tab.Screen name="MainChat" component={ChatScreen} />
-        <Tab.Screen name="MainProfile" component={ProfileScreen} />
+        <Tab.Screen name="MainMatch" component={MatchStatusScreen} options={{ tabBarLabel: 'Match' }} />
+        <Tab.Screen name="MainChat" component={ChatScreen} options={{ tabBarLabel: 'Chat' }} />
+        <Tab.Screen name="MainProfile" component={ProfileScreen} options={{ tabBarLabel: 'Profile' }} />
     </Tab.Navigator>
 );
 
