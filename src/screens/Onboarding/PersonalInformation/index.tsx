@@ -5,19 +5,14 @@ import { useNavigation } from '@react-navigation/native';
 
 import { ApplicationNavigationProp } from '../../../stackNavigationProps/ApplicationNavigationProp';
 
-import { insertUser } from '../../../repositories/api/insertUser';
-
-import useAuthenticationStore from '../../../repositories/localStorage/useAuthenticationStore';
-
 import { GENDER_OPTIONS, User, UserGender } from '../../../repositories/globalEntities/User';
+
+import useUserStore from '../../../repositories/localStorage/useUserStore';
 
 import styles from '../../../styles';
 
-
 const OnboardingPersonalInformationScreen = () => {
     const navigation = useNavigation<ApplicationNavigationProp>();
-
-    const key = useAuthenticationStore((state: any) => state.key);
 
     const [name, setName] = useState<string | undefined>(undefined);
     const [age, setAge] = useState<number | undefined>(undefined);
@@ -26,6 +21,8 @@ const OnboardingPersonalInformationScreen = () => {
     const [selectedGenderValue, setSelectedGenderValue] = useState<UserGender | undefined>(undefined);
 
     const [location, setLocation] = useState<string | undefined>(undefined);
+
+    const setUser = useUserStore((state: any) => state.setUser);
 
     const handleAgeChange = (text: string) => {
         const filteredText = text.replace(/[^0-9]/g, '');
@@ -41,7 +38,7 @@ const OnboardingPersonalInformationScreen = () => {
         setSelectedGenderValue(selectedOption.value);
     };
 
-    const handleInsertUser = async () => {
+    const handleSetUser = async () => {
         if (name === undefined || age === undefined ||
             selectedGenderValue === undefined || location === undefined) {
             return;
@@ -57,10 +54,10 @@ const OnboardingPersonalInformationScreen = () => {
             narrative: ""
         };
 
-        console.log(key, user);
-        await insertUser({ key, user });
+        console.log(user);
+        setUser(user);
 
-        navigation.replace('MainNavigator', { screen: "MainProfile" });
+        navigation.replace('OnboardingNavigator', { screen: "OnboardingSend" });
     };
 
     /*
@@ -128,7 +125,7 @@ const OnboardingPersonalInformationScreen = () => {
 
             <Button
                 style={styles.button}
-                onPress={handleInsertUser}
+                onPress={handleSetUser}
             >
                 Send
             </Button>
