@@ -147,14 +147,16 @@ const OnboardingInsightsScreen = () => {
 
     const [traitPoints, setTraitPoints] = useState<{ [trait: string]: number }>({});
     const [feedback, setFeedback] = useState<string | null>(null);
-    const [isAnimating, setIsAnimating] = useState(false);
+    const [isFeedbackAnimating, setIsFeedbackAnimating] = useState(false);
 
     const currentStep: StepData = stepsData[stepIndex];
 
     const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
 
     const handleOptionSelect = (optionIndex: number) => {
-        if (isAnimating) return; // prevent interaction during animation
+        if (isFeedbackAnimating) {
+            return;
+        }
 
         const selected = stepsData[stepIndex].options[optionIndex];
 
@@ -166,7 +168,7 @@ const OnboardingInsightsScreen = () => {
                 [selected.trait]: (prev[selected.trait] || 0) + 1
             }));
 
-            setIsAnimating(true); // animation begins
+            setIsFeedbackAnimating(true); // animation begins
             setFeedback(`+1 ${capitalize(selected.trait)}`);
         }
     };
@@ -196,16 +198,24 @@ const OnboardingInsightsScreen = () => {
             setStepIndex(stepIndex + 1);
         } else {
             setUserInsights(generateInsight());
-            navigation.replace('OnboardingNavigator', { screen: 'OnboardingSend' });
+            navigation.replace('OnboardingNavigator', { screen: 'OnboardingInsightsSummary', params: { traitPoints } });
         }
     };
 
     const handleSkip = () => {
+        if (isFeedbackAnimating) {
+            return;
+        }
+
         setStepAnswersIndexes(prev => ({ ...prev, [stepIndex]: undefined }));
         goToNextStep();
     };
 
     const handleNext = () => {
+        if (isFeedbackAnimating) {
+            return;
+        }
+
         if (stepAnswersIndexes[stepIndex] === undefined) {
             return;
         }
@@ -238,7 +248,7 @@ const OnboardingInsightsScreen = () => {
                         message={feedback}
                         onAnimationEnd={() => {
                             setFeedback(null);
-                            setIsAnimating(false); // allow interaction again
+                            setIsFeedbackAnimating(false); // allow interaction again
                         }}
                     />
                 )}
@@ -252,7 +262,7 @@ const OnboardingInsightsScreen = () => {
                         style={{ marginVertical: 6 }}
                         onPress={() => handleOptionSelect(answerIndex)}
                         appearance={stepAnswersIndexes[stepIndex] === answerIndex ? 'filled' : 'outline'}
-                        disabled={isAnimating} // prevent multiple clicks
+                        disabled={isFeedbackAnimating} 
                     >
                         {option.text}
                     </Button>
@@ -262,6 +272,7 @@ const OnboardingInsightsScreen = () => {
                     onPress={handleSkip}
                     appearance='ghost'
                     style={{ marginTop: 10 }}
+                    disabled={isFeedbackAnimating} 
                 >
                     Skip
                 </Button>
@@ -269,6 +280,7 @@ const OnboardingInsightsScreen = () => {
                 <Button
                     onPress={handleNext}
                     style={{ marginTop: 20 }}
+                    disabled={isFeedbackAnimating} 
                 >
                     {stepIndex === stepsData.length - 1 ? 'Done' : 'Next'}
                 </Button>
