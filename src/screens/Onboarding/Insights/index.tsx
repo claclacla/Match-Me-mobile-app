@@ -46,9 +46,9 @@ const stepsData = [
         title: "The Stranger on the Tram",
         question: "You sit on a tram. Someone your age starts chatting. They ask what brought you here. What do you share?",
         options: [
-            { text: "A short, honest story about your goals.", trait: "authenticity" },
+            { text: "A short, honest story about my goals.", trait: "authenticity" },
             { text: "Something light and easy, to stay friendly.", trait: "adaptability" },
-            { text: "You smile, but keep it vague.", trait: "reserve" }
+            { text: "I smile, but keep it vague.", trait: "reserve" }
         ]
     },
     {
@@ -57,16 +57,16 @@ const stepsData = [
         options: [
             { text: "Go — it could be a chance to connect.", trait: "sociability" },
             { text: "Say maybe, and decide later.", trait: "flexibility" },
-            { text: "Thank them, but you're not in the mood today.", trait: "self-awareness" }
+            { text: "Thank them, but I'm not in the mood today.", trait: "self-awareness" }
         ]
     },
     {
         title: "The Moment",
         question: "At a park, a street performer invites passersby to join a small improv game. People are laughing. Eyes turn to you. What do you do?",
         options: [
-            { text: "Step in — you like these moments.", trait: "boldness" },
+            { text: "Step in — I like these moments.", trait: "boldness" },
             { text: "Cheer along, maybe record a clip.", trait: "supportiveness" },
-            { text: "Watch from a distance, it’s not your thing.", trait: "introspection" }
+            { text: "Watch from a distance, it’s not my thing.", trait: "introspection" }
         ]
     },
     {
@@ -82,25 +82,25 @@ const stepsData = [
         title: "The Memory Wall",
         question: "There’s a wall where new arrivals pin a photo or write something meaningful. What would you add?",
         options: [
-            { text: "A moment that shaped your life.", trait: "depth" },
-            { text: "A quote or phrase that helps you.", trait: "reflection" },
-            { text: "A sketch or image that captures how you feel now.", trait: "creativity" }
+            { text: "A moment that shaped my life.", trait: "depth" },
+            { text: "A quote or phrase that helps me.", trait: "reflection" },
+            { text: "A sketch or image that captures how I feel now.", trait: "creativity" }
         ]
     },
     {
         title: "The Skill Swap",
         question: "A local community board offers workshops: language, design, storytelling, coding... Which do you offer?",
         options: [
-            { text: "Something you’re good at and love sharing.", trait: "generosity" },
-            { text: "Something practical you know.", trait: "utility" },
-            { text: "You’d rather join than teach right now.", trait: "humility" }
+            { text: "Something I'm good at and love sharing.", trait: "generosity" },
+            { text: "Something practical I know.", trait: "utility" },
+            { text: "I’d rather join than teach right now.", trait: "humility" }
         ]
     },
     {
         title: "The Honest Talk",
         question: "Over coffee, someone asks what you’re really looking for in this city. You say…",
         options: [
-            { text: "People you can trust and grow with.", trait: "connection" },
+            { text: "People I can trust and grow with.", trait: "connection" },
             { text: "A sense of belonging and shared culture.", trait: "community" },
             { text: "A mix — space to be yourself, but stay open.", trait: "balance" }
         ]
@@ -182,9 +182,7 @@ const OnboardingInsightsScreen = () => {
                 return `${stepData.question} (skipped)`;
             }
 
-            const optionText = stepData.options[answerIndex];
-            console.log(`${stepData.question} ${optionText}`);
-            return `${stepData.question} ${optionText}`;
+            return `${stepData.question} ${stepData.options[answerIndex].text} I prefer ${stepData.options[answerIndex].trait}`;
         });
 
         console.log("insights: ", insights);
