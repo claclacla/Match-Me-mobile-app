@@ -20,9 +20,9 @@ const OnboardingSendScreen = () => {
 
     const handleInsertUser = async () => {
         console.log(user);
-        //await insertUser({ key, user });
+        await insertUser({ key, user });
 
-        //navigation.replace('MainNavigator', { screen: "MainProfile" });
+        navigation.replace('MainNavigator', { screen: "MainProfile" });
     };
 
     return (
