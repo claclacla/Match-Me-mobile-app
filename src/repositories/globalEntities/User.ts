@@ -18,5 +18,8 @@ export interface User {
     location: string;
     age: number;
     insights: string[];
-    narrative: string; 
+    narrative: string;
+    match?: {
+        id: string;
+    }
 }
