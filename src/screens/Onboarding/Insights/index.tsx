@@ -25,97 +25,96 @@ interface StepAnswersIndexes {
 
 const stepsData = [
     {
-        title: "The Arrival",
-        question: "You step off the train with a bag, a phone at 20%, and no real plan. The station is buzzing. A map shows three directions to explore. What do you follow?",
+        title: "The Mission Brief",
+        question: "You’ve just joined a 4-person team for a local quest. You barely know them. The leader asks everyone to share how they like to contribute. What do you say?",
         options: [
-            { text: "The sound of street music.", trait: "curiosity" },
-            { text: "A crowd heading to a nearby plaza.", trait: "sociability" },
-            { text: "A quiet alley lined with cafés.", trait: "introspection" }
+            { text: "I’m a planner — I help organize the chaos.", trait: "structure" },
+            { text: "I’m the glue — I keep the group vibe alive.", trait: "emotional-intelligence" },
+            { text: "I adapt — tell me what’s needed, I’ll jump in.", trait: "flexibility" }
         ]
     },
     {
-        title: "The First Choice",
-        question: "You stop by a small cultural centre offering events. A volunteer invites you to join one. It’s last-minute, no details given. How do you respond?",
+        title: "The Unexpected Delay",
+        question: "Halfway to your destination, the group faces a delay. Tension rises. What’s your move?",
         options: [
-            { text: "Say yes, what’s the worst that can happen?", trait: "openness" },
-            { text: "Ask for a bit more information first.", trait: "caution" },
-            { text: "Politely decline and keep walking.", trait: "independence" }
+            { text: "Crack a joke or lighten the mood.", trait: "humor" },
+            { text: "Start a practical discussion on plan B.", trait: "problem-solving" },
+            { text: "Let others talk while you reflect quietly.", trait: "calm-presence" }
         ]
     },
     {
-        title: "The Stranger on the Tram",
-        question: "You sit on a tram. Someone your age starts chatting. They ask what brought you here. What do you share?",
+        title: "The Loud Voice",
+        question: "One member dominates the group talk, cutting others off. What do you do?",
         options: [
-            { text: "A short, honest story about my goals.", trait: "authenticity" },
-            { text: "Something light and easy, to stay friendly.", trait: "adaptability" },
-            { text: "I smile, but keep it vague.", trait: "reserve" }
+            { text: "Step in kindly to balance the space.", trait: "assertiveness" },
+            { text: "Support quieter members by amplifying them.", trait: "allyship" },
+            { text: "Stay out — it’s not your fight.", trait: "detachment" }
         ]
     },
     {
-        title: "The Invitation",
-        question: "They mention a small get-together tonight with people from different backgrounds. No pressure. What do you do?",
+        title: "The Late Arrival",
+        question: "You arrive late to the group meetup. They’ve started without you. What do you feel?",
         options: [
-            { text: "Go — it could be a chance to connect.", trait: "sociability" },
-            { text: "Say maybe, and decide later.", trait: "flexibility" },
-            { text: "Thank them, but I'm not in the mood today.", trait: "self-awareness" }
+            { text: "Slightly off, but I’ll catch up fast.", trait: "resilience" },
+            { text: "Embarrassed — I try to quietly blend in.", trait: "sensitivity" },
+            { text: "Unbothered — I’ll jump in when I’m ready.", trait: "self-assurance" }
         ]
     },
     {
-        title: "The Moment",
-        question: "At a park, a street performer invites passersby to join a small improv game. People are laughing. Eyes turn to you. What do you do?",
+        title: "The Group Decision",
+        question: "Your group must choose between two activities. Opinions are split. What’s your role?",
         options: [
-            { text: "Step in — I like these moments.", trait: "boldness" },
-            { text: "Cheer along, maybe record a clip.", trait: "supportiveness" },
-            { text: "Watch from a distance, it’s not my thing.", trait: "introspection" }
+            { text: "I listen, then suggest a compromise.", trait: "mediator" },
+            { text: "I take a side and explain why.", trait: "conviction" },
+            { text: "I stay neutral and observe.", trait: "observer" }
         ]
     },
     {
-        title: "The Shared Space",
-        question: "You visit a co-living space. You're asked to describe your ideal common room. What matters most to you?",
+        title: "The Silent Member",
+        question: "One person hasn’t spoken much. You’re in a circle about to share ideas. What do you do?",
         options: [
-            { text: "A space where people talk and share ideas.", trait: "collaboration" },
-            { text: "A cozy corner to quietly recharge.", trait: "self-care" },
-            { text: "A flexible space — sometimes chatty, sometimes calm.", trait: "adaptability" }
+            { text: "Invite them in with an open question.", trait: "inclusion" },
+            { text: "Keep it flowing — maybe they’ll chime in later.", trait: "flow" },
+            { text: "Let them be — silence can be powerful too.", trait: "respect" }
         ]
     },
     {
-        title: "The Memory Wall",
-        question: "There’s a wall where new arrivals pin a photo or write something meaningful. What would you add?",
+        title: "The Group Challenge",
+        question: "The group must solve a timed puzzle. Everyone’s thinking differently. What’s your instinct?",
         options: [
-            { text: "A moment that shaped my life.", trait: "depth" },
-            { text: "A quote or phrase that helps me.", trait: "reflection" },
-            { text: "A sketch or image that captures how I feel now.", trait: "creativity" }
+            { text: "Suggest we pause and sync up.", trait: "coordination" },
+            { text: "Focus on your own angle and share later.", trait: "independent-thinking" },
+            { text: "Back someone’s idea and help them push it through.", trait: "support" }
         ]
     },
     {
-        title: "The Skill Swap",
-        question: "A local community board offers workshops: language, design, storytelling, coding... Which do you offer?",
+        title: "The End of the Day",
+        question: "After a long shared day, someone asks: 'How did you feel about our group?' You say…",
         options: [
-            { text: "Something I'm good at and love sharing.", trait: "generosity" },
-            { text: "Something practical I know.", trait: "utility" },
-            { text: "I’d rather join than teach right now.", trait: "humility" }
+            { text: "I liked how we all brought something unique.", trait: "appreciation" },
+            { text: "It was fine — we worked, not sure we clicked.", trait: "realism" },
+            { text: "Hard to say — I’m still figuring it out.", trait: "reflection" }
         ]
     },
     {
-        title: "The Honest Talk",
-        question: "Over coffee, someone asks what you’re really looking for in this city. You say…",
+        title: "The Small Conflict",
+        question: "Two members quietly disagree. No one’s addressing it. What’s your reaction?",
         options: [
-            { text: "People I can trust and grow with.", trait: "connection" },
-            { text: "A sense of belonging and shared culture.", trait: "community" },
-            { text: "A mix — space to be yourself, but stay open.", trait: "balance" }
+            { text: "Name it gently and check in with both.", trait: "emotional-leadership" },
+            { text: "Keep things moving — it’ll sort itself.", trait: "pragmatism" },
+            { text: "Watch how it plays out — dynamics reveal truth.", trait: "strategic-patience" }
         ]
     },
     {
-        title: "The Day’s End",
-        question: "Before sleeping, you mark the places you visited today. The city feels a bit more yours. What do you think about the day?",
+        title: "The Goodbye",
+        question: "It’s time to part ways. Someone suggests staying in touch. What do you feel?",
         options: [
-            { text: "I’m excited for what’s next.", trait: "optimism" },
-            { text: "I feel grounded — slowly finding my rhythm.", trait: "stability" },
-            { text: "I’m still unsure, but I want to keep exploring.", trait: "openness" }
+            { text: "Absolutely — I value these bonds.", trait: "relational" },
+            { text: "Maybe — depends on how things evolve.", trait: "open-ended" },
+            { text: "Not really — I prefer to move on.", trait: "self-containment" }
         ]
     }
 ];
-
 
 import styles from '../../../styles';
 
@@ -260,7 +259,7 @@ const OnboardingInsightsScreen = () => {
                         style={{ marginVertical: 6 }}
                         onPress={() => handleOptionSelect(answerIndex)}
                         appearance={stepAnswersIndexes[stepIndex] === answerIndex ? 'filled' : 'outline'}
-                        disabled={isFeedbackAnimating} 
+                        disabled={isFeedbackAnimating}
                     >
                         {option.text}
                     </Button>
@@ -270,7 +269,7 @@ const OnboardingInsightsScreen = () => {
                     onPress={handleSkip}
                     appearance='ghost'
                     style={{ marginTop: 10 }}
-                    disabled={isFeedbackAnimating} 
+                    disabled={isFeedbackAnimating}
                 >
                     Skip
                 </Button>
@@ -278,7 +277,7 @@ const OnboardingInsightsScreen = () => {
                 <Button
                     onPress={handleNext}
                     style={{ marginTop: 20 }}
-                    disabled={isFeedbackAnimating} 
+                    disabled={isFeedbackAnimating}
                 >
                     {stepIndex === stepsData.length - 1 ? 'Done' : 'Next'}
                 </Button>

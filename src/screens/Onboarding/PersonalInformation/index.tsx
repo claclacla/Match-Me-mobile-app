@@ -15,7 +15,7 @@ const OnboardingPersonalInformationScreen = () => {
     const navigation = useNavigation<ApplicationNavigationProp>();
 
     const [name, setName] = useState<string | undefined>(undefined);
-    const [age, setAge] = useState<number | undefined>(undefined);
+    const [yearOfBirth, setYearOfBirth] = useState<number | undefined>(undefined);
 
     const [selectedGenderIndex, setSelectedGenderIndex] = useState<IndexPath | undefined>(undefined);
     const [selectedGenderValue, setSelectedGenderValue] = useState<UserGender | undefined>(undefined);
@@ -24,10 +24,10 @@ const OnboardingPersonalInformationScreen = () => {
 
     const setUser = useUserStore((state: any) => state.setUser);
 
-    const handleAgeChange = (text: string) => {
+    const handleYearOfBirthChange = (text: string) => {
         const filteredText = text.replace(/[^0-9]/g, '');
         const parsedAge = parseInt(filteredText, 10);
-        setAge(isNaN(parsedAge) ? undefined : parsedAge);
+        setYearOfBirth(isNaN(parsedAge) ? undefined : parsedAge);
     };
 
     const handleSelectGender = (index: IndexPath | IndexPath[]) => {
@@ -39,7 +39,7 @@ const OnboardingPersonalInformationScreen = () => {
     };
 
     const handleSetUser = async () => {
-        if (name === undefined || age === undefined ||
+        if (name === undefined || yearOfBirth === undefined ||
             selectedGenderValue === undefined || location === undefined) {
             return;
         }
@@ -47,11 +47,11 @@ const OnboardingPersonalInformationScreen = () => {
         const user: User = {
             id: "",
             name,
-            age,
+            yearOfBirth,
             gender: selectedGenderValue,
             location,
             insights: [""],
-            narrative: ""
+            groupBehavior: ""
         };
 
         console.log(user);
@@ -98,12 +98,12 @@ const OnboardingPersonalInformationScreen = () => {
             />
             <Input
                 style={styles.input}
-                placeholder='Age'
-                value={age === undefined ? '' : age.toString()}
-                onChangeText={handleAgeChange}
+                placeholder='Year of birth'
+                value={yearOfBirth === undefined ? '' : yearOfBirth.toString()}
+                onChangeText={handleYearOfBirthChange}
                 keyboardType='numeric'
                 // keyboardType='number-pad' 
-                maxLength={3}
+                maxLength={4}
             />
             <Select
                 style={styles.select}
