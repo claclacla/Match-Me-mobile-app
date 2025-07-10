@@ -5,8 +5,9 @@ import { useNavigation } from '@react-navigation/native';
 
 import { ApplicationNavigationProp } from '../../../stackNavigationProps/ApplicationNavigationProp';
 
-import { GENDER_OPTIONS, User, UserGender } from '../../../repositories/globalEntities/User';
+import LanguageSelector from './components/LanguageSelector';
 
+import { GENDER_OPTIONS, User, UserGender } from '../../../repositories/globalEntities/User';
 import useUserStore from '../../../repositories/localStorage/useUserStore';
 
 import styles from '../../../styles';
@@ -21,6 +22,8 @@ const OnboardingPersonalInformationScreen = () => {
     const [selectedGenderValue, setSelectedGenderValue] = useState<UserGender | undefined>(undefined);
 
     const [location, setLocation] = useState<string | undefined>(undefined);
+
+    const [languages, setLanguages] = useState<string[]>([]);
 
     const setUser = useUserStore((state: any) => state.setUser);
 
@@ -40,7 +43,7 @@ const OnboardingPersonalInformationScreen = () => {
 
     const handleSetUser = async () => {
         if (name === undefined || yearOfBirth === undefined ||
-            selectedGenderValue === undefined || location === undefined) {
+            selectedGenderValue === undefined || location === undefined || languages.length === 0) {
             return;
         }
 
@@ -50,6 +53,7 @@ const OnboardingPersonalInformationScreen = () => {
             yearOfBirth,
             gender: selectedGenderValue,
             location,
+            languages,
             insights: [""],
             groupBehavior: ""
         };
@@ -59,29 +63,6 @@ const OnboardingPersonalInformationScreen = () => {
 
         navigation.replace('OnboardingNavigator', { screen: "OnboardingInsightsCover" });
     };
-
-    /*
-    - findSimilarUsersByIdWithKey IMPLEMENTATION
-
-    useEffect(() => {
-        if(key === undefined) {
-            return;
-        }
-
-        console.log(key);
-
-        const findSimilarUsersByIdWithKey = async () => {
-            const response: string = await findSimilarUsersById({ key });
-            console.log(response);
-        };
-
-        findSimilarUsersByIdWithKey();
-    }, [key]);
-    */
-
-    //const goBack = () => {
-    //    navigation.goBack();
-    //};
 
     const selectedGenderLabel = selectedGenderIndex ? GENDER_OPTIONS[selectedGenderIndex.row].label : undefined;
 
@@ -121,6 +102,11 @@ const OnboardingPersonalInformationScreen = () => {
                 placeholder='Location'
                 value={location}
                 onChangeText={setLocation}
+            />
+
+            <LanguageSelector
+                selectedLanguages={languages}
+                setSelectedLanguages={setLanguages}
             />
 
             <Button

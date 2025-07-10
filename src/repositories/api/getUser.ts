@@ -28,6 +28,7 @@ export async function getUser({ key }: { key: string }): Promise<undefined | Use
         name: jsonResponse.user.name,
         gender: jsonResponse.user.gender,
         location: jsonResponse.user.location,
+        languages: jsonResponse.user.languages,
         yearOfBirth: jsonResponse.user.yearOfBirth,
         insights: jsonResponse.user.insights,
         groupBehavior: jsonResponse.user.groupBehavior

@@ -6,31 +6,50 @@ import { ApplicationNavigationProp } from '../../../stackNavigationProps/Applica
 import styles from '../../../styles';
 
 const personalitySummaries = [
-    {
-        id: 'the_connector',
-        name: 'The Connector',
-        traits: ['sociability', 'collaboration', 'community'],
-        summary: "You thrive on connection and shared experiences. Whether it's a plaza full of people or a cozy group chat, you're at home when others are near.",
-    },
-    {
-        id: 'the_wanderer',
-        name: 'The Wanderer',
-        traits: ['curiosity', 'openness', 'exploration'],
-        summary: "You’re driven by curiosity. You follow the music, ask questions, and love discovering what others might overlook.",
-    },
-    {
-        id: 'the_anchor',
-        name: 'The Anchor',
-        traits: ['stability', 'self-awareness', 'caution'],
-        summary: "You move at your own rhythm. Calm, grounded, and intentional, you create space for clarity and comfort.",
-    },
-    {
-        id: 'the_maker',
-        name: 'The Maker',
-        traits: ['creativity', 'depth', 'authenticity'],
-        summary: "You're someone who expresses themselves in thoughtful, original ways. Whether sketching an idea or sharing a quote, your perspective leaves a mark.",
-    },
+  {
+    id: 'the_syncer',
+    name: 'The Syncer',
+    traits: ['coordination', 'structure', 'inclusion'],
+    summary: "You bring clarity to group chaos. Whether it’s syncing people up or organizing ideas, you make collaboration smoother. You’re often the reason things feel aligned.",
+  },
+  {
+    id: 'the_tuner',
+    name: 'The Tuner',
+    traits: ['emotional-intelligence', 'allyship', 'emotional-leadership'],
+    summary: "You’re deeply attuned to group dynamics. You sense what others need — even if unspoken — and act to restore balance or bring warmth where it’s needed most.",
+  },
+  {
+    id: 'the_wave',
+    name: 'The Wave',
+    traits: ['flexibility', 'flow', 'open-ended'],
+    summary: "You move with the moment. Light on your feet, open to change, and okay with ambiguity — you go where the energy goes, trusting that things will unfold naturally.",
+  },
+  {
+    id: 'the_edgewalker',
+    name: 'The Edgewalker',
+    traits: ['independent-thinking', 'self-containment', 'reflection'],
+    summary: "You value your perspective, even when it diverges. Quiet, perceptive, and selective in your engagement — you bring insight without needing to take center stage.",
+  },
+  {
+    id: 'the_igniter',
+    name: 'The Igniter',
+    traits: ['conviction', 'problem-solving', 'assertiveness'],
+    summary: "You step in and spark movement. When a group stalls, you energize it. You’re not afraid to take sides, name tension, or act when something needs to shift.",
+  },
+  {
+    id: 'the_bridgebuilder',
+    name: 'The Bridgebuilder',
+    traits: ['mediator', 'pragmatism', 'appreciation'],
+    summary: "You help groups find middle ground. Listening before acting, you balance differing voices and help people feel acknowledged, even when they disagree.",
+  },
+  {
+    id: 'the_mirror',
+    name: 'The Mirror',
+    traits: ['realism', 'respect', 'strategic-patience'],
+    summary: "You reflect what others miss. You accept group imperfections without judgment and let dynamics reveal themselves. Your strength is in seeing things clearly.",
+  },
 ];
+
 
 function getBestMatchSummary(traitPoints: { [trait: string]: number }) {
     const topTraits = Object.entries(traitPoints)

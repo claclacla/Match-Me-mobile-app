@@ -12,14 +12,15 @@ export const GENDER_OPTIONS = [
 export const DEFAULT_GENDER: UserGender = 'prefer_not_to_say';
 
 export interface User {
-    id: string;
-    name: string;
-    gender: UserGender;
-    location: string;
-    yearOfBirth: number;
-    insights: string[];
-    groupBehavior: string;
+    id: string,
+    name: string,
+    gender: UserGender,
+    location: string,
+    yearOfBirth: number,
+    languages: string[],
+    insights: string[],
+    groupBehavior: string,
     match?: {
-        id: string;
+        id: string,
     }
 }
