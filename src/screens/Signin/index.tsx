@@ -7,11 +7,17 @@ import { useHandleSignInUserFlow } from '../../hooks/useHandleSignInUserFlow';
 
 import { ApplicationNavigationProp } from '../../stackNavigationProps/ApplicationNavigationProp';
 
+import { getUser } from "../../repositories/api/getUser";
+import useUserStore from "../../repositories/localStorage/useUserStore";
+import { User } from '../../repositories/globalEntities/User';
+
 import styles from '../../styles';
 
 const SigninScreen = () => {
     const navigation = useNavigation<ApplicationNavigationProp>();
     const { signIn } = useAuthentication();
+
+    const setUser = useUserStore((state: any) => state.setUser);
 
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
@@ -26,7 +32,15 @@ const SigninScreen = () => {
                 return;
             }
 
-            useHandleSignInUserFlow({ navigation, key });
+            // Get user data
+
+            const user: User | undefined = await getUser({ key });
+
+            // Set local storage user
+
+            setUser(user);
+
+            useHandleSignInUserFlow({ navigation, user });
         } catch (error: any) {
             console.error('Error:', error);
         }

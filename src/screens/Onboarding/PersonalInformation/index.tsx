@@ -7,8 +7,10 @@ import { ApplicationNavigationProp } from '../../../stackNavigationProps/Applica
 
 import LanguageSelector from './components/LanguageSelector';
 
-import { GENDER_OPTIONS, User, UserGender } from '../../../repositories/globalEntities/User';
+import { GENDER_OPTIONS, initUser, User, UserGender } from '../../../repositories/globalEntities/User';
+import { insertUser } from "../../../repositories/api/insertUser";
 import useUserStore from '../../../repositories/localStorage/useUserStore';
+import useAuthenticationStore from "../../../repositories/localStorage/useAuthenticationStore";
 
 import styles from '../../../styles';
 
@@ -25,6 +27,7 @@ const OnboardingPersonalInformationScreen = () => {
 
     const [languages, setLanguages] = useState<string[]>([]);
 
+    const key: string = useAuthenticationStore((state: any) => state.key);
     const setUser = useUserStore((state: any) => state.setUser);
 
     const handleYearOfBirthChange = (text: string) => {
@@ -47,18 +50,14 @@ const OnboardingPersonalInformationScreen = () => {
             return;
         }
 
-        const user: User = {
-            id: "",
-            name,
-            yearOfBirth,
-            gender: selectedGenderValue,
-            location,
-            languages,
-            insights: [""],
-            groupBehavior: ""
-        };
+        let user: User = initUser({
+            name, gender: selectedGenderValue, location, yearOfBirth, languages
+        });
 
         console.log(user);
+
+        user = await insertUser({ key, user });
+        
         setUser(user);
 
         navigation.replace('OnboardingNavigator', { screen: "OnboardingInsightsCover" });

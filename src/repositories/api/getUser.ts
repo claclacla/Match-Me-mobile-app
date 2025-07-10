@@ -23,6 +23,8 @@ export async function getUser({ key }: { key: string }): Promise<undefined | Use
 
     const jsonResponse = await response.json();
 
+    console.log("Get user response: ", jsonResponse);
+
     const user: User = {
         id: jsonResponse.user.id,
         name: jsonResponse.user.name,

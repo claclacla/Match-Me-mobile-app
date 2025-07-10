@@ -1,15 +1,19 @@
 import { ApplicationNavigationProp } from "../stackNavigationProps/ApplicationNavigationProp";
 
 import { User } from "../repositories/globalEntities/User";
-import { getUser } from "../repositories/api/getUser";
 
-export async function useHandleSignInUserFlow({ navigation, key }: { navigation: ApplicationNavigationProp, key: string }) {
-    console.log("Handling sign in user flow...");
-    
-    const user: User | undefined = await getUser({ key });
+export async function useHandleSignInUserFlow({ navigation, user }: { navigation: ApplicationNavigationProp, user: User | undefined }) {
+
+    // First onboarding step: Personal information
 
     if (user === undefined) {
         navigation.replace('OnboardingNavigator', { screen: "OnboardingPersonalInformation" });
+    }
+
+    // Second onboarding step: Insights -> groupBehavior
+
+    else if (user.groupBehavior === "") {
+        navigation.replace('OnboardingNavigator', { screen: "OnboardingInsightsCover" });
     }
     else {
         navigation.replace("MainNavigator", { screen: "MainProfile" });

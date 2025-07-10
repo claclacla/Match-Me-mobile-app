@@ -3,7 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 
 import { ApplicationNavigationProp } from "../../../stackNavigationProps/ApplicationNavigationProp";
 
-import { insertUser } from "../../../repositories/api/insertUser";
+import { setUserGroupBehavior } from "../../../repositories/api/setUserGroupBehavior";
 
 import { User } from "../../../repositories/globalEntities/User";
 
@@ -17,10 +17,13 @@ const OnboardingSendScreen = () => {
 
     const key: string = useAuthenticationStore((state: any) => state.key);
     const user: User = useUserStore((state: any) => state.user);
+    const setUser = useUserStore((state: any) => state.setUser);
 
     const handleInsertUser = async () => {
         console.log(user);
-        await insertUser({ key, user });
+        user.groupBehavior = await setUserGroupBehavior({ key, userId: user.id, insights: user.insights });
+
+        setUser(user);
 
         navigation.replace('MainNavigator', { screen: "MainProfile" });
     };

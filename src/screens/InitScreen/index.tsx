@@ -7,8 +7,14 @@ import { ApplicationNavigationProp } from '../../stackNavigationProps/Applicatio
 import { useAuthentication } from '../../hooks/useAuthentication';
 import { useHandleSignInUserFlow } from '../../hooks/useHandleSignInUserFlow';
 
+import { User } from '../../repositories/globalEntities/User';
+import { getUser } from '../../repositories/api/getUser';
+import useUserStore from "../../repositories/localStorage/useUserStore";
+
 export default function InitScreen() {
     const navigation = useNavigation<ApplicationNavigationProp>();
+
+    const setUser = useUserStore((state: any) => state.setUser);
 
     const { getIdTokenIfSignedIn } = useAuthentication();
 
@@ -20,11 +26,18 @@ export default function InitScreen() {
 
                 if (key === undefined) {
                     navigation.replace("Signin");
-
                     return;
                 }
 
-                useHandleSignInUserFlow({ navigation, key });
+                // Get user data
+
+                const user: User | undefined = await getUser({ key });
+
+                // Set local storage user
+
+                setUser(user);
+
+                useHandleSignInUserFlow({ navigation, user });
             };
 
             checkLogin();

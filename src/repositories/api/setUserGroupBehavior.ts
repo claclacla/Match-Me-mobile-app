@@ -4,27 +4,25 @@ import { User } from "../globalEntities/User";
 
 // TO DO: Add the API input and output parameters
 
-export async function insertUser({ key, user }: { key: string, user: User }) {
-    console.log("Insert user:", key, user);
+export async function setUserGroupBehavior({ key, userId, insights }: { key: string, userId: string, insights: string[] }) {
+    console.log("Set user group behavior:", key, userId, insights);
 
     const response = await fetch(
-        API.ADDRESS + '/user',
+        API.ADDRESS + `/user/${userId}/groupBehavior`,
         {
             method: 'POST',
             headers: {
                 Authorization: `Bearer ${key}`,
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(user)
+            body: JSON.stringify({ insights })
         }
     );
 
     const jsonResponse = await response.json();
+    console.log(jsonResponse);
 
-    console.log("Insert user response: ", jsonResponse);
-    console.log("User id: ", jsonResponse.user.id);
+    const userGroupBehavior: string = jsonResponse.groupBehavior;
 
-    user.id = jsonResponse.user.id;
-
-    return user;
+    return userGroupBehavior;
 }

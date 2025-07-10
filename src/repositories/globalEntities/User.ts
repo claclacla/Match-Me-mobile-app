@@ -24,3 +24,20 @@ export interface User {
         id: string,
     }
 }
+
+export function initUser({ name, gender, location, yearOfBirth, languages }: {
+    name: string, gender: UserGender, location: string, yearOfBirth: number, languages: string[]
+}) {
+    const user: User = {
+        id: "",
+        name,
+        gender,
+        location,
+        yearOfBirth,
+        languages,
+        insights: [],
+        groupBehavior: ""
+    }
+
+    return user;
+}
