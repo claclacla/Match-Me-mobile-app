@@ -33,7 +33,8 @@ export async function getUser({ key }: { key: string }): Promise<undefined | Use
         languages: jsonResponse.user.languages,
         yearOfBirth: jsonResponse.user.yearOfBirth,
         insights: jsonResponse.user.insights,
-        groupBehavior: jsonResponse.user.groupBehavior
+        groupBehavior: jsonResponse.user.groupBehavior,
+        profileSectionsStatus: jsonResponse.user.profileSectionsStatus
     }
 
     return user;

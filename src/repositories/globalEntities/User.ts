@@ -2,6 +2,14 @@
 
 export type UserGender = 'male' | 'female' | 'not_binary' | 'prefer_not_to_say';
 
+export const PROFILE_SECTION_STATUS = {
+    PENDING: "pending",
+    COMPLETED: "completed",
+    SKIPPED: "skipped"
+} as const;
+
+export type ProfileSectionStatus = typeof PROFILE_SECTION_STATUS[keyof typeof PROFILE_SECTION_STATUS];
+
 export const GENDER_OPTIONS = [
     { label: 'Uomo', value: 'male' as UserGender },
     { label: 'Donna', value: 'female' as UserGender },
@@ -12,7 +20,7 @@ export const GENDER_OPTIONS = [
 export const DEFAULT_GENDER: UserGender = 'prefer_not_to_say';
 
 export interface User {
-    id: string,
+    id: string,                 // The Cognito user's id
     name: string,
     gender: UserGender,
     location: string,
@@ -22,6 +30,12 @@ export interface User {
     groupBehavior: string,
     match?: {
         id: string,
+    },
+    profileSectionsStatus: {
+        personalInformation: ProfileSectionStatus,
+        avatar: ProfileSectionStatus,
+        groupBehavior: ProfileSectionStatus,
+        voiceprint: ProfileSectionStatus
     }
 }
 
@@ -36,7 +50,13 @@ export function initUser({ name, gender, location, yearOfBirth, languages }: {
         yearOfBirth,
         languages,
         insights: [],
-        groupBehavior: ""
+        groupBehavior: "",
+        profileSectionsStatus: {
+            personalInformation: "pending",
+            avatar: "pending",
+            groupBehavior: "pending",
+            voiceprint: "pending"
+        }
     }
 
     return user;
