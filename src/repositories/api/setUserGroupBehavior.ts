@@ -10,7 +10,7 @@ export async function setUserGroupBehavior({ key, userId, insights }: { key: str
     const response = await fetch(
         API.ADDRESS + `/user/${userId}/groupBehavior`,
         {
-            method: 'POST',
+            method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${key}`,
                 'Content-Type': 'application/json',
