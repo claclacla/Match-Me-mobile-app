@@ -28,7 +28,9 @@ export async function getUser({ key }: { key: string }): Promise<undefined | Use
     const user: User = {
         id: jsonResponse.user.id,
         name: jsonResponse.user.name,
+        surname: jsonResponse.user.surname,
         gender: jsonResponse.user.gender,
+        country: jsonResponse.user.country,
         location: jsonResponse.user.location,
         languages: jsonResponse.user.languages,
         yearOfBirth: jsonResponse.user.yearOfBirth,

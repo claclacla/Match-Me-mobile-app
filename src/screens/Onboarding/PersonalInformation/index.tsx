@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Layout, Text, Button, Input, Select, SelectItem, IndexPath } from '@ui-kitten/components';
 
 import { useNavigation } from '@react-navigation/native';
+
+import countries from 'i18n-iso-countries';
+import en from 'i18n-iso-countries/langs/en.json';
+countries.registerLocale(en);
 
 import { ApplicationNavigationProp } from '../../../stackNavigationProps/ApplicationNavigationProp';
 
@@ -18,10 +22,15 @@ const OnboardingPersonalInformationScreen = () => {
     const navigation = useNavigation<ApplicationNavigationProp>();
 
     const [name, setName] = useState<string | undefined>(undefined);
+    const [surname, setSurname] = useState<string | undefined>(undefined);
     const [yearOfBirth, setYearOfBirth] = useState<number | undefined>(undefined);
 
     const [selectedGenderIndex, setSelectedGenderIndex] = useState<IndexPath | undefined>(undefined);
     const [selectedGenderValue, setSelectedGenderValue] = useState<UserGender | undefined>(undefined);
+
+    const [countryList, setCountryList] = useState<string[]>([]);
+    const [countryIndex, setCountryIndex] = useState<IndexPath | undefined>(undefined);
+    const [country, setCountry] = useState<string | undefined>(undefined);
 
     const [location, setLocation] = useState<string | undefined>(undefined);
 
@@ -44,26 +53,39 @@ const OnboardingPersonalInformationScreen = () => {
         setSelectedGenderValue(selectedOption.value);
     };
 
+    const handleSelectCountry = (index: IndexPath | IndexPath[]) => {
+        const selectedIndex = Array.isArray(index) ? index[0] : index;
+        setCountryIndex(selectedIndex);
+        setCountry(countryList[selectedIndex.row]);
+    };
+
     const handleSetUser = async () => {
-        if (name === undefined || yearOfBirth === undefined ||
-            selectedGenderValue === undefined || location === undefined || languages.length === 0) {
+        if (name === undefined || surname === undefined || yearOfBirth === undefined ||
+            selectedGenderValue === undefined || country === undefined || location === undefined || languages.length === 0) {
             return;
         }
 
         let user: User = initUser({
-            name, gender: selectedGenderValue, location, yearOfBirth, languages
+            name, surname, gender: selectedGenderValue, country, location, yearOfBirth, languages
         });
 
         console.log(user);
 
         user = await insertUser({ key, user });
-        
+
         setUser(user);
 
         navigation.replace('OnboardingNavigator', { screen: "OnboardingInsightsCover" });
     };
 
     const selectedGenderLabel = selectedGenderIndex ? GENDER_OPTIONS[selectedGenderIndex.row].label : undefined;
+    const selectedCountryLabel = countryIndex ? countryList[countryIndex.row] : undefined;
+
+    useEffect(() => {
+        const names = countries.getNames('en', { select: 'official' });
+        const sorted = Object.values(names).sort((a, b) => a.localeCompare(b));
+        setCountryList(sorted);
+    }, []);
 
     return (
         <Layout style={styles.container}>
@@ -74,6 +96,13 @@ const OnboardingPersonalInformationScreen = () => {
                 placeholder='Name'
                 value={name}
                 onChangeText={setName}
+                autoCapitalize='none'
+            />
+            <Input
+                style={styles.input}
+                placeholder='Surname'
+                value={surname}
+                onChangeText={setSurname}
                 autoCapitalize='none'
             />
             <Input
@@ -94,6 +123,17 @@ const OnboardingPersonalInformationScreen = () => {
             >
                 {GENDER_OPTIONS.map((option) => (
                     <SelectItem key={option.value} title={option.label} />
+                ))}
+            </Select>
+            <Select
+                style={styles.select}
+                placeholder='Country'
+                value={selectedCountryLabel}
+                selectedIndex={countryIndex}
+                onSelect={handleSelectCountry}
+            >
+                {countryList.map((countryName, index) => (
+                    <SelectItem key={index} title={countryName} />
                 ))}
             </Select>
             <Input

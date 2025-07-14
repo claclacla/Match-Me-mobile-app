@@ -22,7 +22,9 @@ export const DEFAULT_GENDER: UserGender = 'prefer_not_to_say';
 export interface User {
     id: string,                 // The Cognito user's id
     name: string,
+    surname: string,
     gender: UserGender,
+    country: string,
     location: string,
     yearOfBirth: number,
     languages: string[],
@@ -41,13 +43,15 @@ export interface User {
     }
 }
 
-export function initUser({ name, gender, location, yearOfBirth, languages }: {
-    name: string, gender: UserGender, location: string, yearOfBirth: number, languages: string[]
+export function initUser({ name, surname, gender, country, location, yearOfBirth, languages }: {
+    name: string, surname: string, gender: UserGender, country: string, location: string, yearOfBirth: number, languages: string[]
 }) {
     const user: User = {
         id: "",
         name,
+        surname,
         gender,
+        country,
         location,
         yearOfBirth,
         languages,
