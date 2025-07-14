@@ -26,8 +26,10 @@ export interface User {
     location: string,
     yearOfBirth: number,
     languages: string[],
-    insights: string[],
-    groupBehavior: string,
+    groupProfile: {
+        insights: string[],
+        behavior: string
+    },
     match?: {
         id: string,
     },
@@ -49,8 +51,10 @@ export function initUser({ name, gender, location, yearOfBirth, languages }: {
         location,
         yearOfBirth,
         languages,
-        insights: [],
-        groupBehavior: "",
+        groupProfile: {
+            insights: [],
+            behavior: ""
+        },
         profileSectionsStatus: {
             personalInformation: "pending",
             avatar: "pending",
