@@ -24,7 +24,7 @@ export interface User {
     name: string,
     surname: string,
     gender: UserGender,
-    country: string,
+    country?: string,
     location: string,
     yearOfBirth: number,
     languages: string[],
@@ -44,14 +44,13 @@ export interface User {
 }
 
 export function initUser({ name, surname, gender, country, location, yearOfBirth, languages }: {
-    name: string, surname: string, gender: UserGender, country: string, location: string, yearOfBirth: number, languages: string[]
+    name: string, surname: string, gender: UserGender, country?: string, location: string, yearOfBirth: number, languages: string[]
 }) {
     const user: User = {
         id: "",
         name,
         surname,
         gender,
-        country,
         location,
         yearOfBirth,
         languages,
@@ -65,6 +64,10 @@ export function initUser({ name, surname, gender, country, location, yearOfBirth
             groupBehavior: "pending",
             voiceprint: "pending"
         }
+    }
+
+    if(country !== undefined) {
+        user.country = country;
     }
 
     return user;

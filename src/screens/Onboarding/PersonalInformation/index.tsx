@@ -61,7 +61,7 @@ const OnboardingPersonalInformationScreen = () => {
 
     const handleSetUser = async () => {
         if (name === undefined || surname === undefined || yearOfBirth === undefined ||
-            selectedGenderValue === undefined || country === undefined || location === undefined || languages.length === 0) {
+            selectedGenderValue === undefined || location === undefined || languages.length === 0) {
             return;
         }
 

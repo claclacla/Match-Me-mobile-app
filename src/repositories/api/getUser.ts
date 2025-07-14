@@ -30,12 +30,19 @@ export async function getUser({ key }: { key: string }): Promise<undefined | Use
         name: jsonResponse.user.name,
         surname: jsonResponse.user.surname,
         gender: jsonResponse.user.gender,
-        country: jsonResponse.user.country,
         location: jsonResponse.user.location,
         languages: jsonResponse.user.languages,
         yearOfBirth: jsonResponse.user.yearOfBirth,
         groupProfile: jsonResponse.user.groupProfile,
         profileSectionsStatus: jsonResponse.user.profileSectionsStatus
+    }
+
+    if(jsonResponse.user.country) {
+        user.country = jsonResponse.user.country;
+    }
+
+    if(jsonResponse.user.match) {
+        user.match = jsonResponse.user.match;
     }
 
     return user;
