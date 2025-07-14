@@ -12,7 +12,10 @@ export async function useHandleSignInUserFlow({ navigation, user }: { navigation
     else {
         console.log("useHandleSignInUserFlow: User profile sections status: ", user.profileSectionsStatus);
 
-        if (user.profileSectionsStatus.groupBehavior === PROFILE_SECTION_STATUS.PENDING) {
+        if (user.profileSectionsStatus.avatar === PROFILE_SECTION_STATUS.PENDING) {
+            navigation.replace('OnboardingNavigator', { screen: "OnboardingUploadAvatar" });
+        }
+        else if (user.profileSectionsStatus.groupBehavior === PROFILE_SECTION_STATUS.PENDING) {
             navigation.replace('OnboardingNavigator', { screen: "OnboardingInsightsCover" });
         }
 

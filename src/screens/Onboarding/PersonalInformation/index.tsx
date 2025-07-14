@@ -75,7 +75,7 @@ const OnboardingPersonalInformationScreen = () => {
 
         setUser(user);
 
-        navigation.replace('OnboardingNavigator', { screen: "OnboardingInsightsCover" });
+        navigation.replace('OnboardingNavigator', { screen: "OnboardingUploadAvatar" });
     };
 
     const selectedGenderLabel = selectedGenderIndex ? GENDER_OPTIONS[selectedGenderIndex.row].label : undefined;

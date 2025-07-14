@@ -1,7 +1,5 @@
 import { API } from "../../config/config.json";
 
-import { User } from "../globalEntities/User";
-
 // TO DO: Add the API input and output parameters
 
 export async function setUserGroupBehavior({ key, userId, insights }: { key: string, userId: string, insights: string[] }) {
