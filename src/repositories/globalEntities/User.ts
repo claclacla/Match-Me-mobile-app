@@ -37,6 +37,7 @@ export interface User {
     location: string,
     yearOfBirth: number,
     languages: string[],
+    avatar?: string,
     groupProfile: {
         insights: string[],
         behavior: string

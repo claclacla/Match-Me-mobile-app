@@ -37,6 +37,10 @@ export async function getUser({ key }: { key: string }): Promise<undefined | Use
         profileSectionsStatus: jsonResponse.user.profileSectionsStatus
     }
 
+    if(jsonResponse.user.avatar) {
+        user.avatar = jsonResponse.user.avatar;
+    }
+
     if(jsonResponse.user.country) {
         user.country = jsonResponse.user.country;
     }

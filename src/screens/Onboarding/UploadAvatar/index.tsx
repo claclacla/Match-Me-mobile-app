@@ -7,6 +7,7 @@ import { useNavigation } from "@react-navigation/native";
 import { ApplicationNavigationProp } from "../../../stackNavigationProps/ApplicationNavigationProp";
 
 import { setUserProfileSectionStatus } from "../../../repositories/api/setUserProfileSectionStatus";
+import { uploadUserAvatar } from "../../../repositories/api/uploadUserAvatar";
 import useAuthenticationStore from "../../../repositories/localStorage/useAuthenticationStore";
 import useUserStore from "../../../repositories/localStorage/useUserStore";
 import { PROFILE_SECTION_KEYS, PROFILE_SECTION_STATUS, User } from "../../../repositories/globalEntities/User";
@@ -18,8 +19,8 @@ const OnboardingUploadAvatarScreen = () => {
 
     const key: string = useAuthenticationStore((state: any) => state.key);
     const user: User = useUserStore((state: any) => state.user);
-    
-    const [imageUri, setImageUri] = useState<string | null>(null);
+
+    const [imageUri, setImageUri] = useState<string | undefined>(undefined);
     const [uploading, setUploading] = useState(false);
 
     const pickImage = async () => {
@@ -40,7 +41,21 @@ const OnboardingUploadAvatarScreen = () => {
     };
 
     const uploadImage = async () => {
+        if (imageUri === undefined) {
+            return;
+        }
 
+        setUploading(true);
+
+        const imageUrl = await uploadUserAvatar({ key, userId: user.id, imageUri });
+
+        setUploading(false);
+
+        if (imageUrl !== undefined) {
+            navigation.replace('OnboardingNavigator', { screen: "OnboardingInsightsCover" });
+        } else {
+            Alert.alert("Upload failed", "There was a problem uploading the avatar. Please try again.");
+        }
     }
 
     const skip = async () => {
