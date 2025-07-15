@@ -21,7 +21,7 @@ const OnboardingSendScreen = () => {
 
     const handleInsertUser = async () => {
         console.log(user);
-        user.groupBehavior = await setUserGroupBehavior({ key, userId: user.id, insights: user.insights });
+        user.groupProfile.behavior = await setUserGroupBehavior({ key, userId: user.id, insights: user.groupProfile.insights });
 
         setUser(user);
 

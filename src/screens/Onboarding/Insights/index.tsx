@@ -139,7 +139,7 @@ const OnboardingInsightsScreen = () => {
     const navigation = useNavigation<ApplicationNavigationProp>();
 
     const user = useUserStore((state: any) => state.user);
-    const setUserInsights = useUserStore((state: any) => state.setUserInsights);
+    const setUserGroupInsights = useUserStore((state: any) => state.setUserGroupInsights);
 
     const [stepIndex, setStepIndex] = useState<number>(0);
     const [stepAnswersIndexes, setStepAnswersIndexes] = useState<StepAnswersIndexes>({});
@@ -172,7 +172,7 @@ const OnboardingInsightsScreen = () => {
         }
     };
 
-    const generateInsight = (): string[] => {
+    const generateInsights = (): string[] => {
         console.log("Generate insights...");
         const insights: string[] = Object.entries(stepAnswersIndexes).map(([questionIndex, answerIndex]) => {
             const stepData = stepsData[Number(questionIndex)];
@@ -194,7 +194,7 @@ const OnboardingInsightsScreen = () => {
         if (stepIndex < stepsData.length - 1) {
             setStepIndex(stepIndex + 1);
         } else {
-            setUserInsights(generateInsight());
+            setUserGroupInsights(generateInsights());
             navigation.replace('OnboardingNavigator', { screen: 'OnboardingInsightsSummary', params: { traitPoints } });
         }
     };

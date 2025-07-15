@@ -6,10 +6,18 @@ import { useNavigation } from "@react-navigation/native";
 
 import { ApplicationNavigationProp } from "../../../stackNavigationProps/ApplicationNavigationProp";
 
+import { setUserProfileSectionStatus } from "../../../repositories/api/setUserProfileSectionStatus";
+import useAuthenticationStore from "../../../repositories/localStorage/useAuthenticationStore";
+import useUserStore from "../../../repositories/localStorage/useUserStore";
+import { PROFILE_SECTION_KEYS, PROFILE_SECTION_STATUS, User } from "../../../repositories/globalEntities/User";
+
 import styles from "../../../styles";
 
 const OnboardingUploadAvatarScreen = () => {
     const navigation = useNavigation<ApplicationNavigationProp>();
+
+    const key: string = useAuthenticationStore((state: any) => state.key);
+    const user: User = useUserStore((state: any) => state.user);
     
     const [imageUri, setImageUri] = useState<string | null>(null);
     const [uploading, setUploading] = useState(false);
@@ -35,7 +43,8 @@ const OnboardingUploadAvatarScreen = () => {
 
     }
 
-    const skip = () => {
+    const skip = async () => {
+        await setUserProfileSectionStatus({ key, userId: user.id, section: PROFILE_SECTION_KEYS.AVATAR, value: PROFILE_SECTION_STATUS.SKIPPED });
         navigation.replace('OnboardingNavigator', { screen: "OnboardingInsightsCover" });
     }
 
