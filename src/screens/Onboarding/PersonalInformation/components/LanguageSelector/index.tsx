@@ -1,6 +1,6 @@
 import { Layout, Select, SelectItem, IndexPath } from '@ui-kitten/components';
 
-import styles from '../../../../styles';
+import styles from '../../../../../styles';
 
 interface LanguageSelectorProps {
     selectedLanguages: string[];

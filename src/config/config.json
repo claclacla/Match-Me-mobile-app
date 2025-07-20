@@ -1,5 +1,8 @@
 {
     "API": {
         "ADDRESS": "https://api.breakice.social"
+    },
+    "LOCATION_IQ": {
+        "KEY": "pk.aa7dacf4286da5db8d13dfc7a67e3f87"
     }
 }

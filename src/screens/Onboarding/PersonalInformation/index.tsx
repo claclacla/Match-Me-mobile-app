@@ -10,8 +10,9 @@ countries.registerLocale(en);
 import { ApplicationNavigationProp } from '../../../stackNavigationProps/ApplicationNavigationProp';
 
 import LanguageSelector from './components/LanguageSelector';
+import { LocationAutocompleteInput } from './components/LocationAutocompleteInput';
 
-import { GENDER_OPTIONS, initUser, User, UserGender } from '../../../repositories/globalEntities/User';
+import { GENDER_OPTIONS, initUser, LocationData, User, UserGender } from '../../../repositories/globalEntities/User';
 import { insertUser } from "../../../repositories/api/insertUser";
 import useUserStore from '../../../repositories/localStorage/useUserStore';
 import useAuthenticationStore from "../../../repositories/localStorage/useAuthenticationStore";
@@ -32,7 +33,7 @@ const OnboardingPersonalInformationScreen = () => {
     const [countryIndex, setCountryIndex] = useState<IndexPath | undefined>(undefined);
     const [country, setCountry] = useState<string | undefined>(undefined);
 
-    const [location, setLocation] = useState<string | undefined>(undefined);
+    const [location, setLocation] = useState<LocationData | undefined>(undefined);
 
     const [languages, setLanguages] = useState<string[]>([]);
 
@@ -136,11 +137,9 @@ const OnboardingPersonalInformationScreen = () => {
                     <SelectItem key={index} title={countryName} />
                 ))}
             </Select>
-            <Input
-                style={styles.input}
-                placeholder='Location'
-                value={location}
-                onChangeText={setLocation}
+
+            <LocationAutocompleteInput
+                onSelectLocation={(location: LocationData | undefined) => setLocation(location)}
             />
 
             <LanguageSelector

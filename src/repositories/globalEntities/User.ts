@@ -28,13 +28,19 @@ export const PROFILE_SECTION_STATUS = {
 
 export type ProfileSectionStatus = typeof PROFILE_SECTION_STATUS[keyof typeof PROFILE_SECTION_STATUS];
 
+export interface LocationData {
+    name: string, 
+    lat: number,
+    lng: number
+}
+
 export interface User {
     id: string,                 // The Cognito user's id
     name: string,
     surname: string,
     gender: UserGender,
     country?: string,
-    location: string,
+    location: LocationData,
     yearOfBirth: number,
     languages: string[],
     avatar?: string,
@@ -49,7 +55,7 @@ export interface User {
 }
 
 export function initUser({ name, surname, gender, country, location, yearOfBirth, languages }: {
-    name: string, surname: string, gender: UserGender, country?: string, location: string, yearOfBirth: number, languages: string[]
+    name: string, surname: string, gender: UserGender, country?: string, location: LocationData, yearOfBirth: number, languages: string[]
 }) {
     const user: User = {
         id: "",
