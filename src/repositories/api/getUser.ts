@@ -16,6 +16,8 @@ export async function getUser({ key }: { key: string }): Promise<undefined | Use
         }
     );
 
+    console.log(response);
+
     if (response.status === 404) {
         console.warn("User not found.");
         return undefined;
