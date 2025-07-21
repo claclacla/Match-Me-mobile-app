@@ -1,10 +1,11 @@
-import { OnboardingInsightsSummaryParams } from "../screens/Onboarding/InsightsSummary";
+import { OnboardingGroupBehaviorInsightsSummaryParams } from "../screens/Onboarding/GroupBehaviorInsightsSummary";
 
 export type OnboardingScreensList = {
     OnboardingPersonalInformation: undefined;
     OnboardingUploadAvatar: undefined;
-    OnboardingInsightsCover: undefined;
-    OnboardingInsights: undefined;
-    OnboardingInsightsSummary: OnboardingInsightsSummaryParams;
+    OnboardingGroupBehaviorInsightsCover: undefined;
+    OnboardingGroupBehaviorInsights: undefined;
+    OnboardingGroupBehaviorInsightsSummary: OnboardingGroupBehaviorInsightsSummaryParams;
+    OnboardingRecAboutMe: undefined;
     OnboardingSend: undefined;
 };

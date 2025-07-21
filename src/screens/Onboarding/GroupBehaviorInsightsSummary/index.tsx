@@ -71,14 +71,14 @@ function getBestMatchSummary(traitPoints: { [trait: string]: number }) {
 }
 
 
-export interface OnboardingInsightsSummaryParams {
+export interface OnboardingGroupBehaviorInsightsSummaryParams {
     traitPoints: { [trait: string]: number };
 }
 
-const OnboardingInsightsSummaryScreen = () => {
+const OnboardingGroupBehaviorInsightsSummaryScreen = () => {
     const navigation = useNavigation<ApplicationNavigationProp>();
     const route = useRoute();
-    const { traitPoints } = route.params as OnboardingInsightsSummaryParams;
+    const { traitPoints } = route.params as OnboardingGroupBehaviorInsightsSummaryParams;
 
     const match = getBestMatchSummary(traitPoints);
 
@@ -106,4 +106,4 @@ const OnboardingInsightsSummaryScreen = () => {
     );
 };
 
-export default OnboardingInsightsSummaryScreen;
+export default OnboardingGroupBehaviorInsightsSummaryScreen;

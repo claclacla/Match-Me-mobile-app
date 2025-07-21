@@ -6,11 +6,11 @@ import { ApplicationNavigationProp } from '../../../stackNavigationProps/Applica
 
 import styles from '../../../styles';
 
-const InsightsCoverScreen = () => {
+const OnboardingGroupBehaviorInsightsCoverScreen = () => {
     const navigation = useNavigation<ApplicationNavigationProp>();
 
     const handleStart = () => {
-        navigation.replace('OnboardingNavigator', { screen: 'OnboardingInsights' });
+        navigation.replace('OnboardingNavigator', { screen: 'OnboardingGroupBehaviorInsights' });
     };
 
     return (
@@ -30,4 +30,4 @@ const InsightsCoverScreen = () => {
     );
 };
 
-export default InsightsCoverScreen;
+export default OnboardingGroupBehaviorInsightsCoverScreen;

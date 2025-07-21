@@ -135,7 +135,7 @@ const StepIndicator = ({ total, current }: { total: number, current: number }) =
     </Layout>
 );
 
-const OnboardingInsightsScreen = () => {
+const OnboardingGroupBehaviorInsightsScreen = () => {
     const navigation = useNavigation<ApplicationNavigationProp>();
 
     const user = useUserStore((state: any) => state.user);
@@ -195,7 +195,7 @@ const OnboardingInsightsScreen = () => {
             setStepIndex(stepIndex + 1);
         } else {
             setUserGroupInsights(generateInsights());
-            navigation.replace('OnboardingNavigator', { screen: 'OnboardingInsightsSummary', params: { traitPoints } });
+            navigation.replace('OnboardingNavigator', { screen: 'OnboardingGroupBehaviorInsightsSummary', params: { traitPoints } });
         }
     };
 
@@ -286,4 +286,4 @@ const OnboardingInsightsScreen = () => {
     );
 }
 
-export default OnboardingInsightsScreen;
+export default OnboardingGroupBehaviorInsightsScreen;
