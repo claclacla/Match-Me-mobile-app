@@ -7,7 +7,7 @@ import { useHandleSignInUserFlow } from '../../hooks/useHandleSignInUserFlow';
 
 import { ApplicationNavigationProp } from '../../stackNavigationProps/ApplicationNavigationProp';
 
-import PhoneNumberInput from './components/PhoneNumberInput';
+import UsernameInput from '../../components/UsernameInput';
 
 import { getUser } from "../../repositories/api/getUser";
 import useUserStore from "../../repositories/localStorage/useUserStore";
@@ -24,21 +24,7 @@ const SigninScreen = () => {
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
 
-    const [phoneNumber, setPhoneNumber] = useState('');
-    const [selectedPrefix, setSelectedPrefix] = useState('+39');
-
-    const handleSetPhoneNumber = (value: string) => {
-        setPhoneNumber(value);
-        setUsername(selectedPrefix + value);
-    };
-
-    const handleSetSelectedPrefix = (value: string) => {
-        setSelectedPrefix(value);
-        setUsername(value + phoneNumber);
-    };
-
     const handleSignIn = async () => {
-        console.log("Username: " + username);
         try {
             const key = await signIn({ username, password });
 
@@ -66,12 +52,7 @@ const SigninScreen = () => {
         <Layout style={styles.container}>
             <Text category='h3' style={styles.title}>Access</Text>
 
-            <PhoneNumberInput
-                phoneNumber={phoneNumber}
-                setPhoneNumber={handleSetPhoneNumber}
-                selectedPrefix={selectedPrefix}
-                setSelectedPrefix={handleSetSelectedPrefix}
-            />
+            <UsernameInput setUsername={setUsername} />
 
             <Input
                 style={styles.input}

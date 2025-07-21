@@ -7,7 +7,7 @@ import {
     Input,
     Text,
 } from '@ui-kitten/components';
-import { View, StyleSheet } from 'react-native';
+import { View } from 'react-native';
 import countries from 'world-countries';
 
 function getFlagEmoji(countryCode: string) {
@@ -56,7 +56,13 @@ const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
     const renderOption = (country: Country) => (
         <SelectItem
             key={country.code}
-            title={`${country.flag} ${country.name} (${country.dialCode})`}
+            // Use a function for the title prop to render custom content
+            title={() => (
+                <View>
+                    <Text>{country.flag} ({country.dialCode})</Text>
+                    <Text style={{ flexShrink: 1 }}>{country.name}</Text>
+                </View>
+            )}
         />
     );
 
@@ -72,10 +78,10 @@ const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
     };
 
     return (
-        <Layout style={styles.container} level="1">
-            <View style={styles.row}>
+        <Layout style={{ width: "100%" }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Select
-                    style={styles.prefixSelect}
+                    style={{ flex: 0.7, marginRight: 0 }}
                     selectedIndex={selectedIndex}
                     onSelect={onSelect}
                     value={renderValue()}
@@ -83,7 +89,7 @@ const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
                     {countryList.map(renderOption)}
                 </Select>
                 <Input
-                    style={styles.phoneInput}
+                    style={{ flex: 1 }}
                     placeholder="Phone number"
                     keyboardType="phone-pad"
                     value={phoneNumber}
@@ -93,22 +99,5 @@ const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
         </Layout>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        width: '100%',
-    },
-    row: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    prefixSelect: {
-        flex: 0.8,
-        marginRight: 8,
-    },
-    phoneInput: {
-        flex: 1,
-    },
-});
 
 export default PhoneNumberInput;

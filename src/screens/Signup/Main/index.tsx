@@ -3,6 +3,8 @@ import { Layout, Text, Button, Input } from '@ui-kitten/components';
 import { CompositeNavigationProp, useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 
+import UsernameInput from '../../../components/UsernameInput';
+
 import { ApplicationScreensList } from '../../../screensList/ApplicationScreensList';
 import { SignupScreensList } from '../../../screensList/SignupScreensList';
 
@@ -36,13 +38,8 @@ const SignupMainScreen = () => {
         <Layout style={styles.container}>
             <Text category='h3' style={styles.title}>Sign up</Text>
 
-            <Input
-                style={styles.input}
-                placeholder='Username'
-                value={username}
-                onChangeText={setUsername}
-                autoCapitalize='none'
-            />
+            <UsernameInput setUsername={setUsername} />
+
             <Input
                 style={styles.input}
                 placeholder='Password'
