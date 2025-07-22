@@ -16,7 +16,10 @@ export async function useHandleSignInUserFlow({ navigation, user }: { navigation
             navigation.replace('OnboardingNavigator', { screen: "OnboardingUploadAvatar" });
         }
         else if (user.profileSectionsStatus.groupBehavior === PROFILE_SECTION_STATUS.PENDING) {
-            navigation.replace('OnboardingNavigator', { screen: "OnboardingInsightsCover" });
+            navigation.replace('OnboardingNavigator', { screen: "OnboardingGroupBehaviorInsightsCover" });
+        }
+        else if (user.profileSectionsStatus.groupPersonalExperience === PROFILE_SECTION_STATUS.PENDING) {
+            navigation.replace('OnboardingNavigator', { screen: "OnboardingGroupPersonalExperience" });
         }
 
         // TO DO: Add the other profile sections check here ... ...

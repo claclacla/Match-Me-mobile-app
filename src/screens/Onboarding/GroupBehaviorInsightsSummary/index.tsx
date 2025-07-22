@@ -2,52 +2,59 @@ import React from 'react';
 import { Button, Layout, Text } from '@ui-kitten/components';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
+import { User } from "../../../repositories/globalEntities/User";
+
+import useUserStore from "../../../repositories/localStorage/useUserStore";
+import useAuthenticationStore from "../../../repositories/localStorage/useAuthenticationStore";
+
+import { setUserGroupBehavior } from "../../../repositories/api/setUserGroupBehavior";
+
 import { ApplicationNavigationProp } from '../../../stackNavigationProps/ApplicationNavigationProp';
 import styles from '../../../styles';
 
 const personalitySummaries = [
-  {
-    id: 'the_syncer',
-    name: 'The Syncer',
-    traits: ['coordination', 'structure', 'inclusion'],
-    summary: "You bring clarity to group chaos. Whether it’s syncing people up or organizing ideas, you make collaboration smoother. You’re often the reason things feel aligned.",
-  },
-  {
-    id: 'the_tuner',
-    name: 'The Tuner',
-    traits: ['emotional-intelligence', 'allyship', 'emotional-leadership'],
-    summary: "You’re deeply attuned to group dynamics. You sense what others need — even if unspoken — and act to restore balance or bring warmth where it’s needed most.",
-  },
-  {
-    id: 'the_wave',
-    name: 'The Wave',
-    traits: ['flexibility', 'flow', 'open-ended'],
-    summary: "You move with the moment. Light on your feet, open to change, and okay with ambiguity — you go where the energy goes, trusting that things will unfold naturally.",
-  },
-  {
-    id: 'the_edgewalker',
-    name: 'The Edgewalker',
-    traits: ['independent-thinking', 'self-containment', 'reflection'],
-    summary: "You value your perspective, even when it diverges. Quiet, perceptive, and selective in your engagement — you bring insight without needing to take center stage.",
-  },
-  {
-    id: 'the_igniter',
-    name: 'The Igniter',
-    traits: ['conviction', 'problem-solving', 'assertiveness'],
-    summary: "You step in and spark movement. When a group stalls, you energize it. You’re not afraid to take sides, name tension, or act when something needs to shift.",
-  },
-  {
-    id: 'the_bridgebuilder',
-    name: 'The Bridgebuilder',
-    traits: ['mediator', 'pragmatism', 'appreciation'],
-    summary: "You help groups find middle ground. Listening before acting, you balance differing voices and help people feel acknowledged, even when they disagree.",
-  },
-  {
-    id: 'the_mirror',
-    name: 'The Mirror',
-    traits: ['realism', 'respect', 'strategic-patience'],
-    summary: "You reflect what others miss. You accept group imperfections without judgment and let dynamics reveal themselves. Your strength is in seeing things clearly.",
-  },
+    {
+        id: 'the_syncer',
+        name: 'The Syncer',
+        traits: ['coordination', 'structure', 'inclusion'],
+        summary: "You bring clarity to group chaos. Whether it’s syncing people up or organizing ideas, you make collaboration smoother. You’re often the reason things feel aligned.",
+    },
+    {
+        id: 'the_tuner',
+        name: 'The Tuner',
+        traits: ['emotional-intelligence', 'allyship', 'emotional-leadership'],
+        summary: "You’re deeply attuned to group dynamics. You sense what others need — even if unspoken — and act to restore balance or bring warmth where it’s needed most.",
+    },
+    {
+        id: 'the_wave',
+        name: 'The Wave',
+        traits: ['flexibility', 'flow', 'open-ended'],
+        summary: "You move with the moment. Light on your feet, open to change, and okay with ambiguity — you go where the energy goes, trusting that things will unfold naturally.",
+    },
+    {
+        id: 'the_edgewalker',
+        name: 'The Edgewalker',
+        traits: ['independent-thinking', 'self-containment', 'reflection'],
+        summary: "You value your perspective, even when it diverges. Quiet, perceptive, and selective in your engagement — you bring insight without needing to take center stage.",
+    },
+    {
+        id: 'the_igniter',
+        name: 'The Igniter',
+        traits: ['conviction', 'problem-solving', 'assertiveness'],
+        summary: "You step in and spark movement. When a group stalls, you energize it. You’re not afraid to take sides, name tension, or act when something needs to shift.",
+    },
+    {
+        id: 'the_bridgebuilder',
+        name: 'The Bridgebuilder',
+        traits: ['mediator', 'pragmatism', 'appreciation'],
+        summary: "You help groups find middle ground. Listening before acting, you balance differing voices and help people feel acknowledged, even when they disagree.",
+    },
+    {
+        id: 'the_mirror',
+        name: 'The Mirror',
+        traits: ['realism', 'respect', 'strategic-patience'],
+        summary: "You reflect what others miss. You accept group imperfections without judgment and let dynamics reveal themselves. Your strength is in seeing things clearly.",
+    },
 ];
 
 
@@ -80,9 +87,18 @@ const OnboardingGroupBehaviorInsightsSummaryScreen = () => {
     const route = useRoute();
     const { traitPoints } = route.params as OnboardingGroupBehaviorInsightsSummaryParams;
 
+    const key: string = useAuthenticationStore((state: any) => state.key);
+    const user: User = useUserStore((state: any) => state.user);
+    const setUser = useUserStore((state: any) => state.setUser);
+
     const match = getBestMatchSummary(traitPoints);
 
-    const handleContinue = () => {
+    const handleSend = async () => {
+        console.log(user);
+        user.groupProfile.behavior = await setUserGroupBehavior({ key, userId: user.id, insights: user.groupProfile.insights });
+
+        setUser(user);
+
         navigation.replace('OnboardingNavigator', { screen: 'OnboardingGroupPersonalExperience' });
     };
 
@@ -99,8 +115,8 @@ const OnboardingGroupBehaviorInsightsSummaryScreen = () => {
                 {match?.summary}
             </Text>
 
-            <Button style={{ marginTop: 30 }} onPress={handleContinue}>
-                Continue
+            <Button style={{ marginTop: 30 }} onPress={handleSend}>
+                Send
             </Button>
         </Layout>
     );
