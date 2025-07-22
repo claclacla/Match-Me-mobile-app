@@ -152,25 +152,6 @@ const OnboardingGroupBehaviorInsightsScreen = () => {
 
     const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
 
-    const handleOptionSelect = (optionIndex: number) => {
-        if (isFeedbackAnimating) {
-            return;
-        }
-
-        const selected = stepsData[stepIndex].options[optionIndex];
-
-        setStepAnswersIndexes(prev => ({ ...prev, [stepIndex]: optionIndex }));
-
-        if (selected.trait) {
-            setTraitPoints(prev => ({
-                ...prev,
-                [selected.trait]: (prev[selected.trait] || 0) + 1
-            }));
-
-            setIsFeedbackAnimating(true); // animation begins
-            setFeedback(`+1 ${capitalize(selected.trait)}`);
-        }
-    };
 
     const generateInsights = (): string[] => {
         console.log("Generate insights...");
@@ -199,24 +180,34 @@ const OnboardingGroupBehaviorInsightsScreen = () => {
         }
     };
 
+    const handleOptionSelect = (optionIndex: number) => {
+        if (isFeedbackAnimating) {
+            return;
+        }
+
+        const selected = stepsData[stepIndex].options[optionIndex];
+
+        setStepAnswersIndexes(prev => ({ ...prev, [stepIndex]: optionIndex }));
+
+        if (selected.trait) {
+            setTraitPoints(prev => ({
+                ...prev,
+                [selected.trait]: (prev[selected.trait] || 0) + 1
+            }));
+
+            setIsFeedbackAnimating(true); // animation begins
+            setFeedback(`+1 ${capitalize(selected.trait)}`);
+        }
+
+        goToNextStep();
+    };
+
     const handleSkip = () => {
         if (isFeedbackAnimating) {
             return;
         }
 
         setStepAnswersIndexes(prev => ({ ...prev, [stepIndex]: undefined }));
-        goToNextStep();
-    };
-
-    const handleNext = () => {
-        if (isFeedbackAnimating) {
-            return;
-        }
-
-        if (stepAnswersIndexes[stepIndex] === undefined) {
-            return;
-        }
-
         goToNextStep();
     };
 
@@ -272,14 +263,6 @@ const OnboardingGroupBehaviorInsightsScreen = () => {
                     disabled={isFeedbackAnimating}
                 >
                     Skip
-                </Button>
-
-                <Button
-                    onPress={handleNext}
-                    style={{ marginTop: 20 }}
-                    disabled={isFeedbackAnimating}
-                >
-                    {stepIndex === stepsData.length - 1 ? 'Done' : 'Next'}
                 </Button>
             </Layout>
         </Layout>
