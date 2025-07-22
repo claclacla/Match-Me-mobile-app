@@ -6,6 +6,6 @@ export type OnboardingScreensList = {
     OnboardingGroupBehaviorInsightsCover: undefined;
     OnboardingGroupBehaviorInsights: undefined;
     OnboardingGroupBehaviorInsightsSummary: OnboardingGroupBehaviorInsightsSummaryParams;
-    OnboardingRecAboutMe: undefined;
+    OnboardingGroupPersonalExperience: undefined;
     OnboardingSend: undefined;
 };

@@ -83,7 +83,7 @@ const OnboardingGroupBehaviorInsightsSummaryScreen = () => {
     const match = getBestMatchSummary(traitPoints);
 
     const handleContinue = () => {
-        navigation.replace('OnboardingNavigator', { screen: 'OnboardingSend' });
+        navigation.replace('OnboardingNavigator', { screen: 'OnboardingGroupPersonalExperience' });
     };
 
     return (

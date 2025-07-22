@@ -15,7 +15,7 @@ export const PROFILE_SECTION_KEYS = {
     PERSONAL_INFORMATION: "personalInformation",
     AVATAR: "avatar",
     GROUP_BEHAVIOR: "groupBehavior",
-    VOICEPRINT: "voiceprint"
+    GROUP_PERSONAL_EXPERIENCE: "groupPersonalExperience"
 } as const;
 
 export type ProfileSectionKey = typeof PROFILE_SECTION_KEYS[keyof typeof PROFILE_SECTION_KEYS];
@@ -73,7 +73,7 @@ export function initUser({ name, surname, gender, country, location, yearOfBirth
             [PROFILE_SECTION_KEYS.PERSONAL_INFORMATION]: PROFILE_SECTION_STATUS.PENDING,
             [PROFILE_SECTION_KEYS.AVATAR]: PROFILE_SECTION_STATUS.PENDING,
             [PROFILE_SECTION_KEYS.GROUP_BEHAVIOR]: PROFILE_SECTION_STATUS.PENDING,
-            [PROFILE_SECTION_KEYS.VOICEPRINT]: PROFILE_SECTION_STATUS.PENDING
+            [PROFILE_SECTION_KEYS.GROUP_PERSONAL_EXPERIENCE]: PROFILE_SECTION_STATUS.PENDING
         }
     }
 

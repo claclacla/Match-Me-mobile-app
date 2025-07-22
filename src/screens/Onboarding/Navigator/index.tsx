@@ -8,6 +8,7 @@ import OnboardingUploadAvatarScreen from '../UploadAvatar';
 import OnboardingGroupBehaviorInsightsCoverScreen from '../GroupBehaviorInsightsCover';
 import OnboardingGroupBehaviorInsightsScreen from '../GroupBehaviorInsights';
 import OnboardingGroupBehaviorInsightsSummaryScreen from '../GroupBehaviorInsightsSummary';
+import OnboardingGroupPersonalExperienceScreen from '../GroupPersonalExperience';
 import OnboardingSendScreen from '../Send';
 
 const Stack = createStackNavigator<OnboardingScreensList>();
@@ -20,6 +21,7 @@ function SignupNavigator() {
             <Stack.Screen name="OnboardingGroupBehaviorInsightsCover" component={OnboardingGroupBehaviorInsightsCoverScreen} options={{ headerShown: false }} />
             <Stack.Screen name="OnboardingGroupBehaviorInsights" component={OnboardingGroupBehaviorInsightsScreen} options={{ headerShown: false }} />
             <Stack.Screen name="OnboardingGroupBehaviorInsightsSummary" component={OnboardingGroupBehaviorInsightsSummaryScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="OnboardingGroupPersonalExperience" component={OnboardingGroupPersonalExperienceScreen} options={{ headerShown: false }} />
             <Stack.Screen name="OnboardingSend" component={OnboardingSendScreen} options={{ headerShown: false }} />
         </Stack.Navigator>
     );
