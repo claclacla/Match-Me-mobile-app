@@ -5,11 +5,16 @@ import { OnboardingScreensList } from '../../../screensList/OnboardingScreensLis
 
 import OnboardingPersonalInformationScreen from '../PersonalInformation';
 import OnboardingUploadAvatarScreen from '../UploadAvatar';
+
+import OnboardingGroupPersonalExperienceCoverScreen from '../GroupPersonalExperienceCover';
+import OnboardingGroupPersonalExperienceIntroScreen from '../GroupPersonalExperienceIntro';
+import OnboardingGroupPersonalExperienceRecordingScreen from '../GroupPersonalExperienceRecording';
+import OnboardingGroupPersonalExperienceThankYouScreen from '../GroupPersonalExperienceThankYou';
+
 import OnboardingGroupBehaviorInsightsCoverScreen from '../GroupBehaviorInsightsCover';
-import OnboardingGroupBehaviorInsightsScreen from '../GroupBehaviorInsights';
-import OnboardingGroupBehaviorInsightsSummaryScreen from '../GroupBehaviorInsightsSummary';
-import OnboardingGroupPersonalExperienceScreen from '../GroupPersonalExperience';
-import OnboardingCompleteScreen from '../Complete';
+import OnboardingGroupBehaviorInsightsIntroScreen from '../GroupBehaviorInsightsIntro';
+import OnboardingGroupBehaviorInsightsQuestionsScreen from '../GroupBehaviorInsightsQuestions';
+import OnboardingGroupBehaviorInsightsThankYouScreen from '../GroupBehaviorInsightsThankYou';
 
 const Stack = createStackNavigator<OnboardingScreensList>();
 
@@ -18,11 +23,16 @@ function SignupNavigator() {
         <Stack.Navigator initialRouteName={"OnboardingPersonalInformation"}>
             <Stack.Screen name="OnboardingPersonalInformation" component={OnboardingPersonalInformationScreen} options={{ headerShown: false }} />
             <Stack.Screen name="OnboardingUploadAvatar" component={OnboardingUploadAvatarScreen} options={{ headerShown: false }} />
+
+            <Stack.Screen name="OnboardingGroupPersonalExperienceCover" component={OnboardingGroupPersonalExperienceCoverScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="OnboardingGroupPersonalExperienceIntro" component={OnboardingGroupPersonalExperienceIntroScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="OnboardingGroupPersonalExperienceRecording" component={OnboardingGroupPersonalExperienceRecordingScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="OnboardingGroupPersonalExperienceThankYou" component={OnboardingGroupPersonalExperienceThankYouScreen} options={{ headerShown: false }} />
+
             <Stack.Screen name="OnboardingGroupBehaviorInsightsCover" component={OnboardingGroupBehaviorInsightsCoverScreen} options={{ headerShown: false }} />
-            <Stack.Screen name="OnboardingGroupBehaviorInsights" component={OnboardingGroupBehaviorInsightsScreen} options={{ headerShown: false }} />
-            <Stack.Screen name="OnboardingGroupBehaviorInsightsSummary" component={OnboardingGroupBehaviorInsightsSummaryScreen} options={{ headerShown: false }} />
-            <Stack.Screen name="OnboardingGroupPersonalExperience" component={OnboardingGroupPersonalExperienceScreen} options={{ headerShown: false }} />
-            <Stack.Screen name="OnboardingComplete" component={OnboardingCompleteScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="OnboardingGroupBehaviorInsightsIntro" component={OnboardingGroupBehaviorInsightsIntroScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="OnboardingGroupBehaviorInsightsQuestions" component={OnboardingGroupBehaviorInsightsQuestionsScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="OnboardingGroupBehaviorInsightsThankYou" component={OnboardingGroupBehaviorInsightsThankYouScreen} options={{ headerShown: false }} />
         </Stack.Navigator>
     );
 }

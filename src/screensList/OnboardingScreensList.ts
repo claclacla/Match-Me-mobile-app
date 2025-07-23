@@ -1,11 +1,13 @@
-import { OnboardingGroupBehaviorInsightsSummaryParams } from "../screens/Onboarding/GroupBehaviorInsightsSummary";
-
 export type OnboardingScreensList = {
     OnboardingPersonalInformation: undefined;
     OnboardingUploadAvatar: undefined;
+    OnboardingGroupPersonalExperienceCover: undefined;
+    OnboardingGroupPersonalExperienceIntro: undefined;
+    OnboardingGroupPersonalExperienceRecording: undefined;
+    OnboardingGroupPersonalExperienceThankYou: undefined;
     OnboardingGroupBehaviorInsightsCover: undefined;
-    OnboardingGroupBehaviorInsights: undefined;
-    OnboardingGroupBehaviorInsightsSummary: OnboardingGroupBehaviorInsightsSummaryParams;
-    OnboardingGroupPersonalExperience: undefined;
+    OnboardingGroupBehaviorInsightsIntro: undefined;
+    OnboardingGroupBehaviorInsightsQuestions: undefined;
+    OnboardingGroupBehaviorInsightsThankYou: undefined
     OnboardingComplete: undefined;
 };

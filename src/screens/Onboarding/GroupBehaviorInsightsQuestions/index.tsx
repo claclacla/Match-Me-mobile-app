@@ -4,9 +4,14 @@ import { useNavigation } from '@react-navigation/native';
 
 import { ApplicationNavigationProp } from '../../../stackNavigationProps/ApplicationNavigationProp';
 
+import { User } from '../../../repositories/globalEntities/User';
 import useUserStore from '../../../repositories/localStorage/useUserStore';
+import { setUserGroupBehavior } from '../../../repositories/api/setUserGroupBehavior';
+import useAuthenticationStore from '../../../repositories/localStorage/useAuthenticationStore';
 
 import AnimatedFeedback from './components/AnimatedFeedback';
+
+import styles from '../../../styles';
 
 interface StepOptionData {
     text: string,
@@ -46,9 +51,9 @@ const stepsData = [
         title: "A Deeper Turn",
         question: "Someone shares something vulnerable. The group gets quieter, more real. All eyes shift toward you. What do you bring in this moment?",
         options: [
-            { text: "A calm presence — I listen with care.", trait: "attunement" },
-            { text: "Something true from me — I like to meet openness with openness.", trait: "emotional-honesty" },
-            { text: "A shift in energy — I lighten the mood when things get heavy.", trait: "lightness" }
+            { text: "A calm presence. I listen with care.", trait: "attunement" },
+            { text: "Something true from me. I like to meet openness with openness.", trait: "emotional-honesty" },
+            { text: "A shift in energy. I lighten the mood when things get heavy.", trait: "lightness" }
         ]
     },
     {
@@ -64,15 +69,12 @@ const stepsData = [
         title: "At the End",
         question: "The group is wrapping up. Someone asks, 'What was this like for you?' What comes to mind?",
         options: [
-            { text: "It felt meaningful — I felt seen.", trait: "connection-seeking" },
-            { text: "It was energizing — I like creating with others.", trait: "collaborative-drive" },
-            { text: "It was gentle — I liked just being together without pressure.", trait: "quiet-companionship" }
+            { text: "It felt meaningful. I felt seen.", trait: "connection-seeking" },
+            { text: "It was energizing. I like creating with others.", trait: "collaborative-drive" },
+            { text: "It was gentle. I liked just being together without pressure.", trait: "quiet-companionship" }
         ]
     }
 ];
-
-
-import styles from '../../../styles';
 
 const StepIndicator = ({ total, current }: { total: number, current: number }) => (
     <Layout style={{ flexDirection: 'row', justifyContent: 'center', marginBottom: 10 }}>
@@ -91,10 +93,13 @@ const StepIndicator = ({ total, current }: { total: number, current: number }) =
     </Layout>
 );
 
-const OnboardingGroupBehaviorInsightsScreen = () => {
+const OnboardingGroupBehaviorInsightsQuestionsScreen = () => {
     const navigation = useNavigation<ApplicationNavigationProp>();
 
-    const user = useUserStore((state: any) => state.user);
+    const key: string = useAuthenticationStore((state: any) => state.key);
+    const user: User = useUserStore((state: any) => state.user);
+    const setUser = useUserStore((state: any) => state.setUser);
+
     const setUserGroupInsights = useUserStore((state: any) => state.setUserGroupInsights);
 
     const [stepIndex, setStepIndex] = useState<number>(0);
@@ -108,7 +113,6 @@ const OnboardingGroupBehaviorInsightsScreen = () => {
 
     const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
 
-
     const generateInsights = (): string[] => {
         console.log("Generate insights...");
         const insights: string[] = Object.entries(stepAnswersIndexes).map(([questionIndex, answerIndex]) => {
@@ -118,21 +122,24 @@ const OnboardingGroupBehaviorInsightsScreen = () => {
                 return `${stepData.question} (skipped)`;
             }
 
-            return `${stepData.question} ${stepData.options[answerIndex].text} I prefer ${stepData.options[answerIndex].trait}`;
+            return `${stepData.question} ${stepData.options[answerIndex].text} ${stepData.options[answerIndex].trait}`;
         });
 
         console.log("insights: ", insights);
         return insights;
     };
 
-    const goToNextStep = () => {
+    const goToNextStep = async () => {
         console.log(user);
 
         if (stepIndex < stepsData.length - 1) {
             setStepIndex(stepIndex + 1);
         } else {
             setUserGroupInsights(generateInsights());
-            navigation.replace('OnboardingNavigator', { screen: 'OnboardingGroupBehaviorInsightsSummary', params: { traitPoints } });
+            user.groupProfile.behavior = await setUserGroupBehavior({ key, userId: user.id, insights: user.groupProfile.insights });
+            setUser(user);
+
+            navigation.replace('OnboardingNavigator', { screen: 'OnboardingGroupBehaviorInsightsThankYou' });
         }
     };
 
@@ -225,4 +232,4 @@ const OnboardingGroupBehaviorInsightsScreen = () => {
     );
 }
 
-export default OnboardingGroupBehaviorInsightsScreen;
+export default OnboardingGroupBehaviorInsightsQuestionsScreen;

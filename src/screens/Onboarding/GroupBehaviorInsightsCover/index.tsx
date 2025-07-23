@@ -9,22 +9,19 @@ import styles from '../../../styles';
 const OnboardingGroupBehaviorInsightsCoverScreen = () => {
     const navigation = useNavigation<ApplicationNavigationProp>();
 
-    const handleStart = () => {
-        navigation.replace('OnboardingNavigator', { screen: 'OnboardingGroupBehaviorInsights' });
+    const handleContinue = () => {
+        navigation.replace('OnboardingNavigator', { screen: 'OnboardingGroupBehaviorInsightsIntro' });
     };
 
     return (
-        <Layout style={[styles.container, { justifyContent: 'center', padding: 24 }]}>
-            <Text category="h3" style={[styles.title, { textAlign: 'center', marginBottom: 16 }]}>
-                Discover Your Insights
-            </Text>
+        <Layout style={styles.container}>
+            <Text style={styles.title}>Now, let’s imagine a moment together</Text>
 
-            <Text appearance="hint" category="s1" style={{ textAlign: 'center', marginBottom: 32, paddingHorizontal: 10 }}>
-                Ready to start your adventure? Answer a few story-based questions to uncover your unique traits and preferences as a newcomer.
-            </Text>
+            <Text style={styles.subtitle}>We’d like to get a feel for how you move in a group.</Text>
+            <Text style={styles.subtitle}>Not through questions, but through a small story.</Text>
 
-            <Button style={styles.button} onPress={handleStart}>
-                Start
+            <Button onPress={handleContinue} style={styles.button}>
+                Continue
             </Button>
         </Layout>
     );

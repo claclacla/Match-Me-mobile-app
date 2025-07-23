@@ -17,6 +17,7 @@ const styles = StyleSheet.create({
     subtitle: {
         fontSize: 18,
         marginBottom: 30,
+        width: "100%"
     },
     input: {
         width: '100%',
@@ -49,6 +50,14 @@ const styles = StyleSheet.create({
     ghostButton: {
         marginTop: 10,
     },
+    micButton: {
+        backgroundColor: '#3D85C6',
+        width: 100,
+        height: 100,
+        borderRadius: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
+    }
 });
 
 export default styles;
