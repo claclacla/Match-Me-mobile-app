@@ -5,6 +5,8 @@ import { Input } from '@ui-kitten/components';
 import { LOCATION_IQ } from "../../../../../config/config.json";
 import { LocationData } from '../../../../../repositories/globalEntities/User';
 
+import styles from '../../../../../styles';
+
 export const LocationAutocompleteInput = ({
     onSelectLocation
 }: {
@@ -92,12 +94,12 @@ export const LocationAutocompleteInput = ({
         <View style={{ width: '100%' }}>
             <Input
                 value={inputValue}
-                placeholder="Enter a location"
+                placeholder="Enter your location"
                 onChangeText={(text) => {
                     setInputValue(text);
                     onSelectLocation(undefined);
                 }}
-                style={{ marginBottom: 8 }}
+                style={styles.input}
                 autoCapitalize="none"
                 autoCorrect={false}
             />

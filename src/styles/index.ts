@@ -10,11 +10,26 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     title: {
+        fontSize: 30,
+        fontWeight: "bold",
+        marginBottom: 20,
+    },
+    subtitle: {
+        fontSize: 18,
         marginBottom: 30,
     },
     input: {
         width: '100%',
         marginBottom: 15,
+    },
+    rowContainer: {
+        flexDirection: 'row', // Arranges children horizontally
+        justifyContent: 'space-between', // Distributes space evenly between inputs
+        marginBottom: 15, // Add margin bottom for spacing from next element
+    },
+    halfInput: {
+        flex: 1, // Each input takes equal available space
+        marginHorizontal: 2, // Add horizontal margin for spacing between inputs
     },
     multiLineInput: {
         width: '100%',
@@ -25,7 +40,7 @@ const styles = StyleSheet.create({
     },
     select: {
         width: "100%",
-        marginVertical: 8,
+        marginBottom: 15,
     },
     button: {
         width: '100%',

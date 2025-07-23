@@ -18,6 +18,7 @@ import useUserStore from '../../../repositories/localStorage/useUserStore';
 import useAuthenticationStore from "../../../repositories/localStorage/useAuthenticationStore";
 
 import styles from '../../../styles';
+import { View } from 'react-native';
 
 const initialCountryList = (() => {
     countries.registerLocale(en);
@@ -94,20 +95,23 @@ const OnboardingPersonalInformationScreen = () => {
 
             <Text style={styles.subtitle}>Tell us who you are, just the essentials.</Text>
 
-            <Input
-                style={styles.input}
-                placeholder='Name'
-                value={name}
-                onChangeText={setName}
-                autoCapitalize='none'
-            />
-            <Input
-                style={styles.input}
-                placeholder='Surname'
-                value={surname}
-                onChangeText={setSurname}
-                autoCapitalize='none'
-            />
+            <View style={styles.rowContainer}>
+                <Input
+                    style={styles.halfInput} 
+                    placeholder='Name'
+                    value={name}
+                    onChangeText={setName}
+                    autoCapitalize='none'
+                />
+                <Input
+                    style={styles.halfInput} 
+                    placeholder='Surname'
+                    value={surname}
+                    onChangeText={setSurname}
+                    autoCapitalize='none'
+                />
+            </View>
+            
             <Input
                 style={styles.input}
                 placeholder='Year of birth'
@@ -128,6 +132,7 @@ const OnboardingPersonalInformationScreen = () => {
                     <SelectItem key={option.value} title={option.label} />
                 ))}
             </Select>
+            
             <Select
                 style={styles.select}
                 placeholder='Country'

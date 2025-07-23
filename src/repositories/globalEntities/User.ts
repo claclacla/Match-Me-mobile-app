@@ -14,8 +14,8 @@ export const DEFAULT_GENDER: UserGender = 'prefer_not_to_say';
 export const PROFILE_SECTION_KEYS = {
     PERSONAL_INFORMATION: "personalInformation",
     AVATAR: "avatar",
-    GROUP_BEHAVIOR: "groupBehavior",
-    GROUP_PERSONAL_EXPERIENCE: "groupPersonalExperience"
+    GROUP_PERSONAL_EXPERIENCE: "groupPersonalExperience",
+    GROUP_BEHAVIOR: "groupBehavior"
 } as const;
 
 export type ProfileSectionKey = typeof PROFILE_SECTION_KEYS[keyof typeof PROFILE_SECTION_KEYS];
@@ -72,8 +72,8 @@ export function initUser({ name, surname, gender, country, location, yearOfBirth
         profileSectionsStatus: {
             [PROFILE_SECTION_KEYS.PERSONAL_INFORMATION]: PROFILE_SECTION_STATUS.PENDING,
             [PROFILE_SECTION_KEYS.AVATAR]: PROFILE_SECTION_STATUS.PENDING,
-            [PROFILE_SECTION_KEYS.GROUP_BEHAVIOR]: PROFILE_SECTION_STATUS.PENDING,
-            [PROFILE_SECTION_KEYS.GROUP_PERSONAL_EXPERIENCE]: PROFILE_SECTION_STATUS.PENDING
+            [PROFILE_SECTION_KEYS.GROUP_PERSONAL_EXPERIENCE]: PROFILE_SECTION_STATUS.PENDING,
+            [PROFILE_SECTION_KEYS.GROUP_BEHAVIOR]: PROFILE_SECTION_STATUS.PENDING
         }
     }
 
