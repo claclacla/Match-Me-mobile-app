@@ -65,7 +65,9 @@ const OnboardingUploadAvatarScreen = () => {
 
     return (
         <Layout style={styles.container}>
-            <Text category='h3' style={styles.title}>Profile</Text>
+            <Text style={styles.title}>Upload your avatar</Text>
+
+            <Text style={styles.subtitle}>Put a face to your presence here.</Text>
 
             {imageUri && (
                 <Avatar source={{ uri: imageUri }} size='giant' style={{ alignSelf: 'center', marginBottom: 20 }} />
@@ -80,7 +82,7 @@ const OnboardingUploadAvatarScreen = () => {
             </Button>
 
             <Button onPress={skip} style={styles.button}>
-                Skip
+                Skip for now, you can always add one later.
             </Button>
         </Layout>
     );
