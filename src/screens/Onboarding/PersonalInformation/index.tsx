@@ -19,6 +19,12 @@ import useAuthenticationStore from "../../../repositories/localStorage/useAuthen
 
 import styles from '../../../styles';
 
+const initialCountryList = (() => {
+    countries.registerLocale(en);
+    const names = countries.getNames('en', { select: 'official' });
+    return Object.values(names).sort((a, b) => a.localeCompare(b));
+})();
+
 const OnboardingPersonalInformationScreen = () => {
     const navigation = useNavigation<ApplicationNavigationProp>();
 
@@ -29,7 +35,7 @@ const OnboardingPersonalInformationScreen = () => {
     const [selectedGenderIndex, setSelectedGenderIndex] = useState<IndexPath | undefined>(undefined);
     const [selectedGenderValue, setSelectedGenderValue] = useState<UserGender | undefined>(undefined);
 
-    const [countryList, setCountryList] = useState<string[]>([]);
+    const [countryList, setCountryList] = useState<string[]>(initialCountryList);
     const [countryIndex, setCountryIndex] = useState<IndexPath | undefined>(undefined);
     const [country, setCountry] = useState<string | undefined>(undefined);
 
@@ -82,15 +88,11 @@ const OnboardingPersonalInformationScreen = () => {
     const selectedGenderLabel = selectedGenderIndex ? GENDER_OPTIONS[selectedGenderIndex.row].label : undefined;
     const selectedCountryLabel = countryIndex ? countryList[countryIndex.row] : undefined;
 
-    useEffect(() => {
-        const names = countries.getNames('en', { select: 'official' });
-        const sorted = Object.values(names).sort((a, b) => a.localeCompare(b));
-        setCountryList(sorted);
-    }, []);
-
     return (
         <Layout style={styles.container}>
-            <Text category='h3' style={styles.title}>Profile</Text>
+            <Text style={styles.title}>Let's get started</Text>
+
+            <Text style={styles.subtitle}>Tell us who you are, just the essentials.</Text>
 
             <Input
                 style={styles.input}
