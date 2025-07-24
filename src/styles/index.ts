@@ -15,9 +15,8 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     subtitle: {
-        fontSize: 18,
-        marginBottom: 30,
-        width: "100%"
+        fontSize: 15,
+        marginBottom: 30
     },
     input: {
         width: '100%',

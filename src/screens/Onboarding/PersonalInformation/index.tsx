@@ -80,7 +80,6 @@ const OnboardingPersonalInformationScreen = () => {
         console.log(user);
 
         user = await insertUser({ key, user });
-
         setUser(user);
 
         navigation.replace('OnboardingNavigator', { screen: "OnboardingUploadAvatar" });
@@ -97,21 +96,21 @@ const OnboardingPersonalInformationScreen = () => {
 
             <View style={styles.rowContainer}>
                 <Input
-                    style={styles.halfInput} 
+                    style={styles.halfInput}
                     placeholder='Name'
                     value={name}
                     onChangeText={setName}
                     autoCapitalize='none'
                 />
                 <Input
-                    style={styles.halfInput} 
+                    style={styles.halfInput}
                     placeholder='Surname'
                     value={surname}
                     onChangeText={setSurname}
                     autoCapitalize='none'
                 />
             </View>
-            
+
             <Input
                 style={styles.input}
                 placeholder='Year of birth'
@@ -123,8 +122,8 @@ const OnboardingPersonalInformationScreen = () => {
             />
             <Select
                 style={styles.select}
-                placeholder='Gender'
-                value={selectedGenderLabel}
+                //placeholder='Gender'
+                value={selectedGenderLabel || 'Select your gender'}
                 selectedIndex={selectedGenderIndex}
                 onSelect={handleSelectGender}
             >
@@ -132,11 +131,11 @@ const OnboardingPersonalInformationScreen = () => {
                     <SelectItem key={option.value} title={option.label} />
                 ))}
             </Select>
-            
+
             <Select
                 style={styles.select}
-                placeholder='Country'
-                value={selectedCountryLabel}
+                //placeholder='Country'
+                value={selectedCountryLabel || 'Select Your country'}
                 selectedIndex={countryIndex}
                 onSelect={handleSelectCountry}
             >
