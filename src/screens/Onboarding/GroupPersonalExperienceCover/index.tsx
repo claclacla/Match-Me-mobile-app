@@ -15,10 +15,13 @@ const OnboardingGroupPersonalExperienceCoverScreen = () => {
         <Layout style={styles.container}>
             <Text style={styles.title}>Welcome!</Text>
 
-            <Text style={styles.subtitle}>You’ve entered a space where attention matters.</Text>
-            <Text style={styles.subtitle}>Where being seen begins with being heard.</Text>
-            <Text style={styles.subtitle}>What comes next isn’t about being right. It’s about being real.</Text>
-            
+            <Layout style={styles.subtitleContainer}>
+                <Text style={styles.subtitle}>You’ve entered a space where attention matters.</Text>
+                <Text style={styles.subtitle}>Where being seen begins with being heard.</Text>
+                <Text style={styles.subtitle}>What comes next isn’t about being right.</Text>
+                <Text style={styles.subtitle}>It’s about being real.</Text>
+            </Layout>
+
             <Button onPress={handleContinue} style={styles.button}>
                 Continue
             </Button>

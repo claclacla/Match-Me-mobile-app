@@ -15,8 +15,10 @@ const OnboardingGroupBehaviorInsightsThankYouScreen = () => {
         <Layout style={styles.container}>
             <Text style={styles.title}>Thank you!</Text>
 
-            <Text style={styles.subtitle}>You’ve drawn a shape that others can now approach.</Text>
-            <Text style={styles.subtitle}>You’re not alone in what you’ve said.</Text>
+            <Layout style={styles.subtitleContainer}>
+                <Text style={styles.subtitle}>You’ve drawn a shape that others can now approach.</Text>
+                <Text style={styles.subtitle}>You’re not alone in what you’ve said.</Text>
+            </Layout>
 
             <Button onPress={handleContinue} style={styles.button}>
                 Continue

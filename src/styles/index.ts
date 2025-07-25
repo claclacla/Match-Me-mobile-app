@@ -12,11 +12,17 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 30,
         fontWeight: "bold",
-        marginBottom: 20,
+        marginBottom: 40,
+    },
+    subtitleContainer: {
+        width: '100%',
+        paddingHorizontal: 5,
+        marginBottom: 20
     },
     subtitle: {
         fontSize: 15,
-        marginBottom: 30
+        marginBottom: 20,
+        textAlign: 'left'
     },
     input: {
         width: '100%',

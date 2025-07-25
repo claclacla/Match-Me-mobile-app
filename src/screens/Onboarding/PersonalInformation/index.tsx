@@ -67,7 +67,7 @@ const OnboardingPersonalInformationScreen = () => {
         setCountry(countryList[selectedIndex.row]);
     };
 
-    const handleSetUser = async () => {
+    const handleContinue = async () => {
         if (name === undefined || surname === undefined || yearOfBirth === undefined ||
             selectedGenderValue === undefined || location === undefined || languages.length === 0) {
             return;
@@ -155,9 +155,9 @@ const OnboardingPersonalInformationScreen = () => {
 
             <Button
                 style={styles.button}
-                onPress={handleSetUser}
+                onPress={handleContinue}
             >
-                Send
+                Continue
             </Button>
         </Layout>
     );

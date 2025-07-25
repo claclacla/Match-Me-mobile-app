@@ -15,11 +15,11 @@ const OnboardingGroupPersonalExperienceThankYouScreen = () => {
         <Layout style={styles.container}>
             <Text style={styles.title}>Thank you!</Text>
 
-            <Text style={styles.subtitle}>
-                Your voice is now part of this space.
-                It brings depth to your presence.
-                A feeling someone might meet, tomorrow or later on.
-            </Text>
+            <Layout style={styles.subtitleContainer}>
+                <Text style={styles.subtitle}>Your voice is now part of this space.</Text>
+                <Text style={styles.subtitle}>It brings depth to your presence.</Text>
+                <Text style={styles.subtitle}>A feeling someone might meet, tomorrow or later on.</Text>
+            </Layout>
 
             <Button onPress={handleContinue} style={styles.button}>
                 Continue

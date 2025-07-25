@@ -40,7 +40,7 @@ const stepsData = [
     },
     {
         title: "Finding Comfort",
-        question: "You take your place in the group. The conversation is open, low-pressure. You could speak—or just listen. What helps you feel at ease?",
+        question: "You take your place in the group. The conversation is open, low-pressure. You could speak or just listen. What helps you feel at ease?",
         options: [
             { text: "Knowing I can just be quiet and be myself.", trait: "non-performative" },
             { text: "Feeling someone gently includes me.", trait: "social-safety" },
@@ -58,7 +58,7 @@ const stepsData = [
     },
     {
         title: "When Something Feels Off",
-        question: "Later, you notice a subtle shift. Maybe you feel a little outside the flow. Nothing major—but it changes your energy. What happens inside you?",
+        question: "Later, you notice a subtle shift. Maybe you feel a little outside the flow. Nothing major, but it changes your energy. What happens inside you?",
         options: [
             { text: "I become quiet and gently step back.", trait: "withdrawal" },
             { text: "I stay present and try to understand.", trait: "curiosity-under-pressure" },
@@ -130,13 +130,17 @@ const OnboardingGroupBehaviorInsightsQuestionsScreen = () => {
     };
 
     const goToNextStep = async () => {
-        console.log(user);
+        if (isFeedbackAnimating) {
+            return;
+        }
 
         if (stepIndex < stepsData.length - 1) {
             setStepIndex(stepIndex + 1);
         } else {
-            setUserGroupInsights(generateInsights());
-            user.groupProfile.behavior = await setUserGroupBehavior({ key, userId: user.id, insights: user.groupProfile.insights });
+            const userGroupInsights: string[] = generateInsights();
+            setUserGroupInsights(userGroupInsights);
+
+            user.groupProfile.behavior = await setUserGroupBehavior({ key, userId: user.id, insights: userGroupInsights });
             setUser(user);
 
             navigation.replace('OnboardingNavigator', { screen: 'OnboardingGroupBehaviorInsightsThankYou' });
@@ -221,8 +225,7 @@ const OnboardingGroupBehaviorInsightsQuestionsScreen = () => {
 
                 <Button
                     onPress={handleSkip}
-                    appearance='ghost'
-                    style={{ marginTop: 10 }}
+                    style={{ marginTop: 30 }}
                     disabled={isFeedbackAnimating}
                 >
                     Skip

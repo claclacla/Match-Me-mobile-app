@@ -17,9 +17,11 @@ const OnboardingGroupBehaviorInsightsIntroScreen = () => {
         <Layout style={styles.container}>
             <Text style={styles.title}>A Group of Strangers</Text>
 
-            <Text style={styles.subtitle}>Imagine you're joining a small group for the first time. Just 3 or 4 people. It’s calm, informal, open.</Text>
-            <Text style={styles.subtitle}>You don’t need to perform, just be yourself. Let’s walk through a few moments together.</Text>
-            <Text style={styles.subtitle}>There are no wrong answers, only traces that help others feel you.</Text>
+            <Layout style={styles.subtitleContainer}>
+                <Text style={styles.subtitle}>Imagine you're joining a small group for the first time. Just 3 or 4 people. It’s calm, informal, open.</Text>
+                <Text style={styles.subtitle}>You don’t need to perform, just be yourself. Let’s walk through a few moments together.</Text>
+                <Text style={styles.subtitle}>There are no wrong answers, only traces that help others feel you.</Text>
+            </Layout>
 
             <Button onPress={handleContinue} style={styles.button}>
                 Continue
