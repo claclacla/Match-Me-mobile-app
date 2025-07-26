@@ -108,6 +108,7 @@ const OnboardingGroupBehaviorInsightsQuestionsScreen = () => {
     const [traitPoints, setTraitPoints] = useState<{ [trait: string]: number }>({});
     const [feedback, setFeedback] = useState<string | null>(null);
     const [isFeedbackAnimating, setIsFeedbackAnimating] = useState(false);
+    const [isSettingUserGroupBehavior, setIsSettingUserGroupBehavior] = useState(false);
 
     const currentStep: StepData = stepsData[stepIndex];
 
@@ -137,6 +138,8 @@ const OnboardingGroupBehaviorInsightsQuestionsScreen = () => {
         if (stepIndex < stepsData.length - 1) {
             setStepIndex(stepIndex + 1);
         } else {
+            setIsSettingUserGroupBehavior(true);
+
             const userGroupInsights: string[] = generateInsights();
             setUserGroupInsights(userGroupInsights);
 
@@ -217,7 +220,7 @@ const OnboardingGroupBehaviorInsightsQuestionsScreen = () => {
                         style={{ marginVertical: 6 }}
                         onPress={() => handleOptionSelect(answerIndex)}
                         appearance={stepAnswersIndexes[stepIndex] === answerIndex ? 'filled' : 'outline'}
-                        disabled={isFeedbackAnimating}
+                        disabled={isFeedbackAnimating || isSettingUserGroupBehavior}
                     >
                         {option.text}
                     </Button>
@@ -226,7 +229,7 @@ const OnboardingGroupBehaviorInsightsQuestionsScreen = () => {
                 <Button
                     onPress={handleSkip}
                     style={{ marginTop: 30 }}
-                    disabled={isFeedbackAnimating}
+                    disabled={isFeedbackAnimating || isSettingUserGroupBehavior}
                 >
                     Skip
                 </Button>
