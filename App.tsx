@@ -1,6 +1,5 @@
 import * as eva from '@eva-design/eva';
-import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
-import { StyleSheet } from 'react-native';
+import { ApplicationProvider } from '@ui-kitten/components';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -35,14 +34,3 @@ export default function App(): React.ReactElement {
         </ApplicationProvider>
     );
 }
-
-const styles = StyleSheet.create({
-    loadingContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    container: {
-        flex: 1,
-    },
-});

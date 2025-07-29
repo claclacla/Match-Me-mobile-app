@@ -15,7 +15,22 @@ const useUserStore = create((set) => ({
                     insights: insights,
                 },
             },
-        })) },
+        }))
+    },
+    setUserGroupPersonalExperience: (personalExperience: string) => {
+        console.log("setUserGroupPersonalExperience: ", personalExperience);
+        set((state: any) => ({
+            user: {
+                ...state.user,
+                groupProfile: {
+                    ...state.user.groupProfile,
+                    personalExperience: {
+                        description: personalExperience
+                    }
+                },
+            },
+        }))
+    },
     unsetUser: () => set((state: any) => ({ user: undefined }))
 }));
 
