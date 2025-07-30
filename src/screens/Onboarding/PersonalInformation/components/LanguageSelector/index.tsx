@@ -1,4 +1,5 @@
-import { Layout, Select, SelectItem, IndexPath } from '@ui-kitten/components';
+import { MultiSelect } from 'react-native-element-dropdown';
+import { Layout } from '@ui-kitten/components';
 
 import styles from '../../../../../styles';
 
@@ -12,42 +13,65 @@ const languages: string[] = [
     "Chinese", "Japanese", "Korean", "Russian", "Portuguese",
 ];
 
+const languageOptions = languages.map(lang => ({
+    label: lang,
+    value: lang,
+}));
+
 const LanguageSelector: React.FC<LanguageSelectorProps> = ({
     selectedLanguages,
     setSelectedLanguages,
 }) => {
-    const selectedIndexes = selectedLanguages
-        .map(lang => {
-            const index = languages.indexOf(lang);
-            return index >= 0 ? new IndexPath(index) : null;
-        })
-        .filter((i): i is IndexPath => i !== null);
-
-    const displayValue = selectedLanguages.length > 0
-        ? selectedLanguages.join(', ')
-        : undefined;  
-
-    const onSelect = (index: IndexPath | IndexPath[]) => {
-        const indexesArray = Array.isArray(index) ? index : [index];
-        const selected = indexesArray.map(i => languages[i.row]);
-        setSelectedLanguages(selected);
-    };
-
     return (
-        <Layout style={styles.select}>
-            <Select
-                multiSelect={true}
-                selectedIndex={selectedIndexes}
-                onSelect={onSelect}
+        <Layout style={styles.selectContainer}>
+            <MultiSelect
+                style={styles.select}
+                //placeholderStyle={styles.placeholderStyle}
+                //selectedTextStyle={styles.selectedTextStyle}
+                //inputSearchStyle={styles.inputSearchStyle}
+                data={languageOptions}
+                labelField="label"
+                valueField="value"
                 placeholder="Select languages"
-                value={displayValue}  
-            >
-                {languages.map((lang) => (
-                    <SelectItem key={lang} title={lang} />
-                ))}
-            </Select>
+                value={selectedLanguages}
+                onChange={(item: string[]) => {
+                    setSelectedLanguages(item);
+                }}
+                //selectedStyle={styles.selectedStyle}
+            />
         </Layout>
     );
 };
+
+/*
+const styles = StyleSheet.create({
+  container: {
+    marginBottom: 16,
+  },
+  dropdown: {
+    height: 50,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingHorizontal: 12,
+    backgroundColor: 'white',
+  },
+  placeholderStyle: {
+    fontSize: 16,
+    color: '#aaa',
+  },
+  selectedTextStyle: {
+    fontSize: 16,
+    color: '#333',
+  },
+  inputSearchStyle: {
+    height: 40,
+    fontSize: 16,
+  },
+  selectedStyle: {
+    borderRadius: 12,
+  },
+});
+*/
 
 export default LanguageSelector;
