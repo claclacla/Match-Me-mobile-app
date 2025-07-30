@@ -6,13 +6,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: "center",
         padding: 20,
-        paddingTop: 100,
+        paddingTop: 20,
         width: '100%',
     },
     title: {
         fontSize: 30,
         fontWeight: "bold",
-        marginBottom: 40,
+        marginBottom: 30,
     },
     subtitleContainer: {
         width: '100%',

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Alert } from "react-native";
 import { Avatar, Button, Layout, Text } from "@ui-kitten/components";
 import * as ImagePicker from "expo-image-picker";
@@ -21,10 +21,27 @@ const OnboardingUploadAvatarScreen = () => {
     const user: User = useUserStore((state: any) => state.user);
 
     const [imageUri, setImageUri] = useState<string | undefined>(undefined);
-    const [uploading, setUploading] = useState(false);
+    const [isUploading, setIsUploading] = useState(false);
+
+    const uploadImage = async () => {
+        if (imageUri === undefined) {
+            return;
+        }
+
+        setIsUploading(true);
+
+        const imageUrl = await uploadUserAvatar({ key, userId: user.id, imageUri });
+
+        if (imageUrl !== undefined) {
+            navigation.replace('OnboardingNavigator', { screen: "OnboardingGroupPersonalExperienceCover" });
+        } else {
+            Alert.alert("Upload failed", "There was a problem uploading the avatar. Please try again.");
+        }
+    }
 
     const pickImage = async () => {
         const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
         if (status !== "granted") {
             Alert.alert("Permission required", "Please grant camera roll permissions.");
             return;
@@ -40,28 +57,18 @@ const OnboardingUploadAvatarScreen = () => {
         }
     };
 
-    const uploadImage = async () => {
-        if (imageUri === undefined) {
-            return;
-        }
-
-        setUploading(true);
-
-        const imageUrl = await uploadUserAvatar({ key, userId: user.id, imageUri });
-
-        setUploading(false);
-
-        if (imageUrl !== undefined) {
-            navigation.replace('OnboardingNavigator', { screen: "OnboardingGroupPersonalExperienceCover" });
-        } else {
-            Alert.alert("Upload failed", "There was a problem uploading the avatar. Please try again.");
-        }
-    }
-
     const skip = async () => {
         await setUserProfileSectionStatus({ key, userId: user.id, section: PROFILE_SECTION_KEYS.AVATAR, value: PROFILE_SECTION_STATUS.SKIPPED });
         navigation.replace('OnboardingNavigator', { screen: "OnboardingGroupPersonalExperienceCover" });
     }
+
+    useEffect(() => {
+        if(imageUri === undefined) {
+            return;
+        }
+
+        uploadImage();
+    }, [imageUri]);
 
     return (
         <Layout style={styles.container}>
@@ -73,15 +80,15 @@ const OnboardingUploadAvatarScreen = () => {
                 <Avatar source={{ uri: imageUri }} size='giant' style={{ alignSelf: 'center', marginBottom: 20 }} />
             )}
 
-            <Button onPress={pickImage} style={styles.button}>
+            <Button onPress={pickImage} style={styles.button} disabled={isUploading}>
                 Select Image
             </Button>
 
-            <Button onPress={uploadImage} style={styles.button} disabled={!imageUri || uploading}>
+            {/*<Button onPress={uploadImage} style={styles.button} disabled={!imageUri || uploading}>
                 {uploading ? 'Uploading...' : 'Upload'}
-            </Button>
+            </Button>*/}
 
-            <Button onPress={skip} style={styles.button}>
+            <Button onPress={skip} style={styles.button} disabled={isUploading}>
                 Skip for now, you can always add one later.
             </Button>
         </Layout>
