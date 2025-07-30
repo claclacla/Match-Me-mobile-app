@@ -15,7 +15,7 @@ export const PROFILE_SECTION_KEYS = {
     PERSONAL_INFORMATION: "personalInformation",
     AVATAR: "avatar",
     GROUP_PERSONAL_EXPERIENCE: "groupPersonalExperience",
-    GROUP_BEHAVIOR: "groupBehavior"
+    GROUP_INSIGHTS: "groupInsights"
 } as const;
 
 export type ProfileSectionKey = typeof PROFILE_SECTION_KEYS[keyof typeof PROFILE_SECTION_KEYS];
@@ -29,7 +29,7 @@ export const PROFILE_SECTION_STATUS = {
 export type ProfileSectionStatus = typeof PROFILE_SECTION_STATUS[keyof typeof PROFILE_SECTION_STATUS];
 
 export interface LocationData {
-    name: string, 
+    name: string,
     lat: number,
     lng: number
 }
@@ -45,11 +45,11 @@ export interface User {
     languages: string[],
     avatar?: string,
     groupProfile: {
-        insights: string[],
-        behavior: string,
+        insights?: string[],
         personalExperience?: {
             description: string
-        }
+        },
+        behavior?: string
     },
     match?: {
         id: string,
@@ -76,7 +76,7 @@ export function initUser({ name, surname, gender, country, location, yearOfBirth
             [PROFILE_SECTION_KEYS.PERSONAL_INFORMATION]: PROFILE_SECTION_STATUS.PENDING,
             [PROFILE_SECTION_KEYS.AVATAR]: PROFILE_SECTION_STATUS.PENDING,
             [PROFILE_SECTION_KEYS.GROUP_PERSONAL_EXPERIENCE]: PROFILE_SECTION_STATUS.PENDING,
-            [PROFILE_SECTION_KEYS.GROUP_BEHAVIOR]: PROFILE_SECTION_STATUS.PENDING
+            [PROFILE_SECTION_KEYS.GROUP_INSIGHTS]: PROFILE_SECTION_STATUS.PENDING
         }
     }
 

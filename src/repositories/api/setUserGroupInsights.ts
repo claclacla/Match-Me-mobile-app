@@ -2,11 +2,11 @@ import { API } from "../../config/config.json";
 
 // TO DO: Add the API input and output parameters
 
-export async function setUserGroupBehavior({ key, userId, insights }: { key: string, userId: string, insights: string[] }) {
+export async function setUserGroupInsights({ key, userId, insights }: { key: string, userId: string, insights: string[] }): Promise<boolean> {
     console.log("Set user group behavior:", key, userId, insights);
 
     const response = await fetch(
-        API.ADDRESS + `/user/${userId}/groupBehavior`,
+        API.ADDRESS + `/user/${userId}/groupInsights`,
         {
             method: 'PATCH',
             headers: {
@@ -17,10 +17,8 @@ export async function setUserGroupBehavior({ key, userId, insights }: { key: str
         }
     );
 
-    const jsonResponse = await response.json();
-    console.log(jsonResponse);
+    //const jsonResponse = await response.json();
+    //console.log(jsonResponse);
 
-    const userGroupBehavior: string = jsonResponse.groupBehavior;
-
-    return userGroupBehavior;
+    return true;
 }

@@ -6,7 +6,7 @@ import { ApplicationNavigationProp } from '../../../stackNavigationProps/Applica
 
 import { User } from '../../../repositories/globalEntities/User';
 import useUserStore from '../../../repositories/localStorage/useUserStore';
-import { setUserGroupBehavior } from '../../../repositories/api/setUserGroupBehavior';
+import { setUserGroupInsights } from '../../../repositories/api/setUserGroupInsights';
 import useAuthenticationStore from '../../../repositories/localStorage/useAuthenticationStore';
 
 import AnimatedFeedback from './components/AnimatedFeedback';
@@ -98,9 +98,7 @@ const OnboardingGroupBehaviorInsightsQuestionsScreen = () => {
 
     const key: string = useAuthenticationStore((state: any) => state.key);
     const user: User = useUserStore((state: any) => state.user);
-    const setUser = useUserStore((state: any) => state.setUser);
-
-    const setUserGroupInsights = useUserStore((state: any) => state.setUserGroupInsights);
+    const setLocalStorageUserGroupInsights = useUserStore((state: any) => state.setUserGroupInsights);
 
     const [stepIndex, setStepIndex] = useState<number>(0);
     const [stepAnswersIndexes, setStepAnswersIndexes] = useState<StepAnswersIndexes>({});
@@ -141,10 +139,9 @@ const OnboardingGroupBehaviorInsightsQuestionsScreen = () => {
             setIsSettingUserGroupBehavior(true);
 
             const userGroupInsights: string[] = generateInsights();
-            setUserGroupInsights(userGroupInsights);
 
-            user.groupProfile.behavior = await setUserGroupBehavior({ key, userId: user.id, insights: userGroupInsights });
-            setUser(user);
+            setLocalStorageUserGroupInsights(userGroupInsights);
+            await setUserGroupInsights({ key, userId: user.id, insights: userGroupInsights });
 
             navigation.replace('OnboardingNavigator', { screen: 'OnboardingGroupBehaviorInsightsThankYou' });
         }
