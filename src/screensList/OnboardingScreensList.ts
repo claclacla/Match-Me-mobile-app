@@ -1,4 +1,5 @@
 export type OnboardingScreensList = {
+    OnboardingCover: undefined;
     OnboardingPersonalInformation: undefined;
     OnboardingUploadAvatar: undefined;
     OnboardingGroupPersonalExperienceCover: undefined;
@@ -9,5 +10,4 @@ export type OnboardingScreensList = {
     OnboardingGroupBehaviorInsightsIntro: undefined;
     OnboardingGroupBehaviorInsightsQuestions: undefined;
     OnboardingGroupBehaviorInsightsThankYou: undefined
-    OnboardingComplete: undefined;
 };

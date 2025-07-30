@@ -7,7 +7,7 @@ export async function useHandleSignInUserFlow({ navigation, user }: { navigation
     // First onboarding step: Personal information
 
     if (user === undefined) {
-        navigation.replace('OnboardingNavigator', { screen: "OnboardingPersonalInformation" });
+        navigation.replace('OnboardingNavigator', { screen: "OnboardingCover" });
     }
     else {
         console.log("useHandleSignInUserFlow: User profile sections status: ", user.profileSectionsStatus);
