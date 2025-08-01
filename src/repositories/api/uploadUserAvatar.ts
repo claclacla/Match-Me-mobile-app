@@ -8,7 +8,7 @@ interface UploadUserAvatarParams {
     imageUri: string; // local file URI
 }
 
-export async function uploadUserAvatar({ key, userId, imageUri }: UploadUserAvatarParams): Promise<boolean> {
+export async function uploadUserAvatar({ key, userId, imageUri }: UploadUserAvatarParams): Promise<string | undefined> {
     try {
         const base64Image = await FileSystem.readAsStringAsync(imageUri, {
             encoding: FileSystem.EncodingType.Base64,
@@ -34,14 +34,13 @@ export async function uploadUserAvatar({ key, userId, imageUri }: UploadUserAvat
 
         if (!response.ok) {
             console.error("Upload failed:", json);
-            return false;
+            return undefined;
         }
 
-        //const { imageUrl } = await uploadResponse.json();
-
-        return true;
+        // Return the avatar value from the response
+        return json.avatar;
     } catch (error) {
         console.error("Error uploading avatar:", error);
-        return false;
+        return undefined;
     }
 }

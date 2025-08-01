@@ -19,6 +19,7 @@ const OnboardingUploadAvatarScreen = () => {
 
     const key: string = useAuthenticationStore((state: any) => state.key);
     const user: User = useUserStore((state: any) => state.user);
+    const setUser = useUserStore((state: any) => state.setUser);
 
     const [imageUri, setImageUri] = useState<string | undefined>(undefined);
     const [isUploading, setIsUploading] = useState(false);
@@ -30,12 +31,26 @@ const OnboardingUploadAvatarScreen = () => {
 
         setIsUploading(true);
 
-        const imageUrl = await uploadUserAvatar({ key, userId: user.id, imageUri });
+        try {
+            const avatarUrl = await uploadUserAvatar({ key, userId: user.id, imageUri });
 
-        if (imageUrl !== undefined) {
-            navigation.replace('OnboardingNavigator', { screen: "OnboardingGroupPersonalExperienceCover" });
-        } else {
+            if (avatarUrl !== undefined) {
+                // Update user with the new avatar URL in Zustand store
+                const updatedUser = {
+                    ...user,
+                    avatar: avatarUrl
+                };
+                setUser(updatedUser);
+
+                navigation.replace('OnboardingNavigator', { screen: "OnboardingGroupPersonalExperienceCover" });
+            } else {
+                Alert.alert("Upload failed", "There was a problem uploading the avatar. Please try again.");
+            }
+        } catch (error) {
+            console.error("Error uploading avatar:", error);
             Alert.alert("Upload failed", "There was a problem uploading the avatar. Please try again.");
+        } finally {
+            setIsUploading(false);
         }
     }
 
