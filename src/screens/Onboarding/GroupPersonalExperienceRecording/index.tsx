@@ -51,6 +51,7 @@ const OnboardingGroupPersonalExperienceRecordingScreen = () => {
 
     const [isRecording, setIsRecording] = useState<Audio.Recording | null>(null);
     const [recordingUri, setRecordingUri] = useState<string | null>(null);
+    const [isUploading, setIsUploading] = useState<boolean>(false);
 
     // Request microphone permissions on mount
 
@@ -88,6 +89,8 @@ const OnboardingGroupPersonalExperienceRecordingScreen = () => {
 
         console.log("sendRecording. uriToTranscribe:", uriToTranscribe);
 
+        setIsUploading(true);
+
         try {
             const userGroupPersonalExperience: string = await setUserGroupPersonalExperience({
                 key,
@@ -102,6 +105,8 @@ const OnboardingGroupPersonalExperienceRecordingScreen = () => {
             navigation.replace('OnboardingNavigator', { screen: 'OnboardingGroupBehaviorInsightsCover' });
         } catch (err: any) {
             console.error("Component: Errore durante la trascrizione:", err);
+        } finally {
+            setIsUploading(false);
         }
     };
 
@@ -163,22 +168,30 @@ const OnboardingGroupPersonalExperienceRecordingScreen = () => {
 
             <Layout style={styles.subtitleContainer}>
                 <Text style={styles.subtitle}>Leave a short voice message.</Text>
-                <Text style={styles.subtitle}>Say something about yourself. Anything you’d like this space to reflect.</Text>
+                <Text style={styles.subtitle}>Say something about yourself. Anything you'd like this space to reflect.</Text>
 
                 <Text style={styles.subtitle}>You can talk about how you feel today.</Text>
                 <Text style={styles.subtitle}>Or how you move in relation to others.</Text>
                 <Text style={styles.subtitle}>Or simply let your voice carry a feeling.</Text>
 
-                <Text style={styles.subtitle}>We’ll use this to give your presence shape here. Not to judge. But to hold.</Text>
+                <Text style={styles.subtitle}>We'll use this to give your presence shape here. Not to judge. But to hold.</Text>
             </Layout>
 
             {/*<MicButton onPress={handleRecord} />*/}
 
-            <Button style={styles.button} onPress={isRecording ? stopRecording : startRecording}>
-                {isRecording ? '🛑 Stop' : '🎤 Rec'}
+            <Button 
+                style={styles.button} 
+                onPress={isRecording ? stopRecording : startRecording}
+                disabled={isUploading}
+            >
+                {isUploading ? '📤 Uploading...' : isRecording ? '🛑 Stop' : '🎤 Rec'}
             </Button>
 
-            <Button onPress={handleSkip} style={styles.button}>
+            <Button 
+                onPress={handleSkip} 
+                style={styles.button}
+                disabled={isUploading}
+            >
                 Skip
             </Button>
         </Layout>
