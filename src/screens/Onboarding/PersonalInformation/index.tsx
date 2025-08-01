@@ -10,14 +10,11 @@ countries.registerLocale(en);
 import { ApplicationNavigationProp } from '../../../stackNavigationProps/ApplicationNavigationProp';
 
 import LanguageSelector from './components/LanguageSelector';
-import { LocationAutocompleteInput } from './components/LocationAutocompleteInput';
 import CountrySelector from './components/CountrySelector';
 import GenderSelector from './components/GenderSelector';
 
-import { GENDER_OPTIONS, initUser, LocationData, User, UserGender } from '../../../repositories/globalEntities/User';
-import { insertUser } from "../../../repositories/api/insertUser";
+import { GENDER_OPTIONS, initUser, User, UserGender } from '../../../repositories/globalEntities/User';
 import useUserStore from '../../../repositories/localStorage/useUserStore';
-import useAuthenticationStore from "../../../repositories/localStorage/useAuthenticationStore";
 
 import styles from '../../../styles';
 import { View } from 'react-native';
@@ -33,12 +30,22 @@ const OnboardingPersonalInformationScreen = () => {
 
     const [country, setCountry] = useState<string | undefined>(undefined);
 
-    const [location, setLocation] = useState<LocationData | undefined>(undefined);
-
     const [languages, setLanguages] = useState<string[]>([]);
 
-    const key: string = useAuthenticationStore((state: any) => state.key);
     const setUser = useUserStore((state: any) => state.setUser);
+
+    // Form validation
+    const isFormValid = useMemo(() => {
+        return (
+            name !== undefined && 
+            name.trim() !== '' &&
+            surname !== undefined && 
+            surname.trim() !== '' &&
+            yearOfBirth !== undefined &&
+            selectedGender !== undefined &&
+            languages.length > 0
+        );
+    }, [name, surname, yearOfBirth, selectedGender, languages]);
 
     const handleYearOfBirthChange = (text: string) => {
         const filteredText = text.replace(/[^0-9]/g, '');
@@ -52,21 +59,23 @@ const OnboardingPersonalInformationScreen = () => {
     };
 
     const handleContinue = async () => {
-        if (name === undefined || surname === undefined || yearOfBirth === undefined ||
-            selectedGender === undefined || location === undefined || languages.length === 0) {
+        if (!isFormValid) {
             return;
         }
 
         let user: User = initUser({
-            name, surname, gender: selectedGender, country, location, yearOfBirth, languages
+            name: name!.trim(), 
+            surname: surname!.trim(), 
+            gender: selectedGender!, 
+            country, 
+            yearOfBirth: yearOfBirth!, 
+            languages
         });
 
-        console.log(user);
-
-        user = await insertUser({ key, user });
+        console.log('Saving user to store:', user);
         setUser(user);
 
-        navigation.replace('OnboardingNavigator', { screen: "OnboardingUploadAvatar" });
+        navigation.replace('OnboardingNavigator', { screen: "OnboardingLocation" });
     };
 
     return (
@@ -82,6 +91,7 @@ const OnboardingPersonalInformationScreen = () => {
                     value={name}
                     onChangeText={setName}
                     autoCapitalize='none'
+                    status={name !== undefined && name.trim() === '' ? 'danger' : 'basic'}
                 />
                 <Input
                     style={styles.halfInput}
@@ -89,6 +99,7 @@ const OnboardingPersonalInformationScreen = () => {
                     value={surname}
                     onChangeText={setSurname}
                     autoCapitalize='none'
+                    status={surname !== undefined && surname.trim() === '' ? 'danger' : 'basic'}
                 />
             </View>
 
@@ -109,10 +120,6 @@ const OnboardingPersonalInformationScreen = () => {
 
             <CountrySelector selectedCountry={country} onSelectCountry={handleCountrySelect} />
 
-            <LocationAutocompleteInput
-                onSelectLocation={(location: LocationData | undefined) => setLocation(location)}
-            />
-
             <LanguageSelector
                 selectedLanguages={languages}
                 setSelectedLanguages={setLanguages}
@@ -121,6 +128,7 @@ const OnboardingPersonalInformationScreen = () => {
             <Button
                 style={styles.button}
                 onPress={handleContinue}
+                disabled={!isFormValid}
             >
                 Continue
             </Button>

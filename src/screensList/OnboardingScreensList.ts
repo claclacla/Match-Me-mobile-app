@@ -1,6 +1,7 @@
 export type OnboardingScreensList = {
     OnboardingCover: undefined;
     OnboardingPersonalInformation: undefined;
+    OnboardingLocation: undefined;
     OnboardingUploadAvatar: undefined;
     OnboardingGroupPersonalExperienceCover: undefined;
     OnboardingGroupPersonalExperienceIntro: undefined;

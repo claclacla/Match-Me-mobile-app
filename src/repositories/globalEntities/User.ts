@@ -40,7 +40,7 @@ export interface User {
     surname: string,
     gender: UserGender,
     country?: string,
-    location: LocationData,
+    location?: LocationData,
     yearOfBirth: number,
     languages: string[],
     avatar?: string,
@@ -58,14 +58,13 @@ export interface User {
 }
 
 export function initUser({ name, surname, gender, country, location, yearOfBirth, languages }: {
-    name: string, surname: string, gender: UserGender, country?: string, location: LocationData, yearOfBirth: number, languages: string[]
+    name: string, surname: string, gender: UserGender, country?: string, location?: LocationData, yearOfBirth: number, languages: string[]
 }) {
     const user: User = {
         id: "",
         name,
         surname,
         gender,
-        location,
         yearOfBirth,
         languages,
         groupProfile: {
@@ -82,6 +81,10 @@ export function initUser({ name, surname, gender, country, location, yearOfBirth
 
     if (country !== undefined) {
         user.country = country;
+    }
+
+    if (location !== undefined) {
+        user.location = location;
     }
 
     return user;

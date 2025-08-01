@@ -6,6 +6,7 @@ import { OnboardingScreensList } from '../../../screensList/OnboardingScreensLis
 import OnboardingCoverScreen from '../Cover';
 
 import OnboardingPersonalInformationScreen from '../PersonalInformation';
+import OnboardingLocationScreen from '../Location';
 import OnboardingUploadAvatarScreen from '../UploadAvatar';
 
 import OnboardingGroupPersonalExperienceCoverScreen from '../GroupPersonalExperienceCover';
@@ -26,6 +27,7 @@ function SignupNavigator() {
             <Stack.Screen name="OnboardingCover" component={OnboardingCoverScreen} options={{ headerShown: false }} />
 
             <Stack.Screen name="OnboardingPersonalInformation" component={OnboardingPersonalInformationScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="OnboardingLocation" component={OnboardingLocationScreen} options={{ headerShown: false }} />
             <Stack.Screen name="OnboardingUploadAvatar" component={OnboardingUploadAvatarScreen} options={{ headerShown: false }} />
 
             <Stack.Screen name="OnboardingGroupPersonalExperienceCover" component={OnboardingGroupPersonalExperienceCoverScreen} options={{ headerShown: false }} />
