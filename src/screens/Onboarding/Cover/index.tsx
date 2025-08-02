@@ -12,17 +12,27 @@ const OnboardingCoverScreen = () => {
     };
 
     return (
-        <Layout style={styles.container}>
-            <Text style={styles.title}>Hello!</Text>
+        <Layout style={styles.coverContainer}>
+            <Text style={styles.titleLarge}>Hello!</Text>
 
             <Layout style={styles.subtitleContainer}>
-                <Text style={styles.subtitle}>Breakice turns cultural exchange into real-life moments. </Text>
+                <Text style={styles.subtitleLarge}>
+                    Breakice turns cultural exchange into real-life moments.
+                </Text>
 
-                <Text style={styles.subtitle}>Join small groups of locals and newcomers, share activities you love,</Text>
-                <Text style={styles.subtitle}>and build friendships that last, right from your new city’s first hello.</Text>
+                <Text style={styles.subtitle}>
+                    Join small groups of locals and newcomers, share activities you love,
+                </Text>
+                <Text style={styles.subtitle}>
+                    and build friendships that last, right from your new city's first hello.
+                </Text>
             </Layout>
 
-            <Button onPress={handleContinue} style={styles.button}>
+            <Button 
+                onPress={handleContinue} 
+                style={styles.button}
+                size="large"
+            >
                 Continue
             </Button>
         </Layout>
