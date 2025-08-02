@@ -111,6 +111,7 @@ const OnboardingPersonalInformationScreen = () => {
                 keyboardType='numeric'
                 // keyboardType='number-pad' 
                 maxLength={4}
+                status={yearOfBirth === undefined ? 'danger' : 'basic'}
             />
 
             <GenderSelector
@@ -126,7 +127,7 @@ const OnboardingPersonalInformationScreen = () => {
             />
 
             <Button
-                style={styles.button}
+                style={isFormValid ? styles.button : styles.buttonDisabled}
                 onPress={handleContinue}
                 disabled={!isFormValid}
             >

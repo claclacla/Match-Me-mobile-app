@@ -168,6 +168,16 @@ const styles = StyleSheet.create({
         borderColor: colors.primary,
     },
     
+    buttonDisabled: {
+        width: '100%',
+        marginTop: 16,
+        marginBottom: 8,
+        borderRadius: 12,
+        height: 52,
+        backgroundColor: colors.gray300,
+        borderColor: colors.gray300,
+    },
+    
     buttonSecondary: {
         width: '100%',
         marginTop: 12,
@@ -176,6 +186,16 @@ const styles = StyleSheet.create({
         height: 52,
         backgroundColor: colors.secondary,
         borderColor: colors.secondary,
+    },
+    
+    buttonSecondaryDisabled: {
+        width: '100%',
+        marginTop: 12,
+        marginBottom: 8,
+        borderRadius: 12,
+        height: 52,
+        backgroundColor: colors.gray300,
+        borderColor: colors.gray300,
     },
     
     buttonOutline: {
@@ -189,7 +209,29 @@ const styles = StyleSheet.create({
         borderWidth: 2,
     },
     
+    buttonOutlineDisabled: {
+        width: '100%',
+        marginTop: 12,
+        marginBottom: 8,
+        borderRadius: 12,
+        height: 52,
+        backgroundColor: colors.gray100,
+        borderColor: colors.gray300,
+        borderWidth: 2,
+    },
+    
     buttonGhost: {
+        width: '100%',
+        marginTop: 12,
+        marginBottom: 8,
+        borderRadius: 12,
+        height: 52,
+        backgroundColor: 'transparent',
+        borderColor: 'transparent',
+        borderWidth: 0,
+    },
+    
+    buttonGhostDisabled: {
         width: '100%',
         marginTop: 12,
         marginBottom: 8,
@@ -215,6 +257,23 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.3,
         shadowRadius: 16,
         elevation: 8,
+    },
+    
+    micButtonDisabled: {
+        backgroundColor: colors.gray300,
+        width: 120,
+        height: 120,
+        borderRadius: 60,
+        justifyContent: 'center',
+        alignItems: 'center',
+        shadowColor: colors.gray300,
+        shadowOffset: {
+            width: 0,
+            height: 4,
+        },
+        shadowOpacity: 0.2,
+        shadowRadius: 8,
+        elevation: 4,
     },
     
     // Cards and containers

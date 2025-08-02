@@ -14,7 +14,7 @@ import useAuthenticationStore from '../../../repositories/localStorage/useAuthen
 import useUserStore from '../../../repositories/localStorage/useUserStore';
 import { PROFILE_SECTION_KEYS, PROFILE_SECTION_STATUS, User } from '../../../repositories/globalEntities/User';
 
-//import MicButton from './components/MicButton';
+import MicButton from './components/MicButton';
 
 import styles from '../../../styles';
 
@@ -167,30 +167,21 @@ const OnboardingGroupPersonalExperienceRecordingScreen = () => {
             <Text style={styles.title}>If you feel like it</Text>
 
             <Layout style={styles.subtitleContainer}>
-                <Text style={styles.subtitle}>Leave a short voice message.</Text>
-                <Text style={styles.subtitle}>Say something about yourself. Anything you'd like this space to reflect.</Text>
-
-                <Text style={styles.subtitle}>You can talk about how you feel today.</Text>
-                <Text style={styles.subtitle}>Or how you move in relation to others.</Text>
-                <Text style={styles.subtitle}>Or simply let your voice carry a feeling.</Text>
-
-                <Text style={styles.subtitle}>We'll use this to give your presence shape here. Not to judge. But to hold.</Text>
+                <Text style={styles.subtitle}>Leave a short voice message about yourself, how you feel today, or how you move in relation to others.</Text>
+                <Text style={styles.subtitle}>We'll use this to give your presence shape here, not to judge, but to hold.</Text>
             </Layout>
 
-            {/*<MicButton onPress={handleRecord} />*/}
-
-            <Button 
-                style={styles.button} 
+            <MicButton 
                 onPress={isRecording ? stopRecording : startRecording}
+                isRecording={isRecording !== null}
                 disabled={isUploading}
-            >
-                {isUploading ? '📤 Uploading...' : isRecording ? '🛑 Stop' : '🎤 Rec'}
-            </Button>
+            />
 
             <Button 
                 onPress={handleSkip} 
-                style={styles.button}
+                style={isUploading ? styles.buttonGhostDisabled : styles.buttonGhost}
                 disabled={isUploading}
+                appearance="ghost"
             >
                 Skip
             </Button>

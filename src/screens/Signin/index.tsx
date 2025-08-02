@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Layout, Text, Button, Input } from '@ui-kitten/components';
 import { useNavigation } from '@react-navigation/native';
 
@@ -24,9 +24,21 @@ const SigninScreen = () => {
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
 
+    // Form validation
+    const isFormValid = useMemo(() => {
+        return (
+            username.trim() !== '' &&
+            password.trim() !== ''
+        );
+    }, [username, password]);
+
     const handleSignIn = async () => {
+        if (!isFormValid) {
+            return;
+        }
+
         try {
-            const key = await signIn({ username, password });
+            const key = await signIn({ username: username.trim(), password: password.trim() });
 
             // TO DO: Handle the case when key is undefined 
 
@@ -60,11 +72,14 @@ const SigninScreen = () => {
                 value={password}
                 onChangeText={setPassword}
                 secureTextEntry
+                status={password !== '' && password.trim() === '' ? 'danger' : 'basic'}
+                caption={password !== '' && password.trim() === '' ? 'Password cannot be empty' : ''}
             />
 
             <Button
-                style={styles.button}
+                style={isFormValid ? styles.button : styles.buttonDisabled}
                 onPress={handleSignIn}
+                disabled={!isFormValid}
             >
                 Sign in
             </Button>

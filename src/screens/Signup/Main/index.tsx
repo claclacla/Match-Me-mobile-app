@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Layout, Text, Button, Input } from '@ui-kitten/components';
 import { CompositeNavigationProp, useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -25,9 +25,22 @@ const SignupMainScreen = () => {
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
 
+    // Form validation
+    const isFormValid = useMemo(() => {
+        return (
+            username.trim() !== '' &&
+            password.trim() !== '' &&
+            password.length >= 6 // Minimum password length
+        );
+    }, [username, password]);
+
     const handleSignUp = async () => {
+        if (!isFormValid) {
+            return;
+        }
+
         try {
-            await signUp({ username, password });
+            await signUp({ username: username.trim(), password: password.trim() });
             navigation.navigate('SignupConfirmation', { username });
         } catch (error: any) {
             console.error('Error:', error);
@@ -46,11 +59,14 @@ const SignupMainScreen = () => {
                 value={password}
                 onChangeText={setPassword}
                 secureTextEntry
+                status={password !== '' && password.length < 6 ? 'danger' : 'basic'}
+                caption={password !== '' && password.length < 6 ? 'Password must be at least 6 characters' : ''}
             />
 
             <Button
-                style={styles.button}
+                style={isFormValid ? styles.button : styles.buttonDisabled}
                 onPress={handleSignUp}
+                disabled={!isFormValid}
             >
                 Sign up
             </Button>

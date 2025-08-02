@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { CompositeNavigationProp, useNavigation, useRoute } from '@react-navigation/native';
 import { Layout, Text, Button, Input } from '@ui-kitten/components';
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
@@ -26,12 +26,21 @@ const SignupConfirmationScreen = () => {
 
     const { confirmSignUp } = useAuthentication();
 
+    // Form validation
+    const isFormValid = useMemo(() => {
+        return confirmationCode.trim() !== '';
+    }, [confirmationCode]);
+
     const handleConfirmationCode = async () => {
+        if (!isFormValid) {
+            return;
+        }
+
         try {
-            await confirmSignUp({ username, confirmationCode });
+            await confirmSignUp({ username, confirmationCode: confirmationCode.trim() });
             navigation.replace('Signin');
         } catch (error: any) {
-
+            console.error('Confirmation error:', error);
         }
     };
 
@@ -45,11 +54,14 @@ const SignupConfirmationScreen = () => {
                 value={confirmationCode}
                 onChangeText={setConfirmationCode}
                 secureTextEntry
+                status={confirmationCode !== '' && confirmationCode.trim() === '' ? 'danger' : 'basic'}
+                caption={confirmationCode !== '' && confirmationCode.trim() === '' ? 'Confirmation code cannot be empty' : ''}
             />
 
             <Button
-                style={styles.button}
+                style={isFormValid ? styles.button : styles.buttonDisabled}
                 onPress={handleConfirmationCode}
+                disabled={!isFormValid}
             >
                 Enter confirmation code
             </Button>

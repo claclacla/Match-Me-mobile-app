@@ -55,6 +55,10 @@ const OnboardingUploadAvatarScreen = () => {
     }
 
     const pickImage = async () => {
+        if (isUploading) {
+            return;
+        }
+
         const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
         if (status !== "granted") {
@@ -73,6 +77,10 @@ const OnboardingUploadAvatarScreen = () => {
     };
 
     const skip = async () => {
+        if (isUploading) {
+            return;
+        }
+
         await setUserProfileSectionStatus({ key, userId: user.id, section: PROFILE_SECTION_KEYS.AVATAR, value: PROFILE_SECTION_STATUS.SKIPPED });
         navigation.replace('OnboardingNavigator', { screen: "OnboardingGroupPersonalExperienceCover" });
     }
@@ -95,16 +103,24 @@ const OnboardingUploadAvatarScreen = () => {
                 <Avatar source={{ uri: imageUri }} size='giant' style={{ alignSelf: 'center', marginBottom: 20 }} />
             )}
 
-            <Button onPress={pickImage} style={styles.button} disabled={isUploading}>
-                Select Image
+            <Button 
+                onPress={pickImage} 
+                style={isUploading ? styles.buttonDisabled : styles.button} 
+                disabled={isUploading}
+            >
+                {isUploading ? 'Uploading...' : 'Select Image'}
             </Button>
 
             {/*<Button onPress={uploadImage} style={styles.button} disabled={!imageUri || uploading}>
                 {uploading ? 'Uploading...' : 'Upload'}
             </Button>*/}
 
-            <Button onPress={skip} style={styles.button} disabled={isUploading}>
-                Skip for now, you can always add one later.
+            <Button 
+                onPress={skip} 
+                style={isUploading ? styles.buttonDisabled : styles.button} 
+                disabled={isUploading}
+            >
+                {isUploading ? 'Uploading...' : 'Skip for now, you can always add one later.'}
             </Button>
         </Layout>
     );

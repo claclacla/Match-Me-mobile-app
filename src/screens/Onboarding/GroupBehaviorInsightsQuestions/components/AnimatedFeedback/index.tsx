@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Animated, StyleSheet } from 'react-native';
+import { colors } from '../../../../../styles';
 
 interface AnimatedFeedbackProps {
     message: string;
@@ -64,10 +65,11 @@ const AnimatedFeedback: React.FC<AnimatedFeedbackProps> = ({ message, onAnimatio
 const styles = StyleSheet.create({
     feedbackText: {
         textAlign: 'center',
-        fontSize: 16,
-        fontWeight: '600',
-        color: '#3366FF',
+        fontSize: 18,
+        fontWeight: '700',
+        color: colors.primary,
         marginTop: 10,
+        letterSpacing: -0.5,
     },
 });
 

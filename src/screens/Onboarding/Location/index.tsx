@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Layout, Text, Button } from '@ui-kitten/components';
 import { View, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 
@@ -18,15 +18,23 @@ const OnboardingLocationScreen = () => {
     const navigation = useNavigation<ApplicationNavigationProp>();
 
     const [location, setLocation] = useState<LocationData | undefined>(undefined);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const user = useUserStore((state: any) => state.user);
     const setUser = useUserStore((state: any) => state.setUser);
     const key: string = useAuthenticationStore((state: any) => state.key);
 
+    // Form validation
+    const isFormValid = useMemo(() => {
+        return location !== undefined;
+    }, [location]);
+
     const handleContinue = async () => {
-        if (location === undefined) {
+        if (!isFormValid || isLoading) {
             return;
         }
+
+        setIsLoading(true);
 
         // Update user with location
         const updatedUser = {
@@ -44,6 +52,8 @@ const OnboardingLocationScreen = () => {
         } catch (error) {
             console.error('Error inserting user:', error);
             // Handle error appropriately
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -73,11 +83,11 @@ const OnboardingLocationScreen = () => {
 
                     <View style={{ marginTop: 'auto', paddingBottom: 20 }}>
                         <Button
-                            style={styles.button}
+                            style={isLoading ? styles.buttonDisabled : (isFormValid ? styles.button : styles.buttonDisabled)}
                             onPress={handleContinue}
-                            disabled={location === undefined}
+                            disabled={!isFormValid || isLoading}
                         >
-                            Continue
+                            {isLoading ? 'Saving...' : 'Continue'}
                         </Button>
                     </View>
                 </View>

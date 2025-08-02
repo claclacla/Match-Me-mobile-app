@@ -10,6 +10,7 @@ import { setUserGroupInsights } from '../../../repositories/api/setUserGroupInsi
 import useAuthenticationStore from '../../../repositories/localStorage/useAuthenticationStore';
 
 import AnimatedFeedback from './components/AnimatedFeedback';
+import { colors } from '../../../styles';
 
 import styles from '../../../styles';
 
@@ -31,7 +32,7 @@ interface StepAnswersIndexes {
 const stepsData = [
     {
         title: "The First Encounter",
-        question: "You walk into a room where a small group is already gathered. They’re chatting softly. No one notices you yet. What do you do?",
+        question: "You walk into a room where a small group is already gathered. They're chatting softly. No one notices you yet. What do you do?",
         options: [
             { text: "Hang back for a moment and observe.", trait: "observer" },
             { text: "Step in, smile, and say hello.", trait: "initiator" },
@@ -77,16 +78,23 @@ const stepsData = [
 ];
 
 const StepIndicator = ({ total, current }: { total: number, current: number }) => (
-    <Layout style={{ flexDirection: 'row', justifyContent: 'center', marginBottom: 10 }}>
+    <Layout style={{ 
+        flexDirection: 'row', 
+        justifyContent: 'center', 
+        marginBottom: 16,
+        alignItems: 'center'
+    }}>
         {Array.from({ length: total }).map((_, index) => (
             <Layout
                 key={index}
                 style={{
-                    width: 10,
-                    height: 10,
-                    borderRadius: 5,
-                    marginHorizontal: 4,
-                    backgroundColor: index === current ? '#3366FF' : '#E4E9F2',
+                    width: 12,
+                    height: 12,
+                    borderRadius: 6,
+                    marginHorizontal: 6,
+                    backgroundColor: index === current ? colors.primary : colors.gray200,
+                    borderWidth: index === current ? 0 : 1,
+                    borderColor: colors.gray300,
                 }}
             />
         ))}
@@ -183,38 +191,69 @@ const OnboardingGroupBehaviorInsightsQuestionsScreen = () => {
             <Layout
                 style={{
                     alignItems: 'center',
-                    justifyContent: 'flex-end', // aligns title to bottom within 200 height
+                    justifyContent: 'flex-end',
                     height: 200,
-                    paddingHorizontal: 20,
-                    paddingBottom: 20,
+                    paddingHorizontal: 24,
+                    paddingBottom: 24,
                 }}
             >
-                <Text appearance="hint" style={{ textAlign: 'center', marginBottom: 5 }}>
+                <Text style={{ 
+                    textAlign: 'center', 
+                    marginBottom: 8,
+                    fontSize: 14,
+                    color: colors.gray600,
+                    fontWeight: '500'
+                }}>
                     Step {stepIndex + 1} of {stepsData.length}
                 </Text>
                 <StepIndicator total={stepsData.length} current={stepIndex} />
-                <Text category="h3" style={{ textAlign: 'center', marginTop: 16 }}>
+                <Text style={{ 
+                    textAlign: 'center', 
+                    marginTop: 16,
+                    fontSize: 28,
+                    fontWeight: '700',
+                    color: colors.gray900,
+                    letterSpacing: -0.5
+                }}>
                     {currentStep.title}
                 </Text>
             </Layout>
-            <Layout style={{ height: 50 }}>
+            
+            <Layout style={{ height: 60, justifyContent: 'center' }}>
                 {feedback && (
                     <AnimatedFeedback
                         message={feedback}
                         onAnimationEnd={() => {
                             setFeedback(null);
-                            setIsFeedbackAnimating(false); // allow interaction again
+                            setIsFeedbackAnimating(false);
                         }}
                     />
                 )}
             </Layout>
-            <Layout style={{ flex: 1 }}>
-                <Text category="s1" style={{ marginVertical: 20 }}>{currentStep.question}</Text>
+            
+            <Layout style={{ flex: 1, paddingHorizontal: 24 }}>
+                <Text style={{ 
+                    marginVertical: 24,
+                    fontSize: 18,
+                    lineHeight: 26,
+                    color: colors.gray700,
+                    fontWeight: '500',
+                    textAlign: 'center'
+                }}>
+                    {currentStep.question}
+                </Text>
 
                 {currentStep.options.map((option: StepOptionData, answerIndex: number) => (
                     <Button
                         key={answerIndex}
-                        style={{ marginVertical: 6 }}
+                        style={{
+                            marginVertical: 8,
+                            borderRadius: 12,
+                            height: 'auto',
+                            minHeight: 60,
+                            paddingVertical: 16,
+                            paddingHorizontal: 20,
+                        }}
                         onPress={() => handleOptionSelect(answerIndex)}
                         appearance={stepAnswersIndexes[stepIndex] === answerIndex ? 'filled' : 'outline'}
                         disabled={isFeedbackAnimating || isSettingUserGroupBehavior}
@@ -225,8 +264,12 @@ const OnboardingGroupBehaviorInsightsQuestionsScreen = () => {
 
                 <Button
                     onPress={handleSkip}
-                    style={{ marginTop: 30 }}
+                    style={{
+                        marginTop: 32,
+                        marginBottom: 20,
+                    }}
                     disabled={isFeedbackAnimating || isSettingUserGroupBehavior}
+                    appearance="ghost"
                 >
                     Skip
                 </Button>

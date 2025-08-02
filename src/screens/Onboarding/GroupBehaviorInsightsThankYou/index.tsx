@@ -13,17 +13,12 @@ const OnboardingGroupBehaviorInsightsThankYouScreen = () => {
 
     return (
         <Layout style={styles.container}>
-            <Text style={styles.title}>Thank you for sharing your story and your time with us.</Text>
+            <Text style={styles.title}>Thank you for sharing your story with us.</Text>
 
             <Layout style={styles.subtitleContainer}>
-                <Text style={styles.subtitle}>Your openness helps us build a space where real connections can grow.</Text>
-                <Text style={styles.subtitle}>At Breakice, trust, safety, and respect are at the heart of everything we do.</Text>
-                <Text style={styles.subtitle}>We ask all members to approach each interaction with kindness and empathy.</Text>
-                <Text style={styles.subtitle}>We truly believe that when people feel safe and seen, beautiful things can happen.</Text>
-                <Text style={styles.subtitle}>We’re excited to see the connections you’ll create.</Text>
-                <Text style={styles.subtitle}>Welcome aboard.</Text>
-                <Text style={styles.subtitle}>With love,</Text>
-                <Text style={styles.subtitle}>The Breakice Team</Text>
+                <Text style={styles.subtitle}>Your openness helps us build a space where real connections can grow, and we ask everyone to approach interactions with kindness.</Text>
+                <Text style={styles.subtitle}>At Breakice, trust, safety, and respect are at the heart of everything we do, and we believe beautiful things happen when people feel safe and seen.</Text>
+                <Text style={styles.subtitle}>We're excited to see the connections you'll create. Welcome aboard!</Text>
             </Layout>
 
             <Button onPress={handleContinue} style={styles.button}>
