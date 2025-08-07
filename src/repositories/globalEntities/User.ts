@@ -34,6 +34,24 @@ export interface LocationData {
     lng: number
 }
 
+export interface GroupBehaviorFactors {
+    "leadership": number,
+    "energy": number,
+    "introversion": number,
+    "empathy": number,
+    "boundarySetting": number,
+    "collaboration": number,
+    "communicationStyle": number,
+    "stressResponse": number,
+    "creativity": number,
+    "supportStyle": number,
+    "socialSafety": number,
+    "emotionalHonesty": number,
+    "lightness": number,
+    "curiosity": number,
+    "connectionSeeking": number
+}
+
 export interface User {
     id: string,                 // The Cognito user's id
     name: string,
@@ -49,7 +67,10 @@ export interface User {
         personalExperience?: {
             description: string
         },
-        behavior?: string
+        behavior?: {
+            description: string,
+            factors: GroupBehaviorFactors,
+        }
     },
     match?: {
         id: string,
@@ -68,8 +89,7 @@ export function initUser({ name, surname, gender, country, location, yearOfBirth
         yearOfBirth,
         languages,
         groupProfile: {
-            insights: [],
-            behavior: ""
+            insights: []
         },
         profileSectionsStatus: {
             [PROFILE_SECTION_KEYS.PERSONAL_INFORMATION]: PROFILE_SECTION_STATUS.PENDING,
