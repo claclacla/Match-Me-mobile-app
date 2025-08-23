@@ -8,7 +8,7 @@ const OnboardingGroupBehaviorInsightsThankYouScreen = () => {
     const navigation = useNavigation<ApplicationNavigationProp>();
 
     const handleContinue = async () => {
-        navigation.replace('MainNavigator', { screen: 'MainProfile' });
+        navigation.replace('MatcherNavigator', { screen: 'MatcherAdventureSelector' });
     };
 
     return (
