@@ -22,7 +22,9 @@ export async function useHandleSignInUserFlow({ navigation, user }: { navigation
             navigation.replace('OnboardingNavigator', { screen: "OnboardingGroupBehaviorInsightsCover" });
         }
 
-        // TO DO: Add the other profile sections check here ... ...
+        else if (user.match?.id === undefined) {
+            navigation.replace('MatcherNavigator', { screen: "MatcherAdventureSelector" });
+        }
 
         else {
             navigation.replace("MainNavigator", { screen: "MainProfile" });
