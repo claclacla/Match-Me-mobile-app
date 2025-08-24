@@ -17,6 +17,7 @@ interface AdventureCardProps {
     tags: string[];
     isActive?: boolean;
     status?: string;
+    onPress?: (type: AdventureType) => void;
 }
 
 const AdventureCard: React.FC<AdventureCardProps> = ({
@@ -29,7 +30,8 @@ const AdventureCard: React.FC<AdventureCardProps> = ({
     quote,
     tags,
     isActive = true,
-    status
+    status,
+    onPress
 }) => {
     const cardStyle = {
         ...styles.card,
@@ -38,7 +40,9 @@ const AdventureCard: React.FC<AdventureCardProps> = ({
     };
 
     const handlePress = () => {
-
+        if (isActive && onPress) {
+            onPress(type);
+        }
     };
 
     return (

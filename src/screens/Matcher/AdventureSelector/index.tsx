@@ -74,6 +74,13 @@ const adventuresData: AdventureData[] = [
 const MatcherAdventureSelectorScreen = () => {
     const navigation = useNavigation<ApplicationNavigationProp>();
 
+    const handleAdventureSelect = (adventureType: AdventureType) => {
+        navigation.navigate('MatcherNavigator', { 
+            screen: 'MatcherPreferencesSelector',
+            params: { adventureType }
+        });
+    };
+
     return (
         <Layout style={styles.container}>
             {/* Header Section */}
@@ -104,6 +111,7 @@ const MatcherAdventureSelectorScreen = () => {
                         tags={adventure.tags}
                         isActive={adventure.isActive}
                         status={adventure.status}
+                        onPress={handleAdventureSelect}
                     />
                 ))}
             </ScrollView>
