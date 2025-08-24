@@ -1,7 +1,7 @@
 import { MultiSelect } from 'react-native-element-dropdown';
 import { Layout } from '@ui-kitten/components';
 
-import styles from '../../../../../styles';
+import styles from '../../styles';
 
 interface LanguageSelectorProps {
     selectedLanguages: string[];

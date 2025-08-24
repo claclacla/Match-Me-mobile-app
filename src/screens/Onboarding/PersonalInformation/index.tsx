@@ -9,7 +9,7 @@ countries.registerLocale(en);
 
 import { ApplicationNavigationProp } from '../../../stackNavigationProps/ApplicationNavigationProp';
 
-import LanguageSelector from './components/LanguageSelector';
+import LanguageSelector from '../../../components/LanguageSelector';
 import CountrySelector from './components/CountrySelector';
 import GenderSelector from './components/GenderSelector';
 
