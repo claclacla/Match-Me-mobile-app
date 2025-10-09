@@ -1,7 +1,7 @@
 import { View, TouchableOpacity, ScrollView } from 'react-native';
 import { Layout, Text, Button } from '@ui-kitten/components';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 
 import { ApplicationNavigationProp } from '../../../stackNavigationProps/ApplicationNavigationProp';
 import styles, { colors } from '../../../styles';
@@ -20,6 +20,11 @@ const MatcherPreferencesSelectorScreen = () => {
     const { adventureType } = route.params;
     const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
     const [sameGenderPreference, setSameGenderPreference] = useState<'yes' | 'no' | null>(null);
+
+    // Form validation: require at least one language and gender preference
+    const isFormValid = useMemo(() => {
+        return selectedLanguages.length > 0 && sameGenderPreference !== null;
+    }, [selectedLanguages, sameGenderPreference]);
 
     const GenderOption = ({ value, label, isSelected, onPress }: {
         value: 'yes' | 'no';
@@ -74,6 +79,10 @@ const MatcherPreferencesSelectorScreen = () => {
     );
 
     const handleContinue = () => {
+        if (!isFormValid) {
+            return;
+        }
+
         // TODO: Submit preferences and start matching
         console.log('Selected languages:', selectedLanguages);
         console.log('Same gender preference:', sameGenderPreference);
@@ -125,7 +134,8 @@ const MatcherPreferencesSelectorScreen = () => {
             <View style={{ width: '100%', paddingHorizontal: 20, paddingBottom: 20 }}>
                 <Button 
                     onPress={handleContinue}
-                    style={styles.button}
+                    style={isFormValid ? styles.button : styles.buttonDisabled}
+                    disabled={!isFormValid}
                 >
                     Start Matching
                 </Button>
