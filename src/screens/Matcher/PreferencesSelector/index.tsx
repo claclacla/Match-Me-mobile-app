@@ -1,5 +1,5 @@
-import { View, TouchableOpacity } from 'react-native';
-import { Layout, Text } from '@ui-kitten/components';
+import { View, TouchableOpacity, ScrollView } from 'react-native';
+import { Layout, Text, Button } from '@ui-kitten/components';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { useState } from 'react';
 
@@ -73,40 +73,63 @@ const MatcherPreferencesSelectorScreen = () => {
         </TouchableOpacity>
     );
 
+    const handleContinue = () => {
+        // TODO: Submit preferences and start matching
+        console.log('Selected languages:', selectedLanguages);
+        console.log('Same gender preference:', sameGenderPreference);
+        console.log('Adventure type:', adventureType);
+        
+        // Navigate to next screen or trigger matching
+        navigation.replace('MainNavigator', { screen: 'MainMatch' });
+    };
+
     return (
-        <Layout style={styles.container}>
+        <Layout style={[styles.container, { justifyContent: 'flex-start', paddingTop: 80 }]}>
+            <ScrollView 
+                style={{ flex: 1, width: '100%' }}
+                contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 20 }}
+                showsVerticalScrollIndicator={false}
+            >
+                <Text style={styles.title}>
+                    Your ideal group
+                </Text>
+                <Text style={[styles.subtitle, { marginBottom: 56 }]}>
+                    Let us know your group preferences or skip this page
+                </Text>
 
-            <Text style={styles.title}>
-                Your ideal group
-            </Text>
-            <Text style={[styles.subtitle, { marginBottom: 56 }]}>
-                Let us know your group preferences or skip this page
-            </Text>
+                <Text style={[styles.subtitle, { textAlign: 'left' }]}>
+                    Do you prefer your group to have a specific language in common?
+                </Text>
+                <LanguageSelector
+                    selectedLanguages={selectedLanguages}
+                    setSelectedLanguages={setSelectedLanguages}
+                />
 
-            <Text style={[styles.subtitle, { textAlign: 'left' }]}>
-                Do you prefer your group to have a specific language in common?
-            </Text>
-            <LanguageSelector
-                selectedLanguages={selectedLanguages}
-                setSelectedLanguages={setSelectedLanguages}
-            />
+                <Text style={[styles.subtitle, { textAlign: 'left' }]}>
+                    Are you looking for a group of persons the same gender as you?
+                </Text>
+                <GenderOption
+                    value="yes"
+                    label="Yes, I prefer same gender"
+                    isSelected={sameGenderPreference === 'yes'}
+                    onPress={() => setSameGenderPreference('yes')}
+                />
+                <GenderOption
+                    value="no"
+                    label="No, I'm open to any gender"
+                    isSelected={sameGenderPreference === 'no'}
+                    onPress={() => setSameGenderPreference('no')}
+                />
+            </ScrollView>
 
-            <Text style={[styles.subtitle, { textAlign: 'left' }]}>
-                Are you looking for a group of persons the same gender as you?
-            </Text>
-            <GenderOption
-                value="yes"
-                label="Yes, I prefer same gender"
-                isSelected={sameGenderPreference === 'yes'}
-                onPress={() => setSameGenderPreference('yes')}
-            />
-            <GenderOption
-                value="no"
-                label="No, I'm open to any gender"
-                isSelected={sameGenderPreference === 'no'}
-                onPress={() => setSameGenderPreference('no')}
-            />
-
+            <View style={{ width: '100%', paddingHorizontal: 20, paddingBottom: 20 }}>
+                <Button 
+                    onPress={handleContinue}
+                    style={styles.button}
+                >
+                    Start Matching
+                </Button>
+            </View>
         </Layout>
     );
 };
