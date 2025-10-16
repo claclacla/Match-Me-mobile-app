@@ -25,7 +25,7 @@ export default function InitScreen() {
                 const key = await getIdTokenIfSignedIn();
 
                 if (key === undefined) {
-                    navigation.replace("Signin");
+                    navigation.replace("SigninSignupNavigator");
                     return;
                 }
 

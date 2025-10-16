@@ -30,13 +30,13 @@ export function useAuthentication() {
             }
 
         } catch (error: any) {
-            console.error('Error: ', error);
-
+            // Only log unexpected errors, not expected ones like user already exists
             if (error.name === 'UsernameExistsException') {
                 throw new Error('This user already exists!');
             } else if (error.name === 'InvalidPasswordException') {
                 throw new Error('Wrong password!');
             } else {
+                console.error('SignUp error: ', error);
                 throw new Error('Error: ' + error.message);
             }
         }

@@ -21,7 +21,7 @@ import OnboardingGroupBehaviorInsightsThankYouScreen from '../GroupBehaviorInsig
 
 const Stack = createStackNavigator<OnboardingScreensList>();
 
-function SignupNavigator() {
+function OnboardingNavigator() {
     return (
         <Stack.Navigator initialRouteName={"OnboardingCover"}>
             <Stack.Screen name="OnboardingCover" component={OnboardingCoverScreen} options={{ headerShown: false }} />
@@ -43,4 +43,4 @@ function SignupNavigator() {
     );
 }
 
-export default SignupNavigator;
+export default OnboardingNavigator;

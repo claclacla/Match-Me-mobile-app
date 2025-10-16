@@ -7,8 +7,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { ApplicationScreensList } from './src/screensList/ApplicationScreensList';
 
 import InitScreen from './src/screens/InitScreen';
-import SigninScreen from './src/screens/Signin';
-import SignupNavigator from './src/screens/Signup/Navigator';
+import SigninSignupNavigator from './src/screens/SigninSignup/Navigator';
 import OnboardingNavigator from './src/screens/Onboarding/Navigator';
 
 import { Amplify } from 'aws-amplify';
@@ -20,14 +19,26 @@ Amplify.configure(awsconfig);
 
 const Stack = createStackNavigator<ApplicationScreensList>();
 
+// Custom theme to allow background colors to show through
+const customTheme = {
+    ...eva.light,
+    'background-basic-color-1': 'transparent',
+    'background-basic-color-2': 'transparent',
+    'background-basic-color-3': 'transparent',
+    'background-basic-color-4': 'transparent',
+};
+
 export default function App(): React.ReactElement {
     return (
-        <ApplicationProvider {...eva} theme={eva.light}>
+        <ApplicationProvider {...eva} theme={customTheme}>
             <NavigationContainer>
                 <Stack.Navigator initialRouteName={"Init"}>
                     <Stack.Screen name="Init" component={InitScreen} options={{ headerShown: false }} />
-                    <Stack.Screen name="Signin" component={SigninScreen} options={{ headerShown: false }} />
-                    <Stack.Screen name="SignupNavigator" component={SignupNavigator} options={{ headerShown: false }} />
+                    <Stack.Screen 
+                        name="SigninSignupNavigator" 
+                        component={SigninSignupNavigator} 
+                        options={{ headerShown: false }} 
+                    />
                     <Stack.Screen name="OnboardingNavigator" component={OnboardingNavigator} options={{ headerShown: false }} />
                     <Stack.Screen name="MatcherNavigator" component={MatcherNavigator} options={{ headerShown: false }} />
                     <Stack.Screen name="MainNavigator" component={MainNavigator} options={{ headerShown: false }} />
