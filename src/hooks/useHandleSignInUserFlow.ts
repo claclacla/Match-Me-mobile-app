@@ -4,19 +4,19 @@ import { PROFILE_SECTION_STATUS, User } from "../repositories/globalEntities/Use
 
 export async function useHandleSignInUserFlow({ navigation, user }: { navigation: ApplicationNavigationProp, user: User | undefined }) {
 
-    // First onboarding step: Personal information
+    // First signup step: Personal information
 
     if (user === undefined) {
-        navigation.replace('OnboardingNavigator', { screen: "OnboardingPersonalInformation" });
+        navigation.replace('SigninSignupNavigator', { screen: "SigninSignupPersonalInformation" });
     }
     else {
         console.log("useHandleSignInUserFlow: User profile sections status: ", user.profileSectionsStatus);
 
         if (user.profileSectionsStatus.avatar === PROFILE_SECTION_STATUS.PENDING) {
-            navigation.replace('OnboardingNavigator', { screen: "OnboardingUploadAvatar" });
+            navigation.replace('SigninSignupNavigator', { screen: "SigninSignupUploadAvatar" });
         }
         else if (user.profileSectionsStatus.groupPersonalExperience === PROFILE_SECTION_STATUS.PENDING) {
-            navigation.replace('OnboardingNavigator', { screen: "OnboardingGroupPersonalExperienceRecording" });
+            navigation.replace('SigninSignupNavigator', { screen: "SigninSignupVoiceRecording" });
         }
 
         else if (user.match?.id === undefined) {

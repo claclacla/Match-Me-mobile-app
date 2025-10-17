@@ -1,6 +1,8 @@
 import React, { useState, useMemo } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, Platform, TextInput, Modal, FlatList, StatusBar } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { CompositeNavigationProp } from '@react-navigation/native';
 
 import { useAuthentication } from '../../../hooks/useAuthentication';
 import { useHandleSignInUserFlow } from '../../../hooks/useHandleSignInUserFlow';
@@ -34,8 +36,10 @@ const COUNTRIES = [
   { code: 'ES', name: 'Spain', dialCode: '+34', flag: '🇪🇸' },
 ];
 
-const SigninSignupScreen = () => {
-    const navigation = useNavigation<ApplicationNavigationProp>();
+type NavigationProp = ApplicationNavigationProp;
+
+const SigninSignupMainScreen = () => {
+    const navigation = useNavigation<NavigationProp>();
     const { signIn, signUp } = useAuthentication();
 
     const setUser = useUserStore((state: any) => state.setUser);
@@ -78,8 +82,9 @@ const SigninSignupScreen = () => {
                 console.log('New user registered successfully');
 
                 // User doesn't exist, signup successful - navigate to confirmation
-                navigation.navigate('SigninSignupConfirmation', { 
-                    username: fullPhoneNumber 
+                navigation.navigate('SigninSignupNavigator', { 
+                    screen: 'SigninSignupConfirmation',
+                    params: { username: fullPhoneNumber }
                 });
 
             } catch (signUpError: any) {
@@ -535,4 +540,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SigninSignupScreen;
+export default SigninSignupMainScreen;

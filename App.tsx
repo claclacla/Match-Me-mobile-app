@@ -8,7 +8,6 @@ import { ApplicationScreensList } from './src/screensList/ApplicationScreensList
 
 import InitScreen from './src/screens/InitScreen';
 import SigninSignupNavigator from './src/screens/SigninSignup/Navigator';
-import OnboardingNavigator from './src/screens/Onboarding/Navigator';
 
 import { Amplify } from 'aws-amplify';
 import awsconfig from './src/aws-exports';
@@ -39,7 +38,6 @@ export default function App(): React.ReactElement {
                         component={SigninSignupNavigator} 
                         options={{ headerShown: false }} 
                     />
-                    <Stack.Screen name="OnboardingNavigator" component={OnboardingNavigator} options={{ headerShown: false }} />
                     <Stack.Screen name="MatcherNavigator" component={MatcherNavigator} options={{ headerShown: false }} />
                     <Stack.Screen name="MainNavigator" component={MainNavigator} options={{ headerShown: false }} />
                 </Stack.Navigator>

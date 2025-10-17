@@ -2,12 +2,13 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Layout, Text, Button, Input, Select, SelectItem, IndexPath } from '@ui-kitten/components';
 
 import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 import countries from 'i18n-iso-countries';
 import en from 'i18n-iso-countries/langs/en.json';
 countries.registerLocale(en);
 
-import { ApplicationNavigationProp } from '../../../stackNavigationProps/ApplicationNavigationProp';
+import { SigninSignupScreensList } from '../../../screensList/SigninSignupScreensList';
 
 import LanguageSelector from '../../../components/LanguageSelector';
 import CountrySelector from './components/CountrySelector';
@@ -19,8 +20,10 @@ import useUserStore from '../../../repositories/localStorage/useUserStore';
 import styles from '../../../styles';
 import { View } from 'react-native';
 
-const OnboardingPersonalInformationScreen = () => {
-    const navigation = useNavigation<ApplicationNavigationProp>();
+type NavigationProp = StackNavigationProp<SigninSignupScreensList, 'SigninSignupPersonalInformation'>;
+
+const SigninSignupPersonalInformationScreen = () => {
+    const navigation = useNavigation<NavigationProp>();
 
     const [name, setName] = useState<string | undefined>(undefined);
     const [surname, setSurname] = useState<string | undefined>(undefined);
@@ -75,7 +78,7 @@ const OnboardingPersonalInformationScreen = () => {
         console.log('Saving user to store:', user);
         setUser(user);
 
-        navigation.replace('OnboardingNavigator', { screen: "OnboardingLocation" });
+        navigation.navigate('SigninSignupLocation');
     };
 
     return (
@@ -137,4 +140,4 @@ const OnboardingPersonalInformationScreen = () => {
     );
 };
 
-export default OnboardingPersonalInformationScreen;
+export default SigninSignupPersonalInformationScreen;

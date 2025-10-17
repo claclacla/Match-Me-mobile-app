@@ -3,8 +3,9 @@ import { Alert } from "react-native";
 import { Avatar, Button, Layout, Text } from "@ui-kitten/components";
 import * as ImagePicker from "expo-image-picker";
 import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from '@react-navigation/stack';
 
-import { ApplicationNavigationProp } from "../../../stackNavigationProps/ApplicationNavigationProp";
+import { SigninSignupScreensList } from '../../../screensList/SigninSignupScreensList';
 
 import { setUserProfileSectionStatus } from "../../../repositories/api/setUserProfileSectionStatus";
 import { uploadUserAvatar } from "../../../repositories/api/uploadUserAvatar";
@@ -14,8 +15,10 @@ import { PROFILE_SECTION_KEYS, PROFILE_SECTION_STATUS, User } from "../../../rep
 
 import styles from "../../../styles";
 
-const OnboardingUploadAvatarScreen = () => {
-    const navigation = useNavigation<ApplicationNavigationProp>();
+type NavigationProp = StackNavigationProp<SigninSignupScreensList, 'SigninSignupUploadAvatar'>;
+
+const SigninSignupUploadAvatarScreen = () => {
+    const navigation = useNavigation<NavigationProp>();
 
     const key: string = useAuthenticationStore((state: any) => state.key);
     const user: User = useUserStore((state: any) => state.user);
@@ -42,7 +45,7 @@ const OnboardingUploadAvatarScreen = () => {
                 };
                 setUser(updatedUser);
 
-                navigation.replace('OnboardingNavigator', { screen: "OnboardingGroupPersonalExperienceRecording" });
+                navigation.navigate('SigninSignupVoiceRecording');
             } else {
                 Alert.alert("Upload failed", "There was a problem uploading the avatar. Please try again.");
             }
@@ -82,7 +85,7 @@ const OnboardingUploadAvatarScreen = () => {
         }
 
         await setUserProfileSectionStatus({ key, userId: user.id, section: PROFILE_SECTION_KEYS.AVATAR, value: PROFILE_SECTION_STATUS.SKIPPED });
-        navigation.replace('OnboardingNavigator', { screen: "OnboardingGroupPersonalExperienceRecording" });
+        navigation.navigate('SigninSignupVoiceRecording');
     }
 
     useEffect(() => {
@@ -126,4 +129,4 @@ const OnboardingUploadAvatarScreen = () => {
     );
 };
 
-export default OnboardingUploadAvatarScreen;
+export default SigninSignupUploadAvatarScreen;

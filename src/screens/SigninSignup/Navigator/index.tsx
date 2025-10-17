@@ -4,6 +4,10 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { SigninSignupScreensList } from '../../../screensList/SigninSignupScreensList';
 import SigninSignupMainScreen from '../Main';
 import SigninSignupConfirmationScreen from '../Confirmation';
+import SigninSignupPersonalInformationScreen from '../PersonalInformation';
+import SigninSignupLocationScreen from '../Location';
+import SigninSignupUploadAvatarScreen from '../UploadAvatar';
+import SigninSignupVoiceRecordingScreen from '../VoiceRecording';
 
 const Stack = createStackNavigator<SigninSignupScreensList>();
 
@@ -22,6 +26,26 @@ export default function SigninSignupNavigator() {
                     headerShown: false,
                     cardStyle: { backgroundColor: '#FAF5F1' }
                 }} 
+            />
+            <Stack.Screen 
+                name="SigninSignupPersonalInformation" 
+                component={SigninSignupPersonalInformationScreen} 
+                options={{ headerShown: false }} 
+            />
+            <Stack.Screen 
+                name="SigninSignupLocation" 
+                component={SigninSignupLocationScreen} 
+                options={{ headerShown: false }} 
+            />
+            <Stack.Screen 
+                name="SigninSignupUploadAvatar" 
+                component={SigninSignupUploadAvatarScreen} 
+                options={{ headerShown: false }} 
+            />
+            <Stack.Screen 
+                name="SigninSignupVoiceRecording" 
+                component={SigninSignupVoiceRecordingScreen} 
+                options={{ headerShown: false }} 
             />
         </Stack.Navigator>
     );

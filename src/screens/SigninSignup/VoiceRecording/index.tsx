@@ -40,7 +40,7 @@ const recordingOptions = {
     },
 };
 
-const OnboardingGroupPersonalExperienceRecordingScreen = () => {
+const SigninSignupVoiceRecordingScreen = () => {
     const navigation = useNavigation<ApplicationNavigationProp>();
 
     const key: string = useAuthenticationStore((state: any) => state.key);
@@ -159,7 +159,7 @@ const OnboardingGroupPersonalExperienceRecordingScreen = () => {
 
             setIsRecording(recording);
             setRecordingUri(null);
-        } catch (err) {
+        } catch (err: any) {
             console.error('Failed to start recording', err);
             
             // If recording fails, check if it's a permission issue
@@ -253,4 +253,4 @@ const OnboardingGroupPersonalExperienceRecordingScreen = () => {
     );
 }
 
-export default OnboardingGroupPersonalExperienceRecordingScreen;
+export default SigninSignupVoiceRecordingScreen;

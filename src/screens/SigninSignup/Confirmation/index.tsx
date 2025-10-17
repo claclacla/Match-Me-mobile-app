@@ -25,7 +25,7 @@ const COLORS = {
 type NavigationProp = CompositeNavigationProp<StackNavigationProp<SigninSignupScreensList>, StackNavigationProp<ApplicationScreensList>>;
 type RouteProp = StackScreenProps<SigninSignupScreensList, 'SigninSignupConfirmation'>['route'];
 
-function SignupConfirmationScreen() {
+function SigninSignupConfirmationScreen() {
     const navigation = useNavigation<NavigationProp>();
     const route = useRoute<RouteProp>();
     const { confirmSignUp } = useAuthentication();
@@ -359,4 +359,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default SignupConfirmationScreen;
+export default SigninSignupConfirmationScreen;

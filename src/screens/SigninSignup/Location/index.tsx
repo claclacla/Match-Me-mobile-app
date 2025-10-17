@@ -3,8 +3,9 @@ import { Layout, Text, Button } from '@ui-kitten/components';
 import { View, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 
-import { ApplicationNavigationProp } from '../../../stackNavigationProps/ApplicationNavigationProp';
+import { SigninSignupScreensList } from '../../../screensList/SigninSignupScreensList';
 
 import { LocationAutocompleteInput } from '../PersonalInformation/components/LocationAutocompleteInput';
 import { LocationData } from '../../../repositories/globalEntities/User';
@@ -14,8 +15,10 @@ import useAuthenticationStore from "../../../repositories/localStorage/useAuthen
 
 import styles from '../../../styles';
 
-const OnboardingLocationScreen = () => {
-    const navigation = useNavigation<ApplicationNavigationProp>();
+type NavigationProp = StackNavigationProp<SigninSignupScreensList, 'SigninSignupLocation'>;
+
+const SigninSignupLocationScreen = () => {
+    const navigation = useNavigation<NavigationProp>();
 
     const [location, setLocation] = useState<LocationData | undefined>(undefined);
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -48,7 +51,7 @@ const OnboardingLocationScreen = () => {
             const insertedUser = await insertUser({ key, user: updatedUser });
             setUser(insertedUser);
 
-            navigation.replace('OnboardingNavigator', { screen: "OnboardingUploadAvatar" });
+            navigation.navigate('SigninSignupUploadAvatar');
         } catch (error) {
             console.error('Error inserting user:', error);
             // Handle error appropriately
@@ -96,4 +99,4 @@ const OnboardingLocationScreen = () => {
     );
 };
 
-export default OnboardingLocationScreen; 
+export default SigninSignupLocationScreen; 
