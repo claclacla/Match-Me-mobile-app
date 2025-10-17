@@ -16,7 +16,7 @@ export async function useHandleSignInUserFlow({ navigation, user }: { navigation
             navigation.replace('OnboardingNavigator', { screen: "OnboardingUploadAvatar" });
         }
         else if (user.profileSectionsStatus.groupPersonalExperience === PROFILE_SECTION_STATUS.PENDING) {
-            navigation.replace('OnboardingNavigator', { screen: "OnboardingGroupPersonalExperienceCover" });
+            navigation.replace('OnboardingNavigator', { screen: "OnboardingGroupPersonalExperienceRecording" });
         }
 
         else if (user.match?.id === undefined) {

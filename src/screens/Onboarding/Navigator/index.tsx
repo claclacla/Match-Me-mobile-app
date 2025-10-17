@@ -7,10 +7,7 @@ import OnboardingPersonalInformationScreen from '../PersonalInformation';
 import OnboardingLocationScreen from '../Location';
 import OnboardingUploadAvatarScreen from '../UploadAvatar';
 
-import OnboardingGroupPersonalExperienceCoverScreen from '../GroupPersonalExperienceCover';
-import OnboardingGroupPersonalExperienceIntroScreen from '../GroupPersonalExperienceIntro';
 import OnboardingGroupPersonalExperienceRecordingScreen from '../GroupPersonalExperienceRecording';
-import OnboardingGroupPersonalExperienceThankYouScreen from '../GroupPersonalExperienceThankYou';
 
 import OnboardingGroupBehaviorInsightsCoverScreen from '../GroupBehaviorInsightsCover';
 import OnboardingGroupBehaviorInsightsIntroScreen from '../GroupBehaviorInsightsIntro';
@@ -26,10 +23,7 @@ function OnboardingNavigator() {
             <Stack.Screen name="OnboardingLocation" component={OnboardingLocationScreen} options={{ headerShown: false }} />
             <Stack.Screen name="OnboardingUploadAvatar" component={OnboardingUploadAvatarScreen} options={{ headerShown: false }} />
 
-            <Stack.Screen name="OnboardingGroupPersonalExperienceCover" component={OnboardingGroupPersonalExperienceCoverScreen} options={{ headerShown: false }} />
-            <Stack.Screen name="OnboardingGroupPersonalExperienceIntro" component={OnboardingGroupPersonalExperienceIntroScreen} options={{ headerShown: false }} />
             <Stack.Screen name="OnboardingGroupPersonalExperienceRecording" component={OnboardingGroupPersonalExperienceRecordingScreen} options={{ headerShown: false }} />
-            <Stack.Screen name="OnboardingGroupPersonalExperienceThankYou" component={OnboardingGroupPersonalExperienceThankYouScreen} options={{ headerShown: false }} />
 
             <Stack.Screen name="OnboardingGroupBehaviorInsightsCover" component={OnboardingGroupBehaviorInsightsCoverScreen} options={{ headerShown: false }} />
             <Stack.Screen name="OnboardingGroupBehaviorInsightsIntro" component={OnboardingGroupBehaviorInsightsIntroScreen} options={{ headerShown: false }} />

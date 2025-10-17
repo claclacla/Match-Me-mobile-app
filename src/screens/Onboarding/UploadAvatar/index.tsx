@@ -42,7 +42,7 @@ const OnboardingUploadAvatarScreen = () => {
                 };
                 setUser(updatedUser);
 
-                navigation.replace('OnboardingNavigator', { screen: "OnboardingGroupPersonalExperienceCover" });
+                navigation.replace('OnboardingNavigator', { screen: "OnboardingGroupPersonalExperienceRecording" });
             } else {
                 Alert.alert("Upload failed", "There was a problem uploading the avatar. Please try again.");
             }
@@ -82,7 +82,7 @@ const OnboardingUploadAvatarScreen = () => {
         }
 
         await setUserProfileSectionStatus({ key, userId: user.id, section: PROFILE_SECTION_KEYS.AVATAR, value: PROFILE_SECTION_STATUS.SKIPPED });
-        navigation.replace('OnboardingNavigator', { screen: "OnboardingGroupPersonalExperienceCover" });
+        navigation.replace('OnboardingNavigator', { screen: "OnboardingGroupPersonalExperienceRecording" });
     }
 
     useEffect(() => {

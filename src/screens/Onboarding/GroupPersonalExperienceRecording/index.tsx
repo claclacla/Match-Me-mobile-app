@@ -128,7 +128,7 @@ const OnboardingGroupPersonalExperienceRecordingScreen = () => {
 
             setLocalStorageUserGroupPersonalExperience(userGroupPersonalExperience);
 
-            navigation.replace('OnboardingNavigator', { screen: 'OnboardingGroupPersonalExperienceThankYou' });
+            navigation.replace('MatcherNavigator', { screen: 'MatcherAdventureSelector' });
         } catch (err: any) {
             console.error("Component: Errore durante la trascrizione:", err);
         } finally {
@@ -200,7 +200,7 @@ const OnboardingGroupPersonalExperienceRecordingScreen = () => {
 
     const handleSkip = async () => {
         await setUserProfileSectionStatus({ key, userId: user.id, section: PROFILE_SECTION_KEYS.GROUP_PERSONAL_EXPERIENCE, value: PROFILE_SECTION_STATUS.SKIPPED });
-        navigation.replace('OnboardingNavigator', { screen: 'OnboardingGroupPersonalExperienceThankYou' });
+        navigation.replace('MatcherNavigator', { screen: 'MatcherAdventureSelector' });
     }
 
     if (permissionLoading) {
