@@ -8,7 +8,7 @@ const OnboardingGroupPersonalExperienceThankYouScreen = () => {
     const navigation = useNavigation<ApplicationNavigationProp>();
 
     const handleContinue = async () => {
-        navigation.replace('OnboardingNavigator', { screen: 'OnboardingGroupBehaviorInsightsCover' });
+        navigation.replace('MatcherNavigator', { screen: 'MatcherAdventureSelector' });
     };
 
     return (

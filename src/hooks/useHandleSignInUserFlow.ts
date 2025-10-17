@@ -18,9 +18,6 @@ export async function useHandleSignInUserFlow({ navigation, user }: { navigation
         else if (user.profileSectionsStatus.groupPersonalExperience === PROFILE_SECTION_STATUS.PENDING) {
             navigation.replace('OnboardingNavigator', { screen: "OnboardingGroupPersonalExperienceCover" });
         }
-        else if (user.profileSectionsStatus.groupInsights === PROFILE_SECTION_STATUS.PENDING) {
-            navigation.replace('OnboardingNavigator', { screen: "OnboardingGroupBehaviorInsightsCover" });
-        }
 
         else if (user.match?.id === undefined) {
             navigation.replace('MatcherNavigator', { screen: "MatcherAdventureSelector" });

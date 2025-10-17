@@ -52,17 +52,43 @@ const OnboardingGroupPersonalExperienceRecordingScreen = () => {
     const [isRecording, setIsRecording] = useState<Audio.Recording | null>(null);
     const [recordingUri, setRecordingUri] = useState<string | null>(null);
     const [isUploading, setIsUploading] = useState<boolean>(false);
+    const [hasPermission, setHasPermission] = useState<boolean>(false);
+    const [permissionLoading, setPermissionLoading] = useState<boolean>(true);
 
     // Request microphone permissions on mount
-
     useEffect(() => {
-        (async () => {
-            const response = await Audio.requestPermissionsAsync();
-            if (response.status !== 'granted') {
-                alert('Please grant audio recording permission!');
-            }
-        })();
+        requestPermissions();
     }, []);
+
+    const requestPermissions = async () => {
+        try {
+            setPermissionLoading(true);
+            
+            // First check if we already have permission
+            const { status: existingStatus } = await Audio.getPermissionsAsync();
+            
+            if (existingStatus === 'granted') {
+                setHasPermission(true);
+                setPermissionLoading(false);
+                return;
+            }
+
+            // If not, request permission
+            const { status } = await Audio.requestPermissionsAsync();
+            
+            if (status === 'granted') {
+                setHasPermission(true);
+            } else {
+                setHasPermission(false);
+                console.log('Audio recording permission denied');
+            }
+        } catch (error) {
+            console.error('Error requesting audio permission:', error);
+            setHasPermission(false);
+        } finally {
+            setPermissionLoading(false);
+        }
+    };
 
     /*
     async function playRecording(uri: string) {
@@ -102,7 +128,7 @@ const OnboardingGroupPersonalExperienceRecordingScreen = () => {
 
             setLocalStorageUserGroupPersonalExperience(userGroupPersonalExperience);
 
-            navigation.replace('OnboardingNavigator', { screen: 'OnboardingGroupBehaviorInsightsCover' });
+            navigation.replace('OnboardingNavigator', { screen: 'OnboardingGroupPersonalExperienceThankYou' });
         } catch (err: any) {
             console.error("Component: Errore durante la trascrizione:", err);
         } finally {
@@ -111,6 +137,16 @@ const OnboardingGroupPersonalExperienceRecordingScreen = () => {
     };
 
     const startRecording = async () => {
+        // Check permission before starting
+        if (!hasPermission) {
+            console.log('No audio permission, requesting...');
+            await requestPermissions();
+            if (!hasPermission) {
+                alert('Audio recording permission is required to record your voice message.');
+                return;
+            }
+        }
+
         try {
             await Audio.setAudioModeAsync({
                 allowsRecordingIOS: true,
@@ -125,6 +161,11 @@ const OnboardingGroupPersonalExperienceRecordingScreen = () => {
             setRecordingUri(null);
         } catch (err) {
             console.error('Failed to start recording', err);
+            
+            // If recording fails, check if it's a permission issue
+            if (err.message && err.message.includes('permission')) {
+                alert('Audio recording permission is required. Please enable it in your device settings.');
+            }
         }
     };
 
@@ -159,7 +200,16 @@ const OnboardingGroupPersonalExperienceRecordingScreen = () => {
 
     const handleSkip = async () => {
         await setUserProfileSectionStatus({ key, userId: user.id, section: PROFILE_SECTION_KEYS.GROUP_PERSONAL_EXPERIENCE, value: PROFILE_SECTION_STATUS.SKIPPED });
-        navigation.replace('OnboardingNavigator', { screen: 'OnboardingGroupBehaviorInsightsCover' });
+        navigation.replace('OnboardingNavigator', { screen: 'OnboardingGroupPersonalExperienceThankYou' });
+    }
+
+    if (permissionLoading) {
+        return (
+            <Layout style={styles.container}>
+                <Text style={styles.title}>Setting up audio...</Text>
+                <Text style={styles.subtitle}>Requesting microphone permission</Text>
+            </Layout>
+        );
     }
 
     return (
@@ -171,11 +221,25 @@ const OnboardingGroupPersonalExperienceRecordingScreen = () => {
                 <Text style={styles.subtitle}>We'll use this to give your presence shape here, not to judge, but to hold.</Text>
             </Layout>
 
-            <MicButton 
-                onPress={isRecording ? stopRecording : startRecording}
-                isRecording={isRecording !== null}
-                disabled={isUploading}
-            />
+            {!hasPermission ? (
+                <Layout style={styles.subtitleContainer}>
+                    <Text style={[styles.subtitle, { color: 'red' }]}>
+                        Audio recording permission is required to record your voice message.
+                    </Text>
+                    <Button 
+                        onPress={requestPermissions}
+                        style={styles.button}
+                    >
+                        Grant Permission
+                    </Button>
+                </Layout>
+            ) : (
+                <MicButton 
+                    onPress={isRecording ? stopRecording : startRecording}
+                    isRecording={isRecording !== null}
+                    disabled={isUploading}
+                />
+            )}
 
             <Button 
                 onPress={handleSkip} 
