@@ -3,8 +3,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import { OnboardingScreensList } from '../../../screensList/OnboardingScreensList';
 
-import OnboardingCoverScreen from '../Cover';
-
 import OnboardingPersonalInformationScreen from '../PersonalInformation';
 import OnboardingLocationScreen from '../Location';
 import OnboardingUploadAvatarScreen from '../UploadAvatar';
@@ -23,9 +21,7 @@ const Stack = createStackNavigator<OnboardingScreensList>();
 
 function OnboardingNavigator() {
     return (
-        <Stack.Navigator initialRouteName={"OnboardingCover"}>
-            <Stack.Screen name="OnboardingCover" component={OnboardingCoverScreen} options={{ headerShown: false }} />
-
+        <Stack.Navigator initialRouteName={"OnboardingPersonalInformation"}>
             <Stack.Screen name="OnboardingPersonalInformation" component={OnboardingPersonalInformationScreen} options={{ headerShown: false }} />
             <Stack.Screen name="OnboardingLocation" component={OnboardingLocationScreen} options={{ headerShown: false }} />
             <Stack.Screen name="OnboardingUploadAvatar" component={OnboardingUploadAvatarScreen} options={{ headerShown: false }} />
