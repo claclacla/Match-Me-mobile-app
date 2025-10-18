@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, Platform, TextInput, Modal, FlatList, StatusBar } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, Platform, TextInput, Modal, FlatList, StatusBar, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { CompositeNavigationProp } from '@react-navigation/native';
@@ -12,6 +12,9 @@ import { ApplicationNavigationProp } from '../../../stackNavigationProps/Applica
 import { getUser } from "../../../repositories/api/getUser";
 import useUserStore from "../../../repositories/localStorage/useUserStore";
 import { User } from '../../../repositories/globalEntities/User';
+
+// Assets
+const img = "http://localhost:3845/assets/cf7c85bd8d7e7b45cd589c173146b1d4187ab8b6.png";
 
 // Figma Design Colors
 const COLORS = {
@@ -143,7 +146,12 @@ const SigninSignupMainScreen = () => {
                 {/* Header */}
                 <View style={styles.header}>
                     <View style={styles.logoContainer}>
-                        <View style={styles.logoIcon} />
+                        <View style={styles.logoIcon}>
+                            <Image 
+                                source={{ uri: img }}
+                                style={styles.logoImage}
+                            />
+                        </View>
                         <Text style={styles.logoText}>BREAKICE</Text>
                     </View>
                 </View>
@@ -310,19 +318,28 @@ const styles = StyleSheet.create({
   logoContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
+    justifyContent: 'center',
+    marginTop: 20,
+    marginBottom: -10,
+    height: 87,
+    paddingRight: 16, // Move the logo group to the left to compensate for negative margin
   },
   logoIcon: {
-    width: 24,
-    height: 24,
-    borderRadius: 6,
-    backgroundColor: '#FFC10A',
-    borderWidth: 2,
-    borderColor: '#121212',
+    width: 72,
+    height: 72,
+    marginRight: -16,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  logoImage: {
+    width: 36,
+    height: 36,
+    resizeMode: 'contain',
   },
   logoText: {
-    fontSize: 21,
-    fontWeight: Platform.OS === 'ios' ? '700' : '800',
+    fontFamily: 'Rubik-Bold',
+    fontSize: 26,
+    fontWeight: '700',
     color: '#E23D3D',
     letterSpacing: 4.83,
   },

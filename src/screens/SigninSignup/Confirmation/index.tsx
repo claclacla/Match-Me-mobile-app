@@ -184,35 +184,36 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.background,
     },
     logoContainer: {
-        position: 'absolute',
-        top: 41,
-        left: '50%',
-        marginLeft: -141.5, // Half of 283 width
-        width: 283,
-        height: 87,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
+        marginTop: 20,
+        marginBottom: 40,
+        height: 87,
+        paddingRight: 16, // Move the logo group to the left to compensate for negative margin
     },
     logoIcon: {
-        width: 50,
-        height: 50,
-        marginRight: 15,
+        width: 72,
+        height: 72,
+        marginRight: -16,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     logoImage: {
-        width: 50,
-        height: 50,
+        width: 36,
+        height: 36,
+        resizeMode: 'contain',
     },
     logoText: {
-        fontFamily: Platform.OS === 'ios' ? 'Rubik' : 'Rubik-Bold',
-        fontSize: 21,
+        fontFamily: 'Rubik-Bold',
+        fontSize: 26,
         fontWeight: '700',
-        color: COLORS.red,
+        color: '#E23D3D',
         letterSpacing: 4.83,
     },
     title: {
         position: 'absolute',
-        top: 178,
+        top: 220,
         left: '50%',
         marginLeft: -169.5, // Half of 339 width
         width: 339,
@@ -224,7 +225,7 @@ const styles = StyleSheet.create({
     },
     subtitle: {
         position: 'absolute',
-        top: 238,
+        top: 280,
         left: '50%',
         marginLeft: -158, // Half of 316 width
         width: 316,
@@ -237,7 +238,7 @@ const styles = StyleSheet.create({
     },
     inputContainer: {
         position: 'absolute',
-        top: 383,
+        top: 420,
         left: '50%',
         marginLeft: -131, // Half of 262 width
         width: 262,
@@ -268,7 +269,7 @@ const styles = StyleSheet.create({
     },
     continueButton: {
         position: 'absolute',
-        top: 467,
+        top: 504,
         left: '50%',
         marginLeft: -131, // Half of 262 width
         width: 262,
