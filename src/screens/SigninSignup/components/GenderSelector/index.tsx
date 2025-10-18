@@ -1,9 +1,9 @@
 import { Dropdown } from 'react-native-element-dropdown';
 import { Layout } from '@ui-kitten/components';
 
-import { GENDER_OPTIONS, UserGender } from '../../../../../repositories/globalEntities/User';
+import { GENDER_OPTIONS, UserGender } from '../../../../repositories/globalEntities/User';
 
-import styles from '../../../../../styles';
+import styles from '../../../../styles';
 
 interface GenderSelectorProps {
   selectedGender: UserGender | undefined;

@@ -7,7 +7,7 @@ export async function useHandleSignInUserFlow({ navigation, user }: { navigation
     // First signup step: Personal information
 
     if (user === undefined) {
-        navigation.replace('SigninSignupNavigator', { screen: "SigninSignupPersonalInformation" });
+        navigation.replace('SigninSignupNavigator', { screen: "SigninSignupBasicInfo" });
     }
     else {
         console.log("useHandleSignInUserFlow: User profile sections status: ", user.profileSectionsStatus);

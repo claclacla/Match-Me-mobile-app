@@ -4,7 +4,7 @@ import { Dropdown } from 'react-native-element-dropdown';
 import countries from 'i18n-iso-countries';
 import en from 'i18n-iso-countries/langs/en.json';
 
-import styles from '../../../../../styles';
+import styles from '../../../../styles';
 import { Layout } from '@ui-kitten/components';
 
 countries.registerLocale(en);
@@ -12,9 +12,10 @@ countries.registerLocale(en);
 type CountryDropdownProps = {
     selectedCountry?: string;
     onSelectCountry: (country: string) => void;
+    placeholder?: string;
 };
 
-const CountryDropdown: React.FC<CountryDropdownProps> = ({ selectedCountry, onSelectCountry }) => {
+const CountryDropdown: React.FC<CountryDropdownProps> = ({ selectedCountry, onSelectCountry, placeholder = "Select your country" }) => {
     const countryList = useMemo(() => {
         const names = countries.getNames('en', { select: 'official' });
 
@@ -41,7 +42,7 @@ const CountryDropdown: React.FC<CountryDropdownProps> = ({ selectedCountry, onSe
                 data={countryList}
                 labelField="label"
                 valueField="value"
-                placeholder="Select your country"
+                placeholder={placeholder}
                 value={value}
                 onChange={handleChange}
                 maxHeight={300}

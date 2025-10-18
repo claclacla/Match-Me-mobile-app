@@ -4,7 +4,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { SigninSignupScreensList } from '../../../screensList/SigninSignupScreensList';
 import SigninSignupMainScreen from '../Main';
 import SigninSignupConfirmationScreen from '../Confirmation';
-import SigninSignupPersonalInformationScreen from '../PersonalInformation';
+import SigninSignupBasicInfoScreen from '../BasicInfo';
+import SigninSignupPersonalDetailsScreen from '../PersonalDetails';
 import SigninSignupLocationScreen from '../Location';
 import SigninSignupUploadAvatarScreen from '../UploadAvatar';
 import SigninSignupVoiceRecordingScreen from '../VoiceRecording';
@@ -28,8 +29,13 @@ export default function SigninSignupNavigator() {
                 }} 
             />
             <Stack.Screen 
-                name="SigninSignupPersonalInformation" 
-                component={SigninSignupPersonalInformationScreen} 
+                name="SigninSignupBasicInfo" 
+                component={SigninSignupBasicInfoScreen} 
+                options={{ headerShown: false }} 
+            />
+            <Stack.Screen 
+                name="SigninSignupPersonalDetails" 
+                component={SigninSignupPersonalDetailsScreen} 
                 options={{ headerShown: false }} 
             />
             <Stack.Screen 

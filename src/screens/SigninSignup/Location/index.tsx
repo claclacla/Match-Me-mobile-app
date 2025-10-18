@@ -7,7 +7,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 
 import { SigninSignupScreensList } from '../../../screensList/SigninSignupScreensList';
 
-import { LocationAutocompleteInput } from '../PersonalInformation/components/LocationAutocompleteInput';
+import { LocationAutocompleteInput } from '../components/LocationAutocompleteInput';
 import { LocationData } from '../../../repositories/globalEntities/User';
 import { insertUser } from "../../../repositories/api/insertUser";
 import useUserStore from '../../../repositories/localStorage/useUserStore';

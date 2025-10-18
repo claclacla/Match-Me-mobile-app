@@ -2,10 +2,10 @@ import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { View, TouchableOpacity, FlatList, Text as RNText, Keyboard } from 'react-native';
 import { Input } from '@ui-kitten/components';
 
-import { LOCATION_IQ } from "../../../../../config/config.json";
-import { LocationData } from '../../../../../repositories/globalEntities/User';
+import { LOCATION_IQ } from "../../../../config/config.json";
+import { LocationData } from '../../../../repositories/globalEntities/User';
 
-import styles from '../../../../../styles';
+import styles from '../../../../styles';
 
 export const LocationAutocompleteInput = ({
     onSelectLocation
