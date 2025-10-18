@@ -12,7 +12,7 @@ import CountrySelector from '../components/CountrySelector';
 import useUserStore from '../../../repositories/localStorage/useUserStore';
 
 // Assets
-const img = "http://localhost:3845/assets/cf7c85bd8d7e7b45cd589c173146b1d4187ab8b6.png";
+const logoImage = require('../../../../assets/images/logo.png');
 
 type NavigationProp = StackNavigationProp<SigninSignupScreensList, 'SigninSignupBasicInfo'>;
 
@@ -68,7 +68,7 @@ const SigninSignupBasicInfoScreen = () => {
             <View style={figmaStyles.logoHeader}>
                 <View style={figmaStyles.logoIcon}>
                     <Image 
-                        source={{ uri: img }}
+                        source={logoImage}
                         style={figmaStyles.logoImage}
                     />
                 </View>

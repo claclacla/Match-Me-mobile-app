@@ -14,8 +14,8 @@ import useUserStore from '../../../repositories/localStorage/useUserStore';
 import useAuthenticationStore from "../../../repositories/localStorage/useAuthenticationStore";
 
 // Assets
-const img1 = "http://localhost:3845/assets/cf7c85bd8d7e7b45cd589c173146b1d4187ab8b6.png";
-const imgDownArrow1 = "http://localhost:3845/assets/bcedc4b2b7d51499b885be3cbd4a2cfde3b64ad1.png";
+const logoImage = require('../../../../assets/images/logo.png');
+const backArrowImage = require('../../../../assets/images/back-arrow.png');
 
 type NavigationProp = StackNavigationProp<SigninSignupScreensList, 'SigninSignupLocation'>;
 
@@ -73,14 +73,14 @@ const SigninSignupLocationScreen = () => {
             {/* Header with Back Button and Logo */}
             <View style={figmaStyles.headerContainer}>
                 <TouchableOpacity style={figmaStyles.backButton} onPress={handleBack}>
-                    <Image source={{ uri: imgDownArrow1 }} style={figmaStyles.backIcon} />
+                    <Image source={backArrowImage} style={figmaStyles.backIcon} />
                     <Text style={figmaStyles.backText}>Back</Text>
                 </TouchableOpacity>
                 
                 <View style={figmaStyles.logoHeader}>
                     <View style={figmaStyles.logoIcon}>
                         <Image 
-                            source={{ uri: img1 }}
+                            source={logoImage}
                             style={figmaStyles.logoImage}
                         />
                     </View>
