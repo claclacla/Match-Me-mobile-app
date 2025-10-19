@@ -117,23 +117,20 @@ const SigninSignupUploadAvatarScreen = () => {
 
             {/* Main Content */}
             <View style={figmaStyles.content}>
-                {/* Avatar Circle */}
-                <View style={figmaStyles.avatarContainer}>
-                    {imageUri ? (
-                        <Image source={{ uri: imageUri }} style={figmaStyles.avatarImage} />
-                    ) : (
-                        <Image source={avatarPlaceholderImage} style={figmaStyles.avatarPlaceholder} />
-                    )}
-                </View>
-
-                {/* Upload Button */}
+                {/* Upload Button / Avatar */}
                 <TouchableOpacity 
                     style={[figmaStyles.uploadButton, isUploading && figmaStyles.uploadButtonDisabled]} 
                     onPress={pickImage}
                     disabled={isUploading}
                 >
-                    <Text style={figmaStyles.uploadButtonEmoji}>📷</Text>
-                    <Text style={figmaStyles.uploadButtonText}>Upload image</Text>
+                    {imageUri ? (
+                        <Image source={{ uri: imageUri }} style={figmaStyles.uploadedImage} />
+                    ) : (
+                        <>
+                            <Text style={figmaStyles.uploadButtonEmoji}>📷</Text>
+                            <Text style={figmaStyles.uploadButtonText}>Upload image</Text>
+                        </>
+                    )}
                 </TouchableOpacity>
 
                 <Text style={figmaStyles.title}>Your avatar</Text>
@@ -160,7 +157,7 @@ const SigninSignupUploadAvatarScreen = () => {
 
             {/* Progress Section */}
             <View style={figmaStyles.progressSection}>
-                <Text style={figmaStyles.stepText}>Step 2 of 7</Text>
+                <Text style={figmaStyles.stepText}>Step 4 of 7</Text>
                 <View style={figmaStyles.progressBar}>
                     <View style={figmaStyles.progressFill} />
                 </View>
@@ -177,7 +174,7 @@ const figmaStyles = StyleSheet.create({
     headerContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop: 20,
+        marginTop: 0,
         marginBottom: 0,
         height: 87,
         position: 'relative',
@@ -209,28 +206,11 @@ const figmaStyles = StyleSheet.create({
         letterSpacing: 4.83,
     },
     content: {
-        flex: 1,
-        paddingHorizontal: 32,
+        position: 'absolute',
+        top: 190,
+        left: 32,
+        right: 32,
         alignItems: 'center',
-        justifyContent: 'flex-start',
-        paddingTop: 0,
-    },
-    avatarContainer: {
-        width: 173,
-        height: 173,
-        marginBottom: 20,
-        marginTop: -20,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    avatarImage: {
-        width: 173,
-        height: 173,
-        borderRadius: 173 / 2,
-    },
-    avatarPlaceholder: {
-        width: 173,
-        height: 173,
     },
     uploadButton: {
         alignItems: 'center',
@@ -243,6 +223,11 @@ const figmaStyles = StyleSheet.create({
     },
     uploadButtonDisabled: {
         backgroundColor: '#CCCCCC',
+    },
+    uploadedImage: {
+        width: 173,
+        height: 173,
+        borderRadius: 173 / 2,
     },
     uploadButtonEmoji: {
         fontSize: 36,
@@ -312,9 +297,11 @@ const figmaStyles = StyleSheet.create({
         textAlign: 'center',
     },
     progressSection: {
+        position: 'absolute',
+        bottom: 40,
+        left: 0,
+        right: 0,
         alignItems: 'center',
-        paddingBottom: 40,
-        marginTop: 'auto',
     },
     stepText: {
         fontFamily: 'Rubik-Regular',
@@ -332,7 +319,7 @@ const figmaStyles = StyleSheet.create({
         overflow: 'hidden',
     },
     progressFill: {
-        width: 70,
+        width: 140,
         height: '100%',
         backgroundColor: '#FFC10A',
         borderRadius: 2,
