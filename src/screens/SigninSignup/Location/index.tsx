@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Layout, Text, Button } from '@ui-kitten/components';
+import { Layout, Text } from '@ui-kitten/components';
 import { View, StyleSheet, SafeAreaView, StatusBar, Image, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
@@ -110,15 +110,18 @@ const SigninSignupLocationScreen = () => {
 
                 {/* Continue Button */}
                 <View style={figmaStyles.buttonContainer}>
-                    <Button
-                        style={[figmaStyles.continueButton, (!isFormValid || isLoading) && figmaStyles.continueButtonDisabled]}
+                    <TouchableOpacity
+                        style={[
+                            figmaStyles.continueButton,
+                            { backgroundColor: (isFormValid && !isLoading) ? '#E23D3D' : '#CCCCCC' }
+                        ]}
                         onPress={handleContinue}
                         disabled={!isFormValid || isLoading}
                     >
                         <Text style={figmaStyles.continueButtonText}>
                             {isLoading ? 'Saving...' : 'Continue'}
                         </Text>
-                    </Button>
+                    </TouchableOpacity>
                 </View>
             </View>
 
@@ -248,12 +251,13 @@ const figmaStyles = StyleSheet.create({
         shadowOpacity: 0.12,
         shadowRadius: 12,
         elevation: 4,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     continueButtonDisabled: {
         backgroundColor: '#CCCCCC',
     },
     continueButtonText: {
-        fontFamily: 'Rubik-Regular',
         fontSize: 20,
         fontWeight: '400',
         color: '#FFFFFF',

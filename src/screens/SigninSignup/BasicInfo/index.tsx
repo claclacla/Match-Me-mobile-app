@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
-import { Layout, Text, Button } from '@ui-kitten/components';
-import { View, StyleSheet, SafeAreaView, StatusBar, Image, TextInput } from 'react-native';
+import { Layout, Text } from '@ui-kitten/components';
+import { View, StyleSheet, SafeAreaView, StatusBar, Image, TextInput, TouchableOpacity } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -130,13 +130,16 @@ const SigninSignupBasicInfoScreen = () => {
 
                 {/* Continue Button */}
                 <View style={figmaStyles.buttonContainer}>
-                    <Button
-                        style={[figmaStyles.continueButton, !isFormValid && figmaStyles.continueButtonDisabled]}
+                    <TouchableOpacity
+                        style={[
+                            figmaStyles.continueButton,
+                            { backgroundColor: isFormValid ? '#E23D3D' : '#CCCCCC' }
+                        ]}
                         onPress={handleContinue}
                         disabled={!isFormValid}
                     >
                         <Text style={figmaStyles.continueButtonText}>Continue</Text>
-                    </Button>
+                    </TouchableOpacity>
                 </View>
             </View>
 
@@ -257,12 +260,13 @@ const figmaStyles = StyleSheet.create({
         shadowOpacity: 0.12,
         shadowRadius: 12,
         elevation: 4,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     continueButtonDisabled: {
         backgroundColor: '#CCCCCC',
     },
     continueButtonText: {
-        fontFamily: 'Rubik-Regular',
         fontSize: 20,
         fontWeight: '400',
         color: '#FFFFFF',

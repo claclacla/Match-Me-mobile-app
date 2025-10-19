@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Button, Layout, Text } from '@ui-kitten/components';
+import { View, StyleSheet, SafeAreaView, StatusBar, Image, TouchableOpacity, Alert } from 'react-native';
+import { Layout, Text } from '@ui-kitten/components';
 import { useNavigation } from '@react-navigation/native';
 
 import * as FileSystem from 'expo-file-system';
@@ -14,9 +15,8 @@ import useAuthenticationStore from '../../../repositories/localStorage/useAuthen
 import useUserStore from '../../../repositories/localStorage/useUserStore';
 import { PROFILE_SECTION_KEYS, PROFILE_SECTION_STATUS, User } from '../../../repositories/globalEntities/User';
 
-import MicButton from './components/MicButton';
-
-import styles from '../../../styles';
+// Assets
+const logoImage = require('../../../../assets/images/logo.png');
 
 const recordingOptions = {
     android: {
@@ -205,52 +205,315 @@ const SigninSignupVoiceRecordingScreen = () => {
 
     if (permissionLoading) {
         return (
-            <Layout style={styles.container}>
-                <Text style={styles.title}>Setting up audio...</Text>
-                <Text style={styles.subtitle}>Requesting microphone permission</Text>
-            </Layout>
+            <SafeAreaView style={figmaStyles.container}>
+                <StatusBar backgroundColor="#FAF5F1" barStyle="dark-content" />
+                <View style={figmaStyles.loadingContainer}>
+                    <Text style={figmaStyles.loadingTitle}>Setting up audio...</Text>
+                    <Text style={figmaStyles.loadingSubtitle}>Requesting microphone permission</Text>
+                </View>
+            </SafeAreaView>
         );
     }
 
     return (
-        <Layout style={styles.container}>
-            <Text style={styles.title}>If you feel like it</Text>
+        <SafeAreaView style={figmaStyles.container}>
+            <StatusBar backgroundColor="#FAF5F1" barStyle="dark-content" />
 
-            <Layout style={styles.subtitleContainer}>
-                <Text style={styles.subtitle}>Leave a short voice message about yourself, how you feel today, or how you move in relation to others.</Text>
-                <Text style={styles.subtitle}>We'll use this to give your presence shape here, not to judge, but to hold.</Text>
-            </Layout>
+            {/* Logo Header */}
+            <View style={figmaStyles.logoHeader}>
+                <View style={figmaStyles.logoIcon}>
+                    <Image
+                        source={logoImage}
+                        style={figmaStyles.logoImage}
+                    />
+                </View>
+                <Text style={figmaStyles.logoText}>BREAKICE</Text>
+            </View>
+
+            {/* Main Content */}
+            <View style={figmaStyles.content}>
+                <Text style={figmaStyles.title}>Your voice</Text>
+
+                <Text style={figmaStyles.subtitle}>
+                    Optional voice note (up to 60s).
+                </Text>
+
+                <Text style={figmaStyles.subtitle}>
+                It helps us match you with the right group. It’s always private.{'\n'}
+                Not to judge, but to connect.
+                </Text>
+
+                <Text style={figmaStyles.subtitle2}>
+                    • Why you joined{'\n'}
+                    • What energizes you{'\n'}
+                    • What you're looking for
+                </Text>
 
             {!hasPermission ? (
-                <Layout style={styles.subtitleContainer}>
-                    <Text style={[styles.subtitle, { color: 'red' }]}>
+                    <View style={figmaStyles.permissionContainer}>
+                        <Text style={figmaStyles.permissionText}>
                         Audio recording permission is required to record your voice message.
                     </Text>
-                    <Button 
+                    <TouchableOpacity
                         onPress={requestPermissions}
-                        style={styles.button}
+                        style={figmaStyles.permissionButton}
                     >
-                        Grant Permission
-                    </Button>
-                </Layout>
-            ) : (
-                <MicButton 
-                    onPress={isRecording ? stopRecording : startRecording}
-                    isRecording={isRecording !== null}
-                    disabled={isUploading}
-                />
-            )}
+                        <Text style={figmaStyles.permissionButtonText}>Grant Permission</Text>
+                    </TouchableOpacity>
+                    </View>
+                ) : (
+                    <View style={figmaStyles.recordingButtonContainer}>
+                        <TouchableOpacity
+                            onPress={isRecording ? stopRecording : startRecording}
+                            style={[
+                                figmaStyles.recordingButton,
+                                { backgroundColor: !isUploading ? '#E23D3D' : '#CCCCCC' }
+                            ]}
+                            disabled={isUploading}
+                        >
+                            <Text style={figmaStyles.recordingButtonText}>
+                                {isRecording ? 'Stop Recording' : 'Start recording'}
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                )}
 
-            <Button 
-                onPress={handleSkip} 
-                style={isUploading ? styles.buttonGhostDisabled : styles.buttonGhost}
-                disabled={isUploading}
-                appearance="ghost"
-            >
-                Skip
-            </Button>
-        </Layout>
+            {/* <View style={figmaStyles.skipButtonContainer}>
+                <TouchableOpacity
+                    onPress={handleSkip}
+                    style={[
+                        figmaStyles.skipButton,
+                        { backgroundColor: !isUploading ? '#E23D3D' : '#CCCCCC' }
+                    ]}
+                    disabled={isUploading}
+                >
+                    <Text style={figmaStyles.skipButtonText}>Skip</Text>
+                </TouchableOpacity>
+            </View> */}
+            </View>
+
+            {/* Progress Section */}
+            <View style={figmaStyles.progressSection}>
+                <Text style={figmaStyles.stepText}>Step 5 of 7</Text>
+                <View style={figmaStyles.progressBar}>
+                    <View style={figmaStyles.progressFill} />
+                </View>
+            </View>
+        </SafeAreaView>
     );
 }
+
+const figmaStyles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#FAF5F1',
+    },
+    logoHeader: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 20,
+        marginBottom: 0,
+        paddingRight: 16,
+    },
+    logoIcon: {
+        width: 72,
+        height: 72,
+        marginRight: -16,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    logoImage: {
+        width: 36,
+        height: 36,
+        resizeMode: 'contain',
+    },
+    logoText: {
+        fontFamily: 'Rubik-Bold',
+        fontSize: 26,
+        fontWeight: '700',
+        color: '#E23D3D',
+        letterSpacing: 4.83,
+    },
+    content: {
+        position: 'absolute',
+        top: 190,
+        left: 32,
+        right: 32,
+        alignItems: 'center',
+    },
+    title: {
+        fontFamily: 'SF Pro Rounded',
+        fontSize: 32,
+        fontWeight: '600',
+        color: '#000000',
+        textAlign: 'center',
+        marginBottom: 16,
+        width: 339,
+    },
+    subtitle: {
+        fontFamily: 'Rubik-Regular',
+        fontSize: 16,
+        fontWeight: '400',
+        color: '#000000',
+        textAlign: 'center',
+        marginBottom: 16,
+        width: 282,
+        lineHeight: 22,
+    },
+    subtitle2: {
+        fontFamily: 'Rubik-Regular',
+        fontSize: 16,
+        fontWeight: '400',
+        color: '#000000',
+        textAlign: 'center',
+        marginBottom: 40,
+        width: 339,
+        lineHeight: 22,
+    },
+    permissionContainer: {
+        alignItems: 'center',
+        marginTop: 20,
+    },
+    permissionText: {
+        fontFamily: 'Rubik-Regular',
+        fontSize: 14,
+        fontWeight: '400',
+        color: '#E23D3D',
+        textAlign: 'center',
+        marginBottom: 20,
+        paddingHorizontal: 20,
+    },
+    permissionButton: {
+        backgroundColor: '#E23D3D',
+        borderRadius: 8,
+        height: 45,
+        paddingHorizontal: 20,
+        borderWidth: 0,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    permissionButtonText: {
+        fontSize: 16,
+        fontWeight: '400',
+        color: '#FFFFFF',
+        textAlign: 'center',
+    },
+    recordingButtonContainer: {
+        width: '100%',
+        maxWidth: 262,
+        marginBottom: 20,
+    },
+    recordingButton: {
+        backgroundColor: '#E23D3D',
+        borderRadius: 8,
+        height: 45,
+        borderWidth: 0,
+        shadowColor: '#000000',
+        shadowOffset: {
+            width: 0,
+            height: 4,
+        },
+        shadowOpacity: 0.12,
+        shadowRadius: 12,
+        elevation: 4,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    recordingButtonDisabled: {
+        backgroundColor: '#CCCCCC',
+    },
+    recordingButtonText: {
+        fontSize: 20,
+        fontWeight: '400',
+        color: '#FFFFFF',
+        textAlign: 'center',
+    },
+    skipButtonContainer: {
+        width: '100%',
+        maxWidth: 262,
+        marginTop: 20,
+    },
+    skipButton: {
+        backgroundColor: '#E23D3D',
+        borderRadius: 8,
+        height: 45,
+        borderWidth: 0,
+        shadowColor: '#000000',
+        shadowOffset: {
+            width: 0,
+            height: 4,
+        },
+        shadowOpacity: 0.12,
+        shadowRadius: 12,
+        elevation: 4,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    skipButtonDisabled: {
+        backgroundColor: '#CCCCCC',
+    },
+    skipButtonText: {
+        fontSize: 20,
+        fontWeight: '400',
+        color: '#FFFFFF',
+        textAlign: 'center',
+    },
+    progressSection: {
+        position: 'absolute',
+        bottom: 40,
+        left: 0,
+        right: 0,
+        alignItems: 'center',
+    },
+    stepText: {
+        fontFamily: 'Rubik-Regular',
+        fontSize: 14,
+        fontWeight: '400',
+        color: '#000000',
+        letterSpacing: 2,
+        marginBottom: 16,
+    },
+    progressBar: {
+        width: 244,
+        height: 16,
+        backgroundColor: '#EAEAEA',
+        borderRadius: 4,
+        overflow: 'hidden',
+    },
+    progressFill: {
+        width: 175,
+        height: '100%',
+        backgroundColor: '#FFC10A',
+        borderRadius: 2,
+        shadowColor: 'rgba(8, 32, 56, 0.1)',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 1,
+        shadowRadius: 4,
+    },
+    loadingContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingHorizontal: 32,
+    },
+    loadingTitle: {
+        fontFamily: 'Rubik-Medium',
+        fontSize: 24,
+        fontWeight: '500',
+        color: '#000000',
+        marginBottom: 16,
+    },
+    loadingSubtitle: {
+        fontFamily: 'Rubik-Regular',
+        fontSize: 16,
+        fontWeight: '400',
+        color: '#666666',
+        textAlign: 'center',
+    },
+});
 
 export default SigninSignupVoiceRecordingScreen;

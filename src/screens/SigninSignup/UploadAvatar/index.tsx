@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Alert, View, StyleSheet, SafeAreaView, StatusBar, Image, TouchableOpacity } from "react-native";
-import { Avatar, Button, Layout, Text } from "@ui-kitten/components";
+import { Avatar, Layout, Text } from "@ui-kitten/components";
 import * as ImagePicker from "expo-image-picker";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -145,13 +145,16 @@ const SigninSignupUploadAvatarScreen = () => {
 
                 {/* Skip Button */}
                 <View style={figmaStyles.skipButtonContainer}>
-                    <Button
-                        style={[figmaStyles.skipButton, isUploading && figmaStyles.skipButtonDisabled]}
+                    <TouchableOpacity
+                        style={[
+                            figmaStyles.skipButton,
+                            { backgroundColor: !isUploading ? '#E23D3D' : '#CCCCCC' }
+                        ]}
                         onPress={skip}
                         disabled={isUploading}
                     >
                         <Text style={figmaStyles.skipButtonText}>Skip</Text>
-                    </Button>
+                    </TouchableOpacity>
                 </View>
             </View>
 
@@ -285,12 +288,13 @@ const figmaStyles = StyleSheet.create({
         shadowOpacity: 0.12,
         shadowRadius: 12,
         elevation: 4,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     skipButtonDisabled: {
         backgroundColor: '#CCCCCC',
     },
     skipButtonText: {
-        fontFamily: 'Rubik-Regular',
         fontSize: 20,
         fontWeight: '400',
         color: '#FFFFFF',
