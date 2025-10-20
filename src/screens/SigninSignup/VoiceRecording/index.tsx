@@ -8,6 +8,7 @@ import { Audio } from "expo-av";
 
 import { setUserProfileSectionStatus } from "../../../repositories/api/setUserProfileSectionStatus";
 import { setUserGroupPersonalExperienceFromVoice } from '../../../repositories/api/setUserGroupPersonalExperienceFromVoice';
+import { setUserGroupPersonalExperienceFromText } from '../../../repositories/api/setUserGroupPersonalExperienceFromText';
 
 import { ApplicationNavigationProp } from '../../../stackNavigationProps/ApplicationNavigationProp';
 
@@ -218,7 +219,15 @@ const SigninSignupVoiceRecordingScreen = () => {
         setIsUploading(true);
 
         try {
-            setLocalStorageUserGroupPersonalExperience(textNote.trim());
+            const userGroupPersonalExperience: string = await setUserGroupPersonalExperienceFromText({
+                key,
+                userId: user.id,
+                personalExperience: textNote.trim()
+            });
+
+            console.log("Text note submitted:", userGroupPersonalExperience);
+
+            setLocalStorageUserGroupPersonalExperience(userGroupPersonalExperience);
             navigation.replace('MatcherNavigator', { screen: 'MatcherAdventureSelector' });
         } catch (err: any) {
             console.error("Error submitting text note:", err);
