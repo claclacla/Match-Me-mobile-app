@@ -2,7 +2,7 @@ import * as FileSystem from 'expo-file-system';
 
 import { API } from "../../config/config.json";
 
-export async function setUserGroupPersonalExperience({
+export async function setUserGroupPersonalExperienceFromVoice({
     key,
     userId,
     audioUri
@@ -80,11 +80,11 @@ export async function setUserGroupPersonalExperience({
     console.log("--- FormData Check Complete ---");
 
     try {
-        console.log(`API Service: /user/${userId}/groupPersonalExperience`);
+        console.log(`API Service: /user/${userId}/groupPersonalExperienceFromVoice`);
 
         console.log(formData);
         const response = await fetch(
-            API.ADDRESS + `/user/${userId}/groupPersonalExperience`,
+            API.ADDRESS + `/user/${userId}/groupPersonalExperienceFromVoice`,
             {
                 method: 'POST',
                 headers: {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { View, StyleSheet, SafeAreaView, StatusBar, Image, TouchableOpacity, Alert } from 'react-native';
+import { View, StyleSheet, SafeAreaView, StatusBar, Image, TouchableOpacity, Alert, TextInput, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { Layout, Text } from '@ui-kitten/components';
 import { useNavigation } from '@react-navigation/native';
 
@@ -7,7 +7,7 @@ import * as FileSystem from 'expo-file-system';
 import { Audio } from "expo-av";
 
 import { setUserProfileSectionStatus } from "../../../repositories/api/setUserProfileSectionStatus";
-import { setUserGroupPersonalExperience } from '../../../repositories/api/setUserGroupPersonalExperience';
+import { setUserGroupPersonalExperienceFromVoice } from '../../../repositories/api/setUserGroupPersonalExperienceFromVoice';
 
 import { ApplicationNavigationProp } from '../../../stackNavigationProps/ApplicationNavigationProp';
 
@@ -54,6 +54,8 @@ const SigninSignupVoiceRecordingScreen = () => {
     const [isUploading, setIsUploading] = useState<boolean>(false);
     const [hasPermission, setHasPermission] = useState<boolean>(false);
     const [permissionLoading, setPermissionLoading] = useState<boolean>(true);
+    const [showTextInput, setShowTextInput] = useState<boolean>(false);
+    const [textNote, setTextNote] = useState<string>('');
 
     // Request microphone permissions on mount
     useEffect(() => {
@@ -118,7 +120,7 @@ const SigninSignupVoiceRecordingScreen = () => {
         setIsUploading(true);
 
         try {
-            const userGroupPersonalExperience: string = await setUserGroupPersonalExperience({
+            const userGroupPersonalExperience: string = await setUserGroupPersonalExperienceFromVoice({
                 key,
                 userId: user.id,
                 audioUri: uriToTranscribe
@@ -203,6 +205,29 @@ const SigninSignupVoiceRecordingScreen = () => {
         navigation.replace('MatcherNavigator', { screen: 'MatcherAdventureSelector' });
     }
 
+    const handleWriteNote = () => {
+        setShowTextInput(true);
+    }
+
+    const handleSubmitTextNote = async () => {
+        if (!textNote.trim()) {
+            Alert.alert("Empty note", "Please write something before submitting.");
+            return;
+        }
+
+        setIsUploading(true);
+
+        try {
+            setLocalStorageUserGroupPersonalExperience(textNote.trim());
+            navigation.replace('MatcherNavigator', { screen: 'MatcherAdventureSelector' });
+        } catch (err: any) {
+            console.error("Error submitting text note:", err);
+            Alert.alert("Error", "There was a problem submitting your note. Please try again.");
+        } finally {
+            setIsUploading(false);
+        }
+    }
+
     if (permissionLoading) {
         return (
             <SafeAreaView style={figmaStyles.container}>
@@ -231,66 +256,102 @@ const SigninSignupVoiceRecordingScreen = () => {
             </View>
 
             {/* Main Content */}
-            <View style={figmaStyles.content}>
-                <Text style={figmaStyles.title}>Your voice</Text>
+            <KeyboardAvoidingView 
+                style={figmaStyles.content}
+                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
+            >
+                <ScrollView contentContainerStyle={figmaStyles.scrollContent}>
+                    <Text style={figmaStyles.title}>Your voice</Text>
 
-                <Text style={figmaStyles.subtitle}>
-                    Optional voice note (up to 60s).
-                </Text>
-
-                <Text style={figmaStyles.subtitle}>
-                It helps us match you with the right group. It’s always private.{'\n'}
-                Not to judge, but to connect.
-                </Text>
-
-                <Text style={figmaStyles.subtitle2}>
-                    • Why you joined{'\n'}
-                    • What energizes you{'\n'}
-                    • What you're looking for
-                </Text>
-
-            {!hasPermission ? (
-                    <View style={figmaStyles.permissionContainer}>
-                        <Text style={figmaStyles.permissionText}>
-                        Audio recording permission is required to record your voice message.
+                    <Text style={figmaStyles.subtitle}>
+                        Optional voice note (up to 60s).
                     </Text>
-                    <TouchableOpacity
-                        onPress={requestPermissions}
-                        style={figmaStyles.permissionButton}
-                    >
-                        <Text style={figmaStyles.permissionButtonText}>Grant Permission</Text>
-                    </TouchableOpacity>
-                    </View>
-                ) : (
-                    <View style={figmaStyles.recordingButtonContainer}>
-                        <TouchableOpacity
-                            onPress={isRecording ? stopRecording : startRecording}
-                            style={[
-                                figmaStyles.recordingButton,
-                                { backgroundColor: !isUploading ? '#E23D3D' : '#CCCCCC' }
-                            ]}
-                            disabled={isUploading}
-                        >
-                            <Text style={figmaStyles.recordingButtonText}>
-                                {isRecording ? 'Stop Recording' : 'Start recording'}
-                            </Text>
-                        </TouchableOpacity>
-                    </View>
-                )}
 
-            {/* <View style={figmaStyles.skipButtonContainer}>
-                <TouchableOpacity
-                    onPress={handleSkip}
-                    style={[
-                        figmaStyles.skipButton,
-                        { backgroundColor: !isUploading ? '#E23D3D' : '#CCCCCC' }
-                    ]}
-                    disabled={isUploading}
-                >
-                    <Text style={figmaStyles.skipButtonText}>Skip</Text>
-                </TouchableOpacity>
-            </View> */}
-            </View>
+                    <Text style={figmaStyles.subtitle}>
+                    It helps us match you with the right group. It's always private.{'\n'}
+                    Not to judge, but to connect.
+                    </Text>
+
+                    <Text style={figmaStyles.subtitle2}>
+                        • Why you joined{'\n'}
+                        • What energizes you{'\n'}
+                        • What you're looking for
+                    </Text>
+
+                    {showTextInput ? (
+                        <View style={figmaStyles.textInputContainer}>
+                            <TextInput
+                                style={figmaStyles.textArea}
+                                placeholder="Write your note here..."
+                                placeholderTextColor="#999999"
+                                value={textNote}
+                                onChangeText={setTextNote}
+                                multiline
+                                numberOfLines={8}
+                                textAlignVertical="top"
+                                editable={!isUploading}
+                            />
+                            <View style={figmaStyles.submitButtonContainer}>
+                                <TouchableOpacity
+                                    onPress={handleSubmitTextNote}
+                                    style={[
+                                        figmaStyles.submitButton,
+                                        { backgroundColor: textNote.trim() && !isUploading ? '#E23D3D' : '#CCCCCC' }
+                                    ]}
+                                    disabled={!textNote.trim() || isUploading}
+                                >
+                                    <Text style={figmaStyles.submitButtonText}>
+                                        {isUploading ? 'Submitting...' : 'Submit'}
+                                    </Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    ) : (
+                        <>
+                            {!hasPermission ? (
+                                <View style={figmaStyles.permissionContainer}>
+                                    <Text style={figmaStyles.permissionText}>
+                                        Audio recording permission is required to record your voice message.
+                                    </Text>
+                                <TouchableOpacity
+                                    onPress={requestPermissions}
+                                    style={figmaStyles.permissionButton}
+                                >
+                                    <Text style={figmaStyles.permissionButtonText}>Grant Permission</Text>
+                                </TouchableOpacity>
+                                </View>
+                            ) : (
+                                <View style={figmaStyles.recordingButtonContainer}>
+                                    <TouchableOpacity
+                                        onPress={isRecording ? stopRecording : startRecording}
+                                        style={[
+                                            figmaStyles.recordingButton,
+                                            { backgroundColor: !isUploading ? '#E23D3D' : '#CCCCCC' }
+                                        ]}
+                                        disabled={isUploading}
+                                    >
+                                        <Text style={figmaStyles.recordingButtonText}>
+                                            {isRecording ? 'Stop Recording' : 'Start recording'}
+                                        </Text>
+                                    </TouchableOpacity>
+                                </View>
+                            )}
+
+                            {/* Write Note Instead Button */}
+                            <View style={figmaStyles.writeNoteButtonContainer}>
+                                <TouchableOpacity
+                                    onPress={handleWriteNote}
+                                    style={figmaStyles.writeNoteButton}
+                                    disabled={isUploading}
+                                >
+                                    <Text style={figmaStyles.writeNoteButtonText}>Write note instead</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </>
+                    )}
+                </ScrollView>
+            </KeyboardAvoidingView>
 
             {/* Progress Section */}
             <View style={figmaStyles.progressSection}>
@@ -336,11 +397,13 @@ const figmaStyles = StyleSheet.create({
         letterSpacing: 4.83,
     },
     content: {
-        position: 'absolute',
-        top: 190,
-        left: 32,
-        right: 32,
+        flex: 1,
+    },
+    scrollContent: {
+        flexGrow: 1,
+        paddingHorizontal: 32,
         alignItems: 'center',
+        paddingTop: 20,
     },
     title: {
         fontFamily: 'SF Pro Rounded',
@@ -429,12 +492,56 @@ const figmaStyles = StyleSheet.create({
         color: '#FFFFFF',
         textAlign: 'center',
     },
-    skipButtonContainer: {
+    writeNoteButtonContainer: {
         width: '100%',
         maxWidth: 262,
         marginTop: 20,
     },
-    skipButton: {
+    writeNoteButton: {
+        backgroundColor: '#F3EFED',
+        borderRadius: 8,
+        height: 45,
+        borderWidth: 1,
+        borderColor: '#E23D3D',
+        shadowColor: '#000000',
+        shadowOffset: {
+            width: 0,
+            height: 4,
+        },
+        shadowOpacity: 0.12,
+        shadowRadius: 12,
+        elevation: 4,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    writeNoteButtonText: {
+        fontSize: 20,
+        fontWeight: '400',
+        color: '#E23D3D',
+        textAlign: 'center',
+    },
+    textInputContainer: {
+        width: '100%',
+        maxWidth: 262,
+        marginTop: 20,
+    },
+    textArea: {
+        backgroundColor: '#FFFFFF',
+        borderRadius: 8,
+        borderWidth: 1,
+        borderColor: '#E0E0E0',
+        padding: 16,
+        minHeight: 200,
+        fontSize: 16,
+        fontFamily: 'Rubik-Regular',
+        color: '#000000',
+        marginBottom: 16,
+        textAlignVertical: 'top',
+    },
+    submitButtonContainer: {
+        width: '100%',
+    },
+    submitButton: {
         backgroundColor: '#E23D3D',
         borderRadius: 8,
         height: 45,
@@ -450,10 +557,7 @@ const figmaStyles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    skipButtonDisabled: {
-        backgroundColor: '#CCCCCC',
-    },
-    skipButtonText: {
+    submitButtonText: {
         fontSize: 20,
         fontWeight: '400',
         color: '#FFFFFF',
