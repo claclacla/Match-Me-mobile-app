@@ -1,14 +1,12 @@
 import { NavigatorScreenParams } from '@react-navigation/native';
 
 import { SigninSignupScreensList } from './SigninSignupScreensList';
-import { MatcherScreensList } from './MatcherScreensList';
-import { MainScreensList } from './MainScreensList';
+import { OnboardingScreensList } from './OnboardingScreensList';
 
 export type ApplicationScreensList = {
     SplashScreen: undefined,
     IntroductionCarousel: undefined,
     Init: undefined,
     SigninSignupNavigator: NavigatorScreenParams<SigninSignupScreensList>;
-    MatcherNavigator: NavigatorScreenParams<MatcherScreensList>;
-    MainNavigator: NavigatorScreenParams<MainScreensList>;
+    OnboardingNavigator: NavigatorScreenParams<OnboardingScreensList>;
 };

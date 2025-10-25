@@ -15,7 +15,7 @@ const SignupOutroScreen = () => {
     const navigation = useNavigation<NavigationProp & AppNavigationProp>();
 
     const handleUnderstand = () => {
-        navigation.replace('MatcherNavigator', { screen: 'MatcherAdventureSelector' });
+        navigation.replace('OnboardingNavigator', { screen: 'OnboardingFork' });
     };
 
     return (

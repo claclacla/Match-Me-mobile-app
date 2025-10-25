@@ -19,12 +19,8 @@ export async function useHandleSignInUserFlow({ navigation, user }: { navigation
             navigation.replace('SigninSignupNavigator', { screen: "SigninSignupVoiceRecording" });
         }
 
-        else if (user.match?.id === undefined) {
-            navigation.replace('MatcherNavigator', { screen: "MatcherAdventureSelector" });
-        }
-
         else {
-            navigation.replace("MainNavigator", { screen: "MainProfile" });
+            navigation.replace('OnboardingNavigator', { screen: "OnboardingFork" });
         }
     }
 }

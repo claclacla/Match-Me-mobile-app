@@ -207,7 +207,7 @@ const SigninSignupVoiceRecordingScreen = () => {
 
     const handleSkip = async () => {
         await setUserProfileSectionStatus({ key, userId: user.id, section: PROFILE_SECTION_KEYS.GROUP_PERSONAL_EXPERIENCE, value: PROFILE_SECTION_STATUS.SKIPPED });
-        navigation.replace('MatcherNavigator', { screen: 'MatcherAdventureSelector' });
+        navigation.replace('OnboardingNavigator', { screen: 'OnboardingFork' });
     }
 
     const handleWriteNote = () => {
