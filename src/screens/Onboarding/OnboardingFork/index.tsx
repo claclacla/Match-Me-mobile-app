@@ -16,8 +16,7 @@ const OnboardingForkScreen = () => {
     };
 
     const handleLearnMore = () => {
-        // TODO: Navigate to learn more when implemented
-        console.log('Learn more pressed');
+        navigation.navigate('HowItWorks');
     };
 
     return (
