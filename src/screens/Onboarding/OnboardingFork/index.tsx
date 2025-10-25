@@ -11,8 +11,7 @@ const OnboardingForkScreen = () => {
     const navigation = useNavigation<ApplicationNavigationProp>();
 
     const handleStartQuiz = () => {
-        // TODO: Navigate to quiz when implemented
-        console.log('Start quiz pressed');
+        navigation.navigate('InsightsQuiz');
     };
 
     const handleLearnMore = () => {

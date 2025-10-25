@@ -3,6 +3,7 @@ import { OnboardingScreensList } from '../../../screensList/OnboardingScreensLis
 
 import OnboardingForkScreen from '../OnboardingFork';
 import HowItWorksScreen from '../HowItWorks';
+import InsightsQuizScreen from '../InsightsQuiz';
 
 const Stack = createStackNavigator<OnboardingScreensList>();
 
@@ -17,6 +18,11 @@ const OnboardingNavigator = () => {
             <Stack.Screen 
                 name="HowItWorks" 
                 component={HowItWorksScreen} 
+                options={{ headerShown: false }} 
+            />
+            <Stack.Screen 
+                name="InsightsQuiz" 
+                component={InsightsQuizScreen} 
                 options={{ headerShown: false }} 
             />
         </Stack.Navigator>
