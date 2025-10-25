@@ -38,14 +38,14 @@ const slides: SlideData[] = [
     {
         id: 2,
         title: "Do small-group activities feel like your pace?",
-        subtitle: "breakfasts, walks, dinners, join or suggest your own",
+        subtitle: "Breakfasts, walks, dinners, join or suggest your own",
         cardColor: "#fde8e8",
         cardColor2: "#ffdd7b"
     },
     {
         id: 3,
         title: "Would curated groups help you settle faster?",
-        subtitle: "we match you within 24 hours, Real people only",
+        subtitle: "We match you within 24 hours, Real people only",
         cardColor: "#ffdd7b"
     }
 ];
@@ -68,6 +68,12 @@ export default function IntroductionCarousel() {
             AsyncStorage.setItem('hasSeenIntroduction', 'true');
             navigation.replace("Init");
         }
+    };
+
+    const handleJoinButton = () => {
+        // Mark as completed and navigate directly to SigninSignupNavigator
+        AsyncStorage.setItem('hasSeenIntroduction', 'true');
+        navigation.replace("SigninSignupNavigator");
     };
 
     const handleSkip = () => {
@@ -104,23 +110,11 @@ export default function IntroductionCarousel() {
                     </View>
                 </View>
 
-                {/* Action Buttons - Hidden for first slide */}
-                {index > 0 && (
-                    <View style={styles.actionButtons}>
-                        <TouchableOpacity style={styles.skipButton} onPress={handleSkip}>
-                            <Text style={styles.skipButtonText}>
-                                {index === 1 ? "not really" : "not now"}
-                            </Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.yesButton} onPress={handleNext}>
-                            <Text style={styles.yesButtonText}>Yes</Text>
-                        </TouchableOpacity>
-                    </View>
-                )}
+                {/* Action Buttons - Hidden for all slides */}
 
                 {/* Bottom Buttons */}
                 <View style={styles.bottomButtons}>
-                    <TouchableOpacity style={styles.joinButton} onPress={handleNext}>
+                    <TouchableOpacity style={styles.joinButton} onPress={handleJoinButton}>
                         <Text style={styles.joinButtonText}>Join Breakice — it's free</Text>
                     </TouchableOpacity>
                     <Text style={styles.signupText}>Signup takes 60 seconds.</Text>
