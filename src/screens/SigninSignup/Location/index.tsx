@@ -97,6 +97,11 @@ const SigninSignupLocationScreen = () => {
                     This help us find groups near you.
                 </Text>
 
+                {/* Active Status Box */}
+                <View style={figmaStyles.activeStatusBox}>
+                    <Text style={figmaStyles.activeStatusText}>Active in province of Milano</Text>
+                </View>
+
                 {/* Form Fields */}
                 <View style={figmaStyles.formContainer}>
                     {/* Location Input */}
@@ -107,6 +112,11 @@ const SigninSignupLocationScreen = () => {
                         />
                     </View>
                 </View>
+
+                {/* New Cities Text */}
+                <Text style={figmaStyles.newCitiesText}>
+                    We open new cities once enough people join nearby.
+                </Text>
 
                 {/* Continue Button */}
                 <View style={figmaStyles.buttonContainer}>
@@ -127,7 +137,7 @@ const SigninSignupLocationScreen = () => {
 
             {/* Progress Section */}
             <View style={figmaStyles.progressSection}>
-                <Text style={figmaStyles.stepText}>Step 3 of 7</Text>
+                <Text style={figmaStyles.stepText}>Step 4 of 7</Text>
                 <View style={figmaStyles.progressBar}>
                     <View style={figmaStyles.progressFill} />
                 </View>
@@ -214,13 +224,44 @@ const figmaStyles = StyleSheet.create({
         fontWeight: '400',
         color: '#000000',
         textAlign: 'center',
-        marginBottom: 40,
+        marginBottom: 20,
         width: 306,
         lineHeight: 22,
     },
     formContainer: {
         width: '100%',
         maxWidth: 262,
+        marginBottom: 0,
+    },
+    activeStatusBox: {
+        backgroundColor: '#FFC10A',
+        borderRadius: 4,
+        paddingVertical: 8,
+        paddingHorizontal: 16,
+        marginBottom: 24,
+        alignSelf: 'center',
+        minWidth: 242,
+        minHeight: 32,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    activeStatusText: {
+        fontFamily: 'Arial Rounded MT Bold',
+        fontSize: 16,
+        fontWeight: '400',
+        color: '#000000',
+        textAlign: 'center',
+    },
+    newCitiesText: {
+        fontFamily: 'Rubik-Regular',
+        fontSize: 14,
+        fontWeight: '400',
+        color: '#000000',
+        textAlign: 'center',
+        letterSpacing: 2,
+        marginBottom: 120,
+        width: 231,
+        alignSelf: 'center',
     },
     fieldContainer: {
         marginBottom: 24,
