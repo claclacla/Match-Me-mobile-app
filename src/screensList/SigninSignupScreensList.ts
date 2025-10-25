@@ -6,4 +6,5 @@ export type SigninSignupScreensList = {
     SigninSignupLocation: undefined;
     SigninSignupUploadAvatar: undefined;
     SigninSignupVoiceRecording: undefined;
+    SigninSignupSignupOutro: undefined;
 };

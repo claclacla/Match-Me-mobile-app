@@ -9,6 +9,7 @@ import SigninSignupPersonalDetailsScreen from '../PersonalDetails';
 import SigninSignupLocationScreen from '../Location';
 import SigninSignupUploadAvatarScreen from '../UploadAvatar';
 import SigninSignupVoiceRecordingScreen from '../VoiceRecording';
+import SigninSignupSignupOutroScreen from '../SignupOutro';
 
 const Stack = createStackNavigator<SigninSignupScreensList>();
 
@@ -51,6 +52,11 @@ export default function SigninSignupNavigator() {
             <Stack.Screen 
                 name="SigninSignupVoiceRecording" 
                 component={SigninSignupVoiceRecordingScreen} 
+                options={{ headerShown: false }} 
+            />
+            <Stack.Screen 
+                name="SigninSignupSignupOutro" 
+                component={SigninSignupSignupOutroScreen} 
                 options={{ headerShown: false }} 
             />
         </Stack.Navigator>

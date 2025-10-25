@@ -11,6 +11,8 @@ import { setUserGroupPersonalExperienceFromVoice } from '../../../repositories/a
 import { setUserGroupPersonalExperienceFromText } from '../../../repositories/api/setUserGroupPersonalExperienceFromText';
 
 import { ApplicationNavigationProp } from '../../../stackNavigationProps/ApplicationNavigationProp';
+import { SigninSignupScreensList } from '../../../screensList/SigninSignupScreensList';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 import useAuthenticationStore from '../../../repositories/localStorage/useAuthenticationStore';
 import useUserStore from '../../../repositories/localStorage/useUserStore';
@@ -41,8 +43,10 @@ const recordingOptions = {
     },
 };
 
+type NavigationProp = StackNavigationProp<SigninSignupScreensList, 'SigninSignupVoiceRecording'> & ApplicationNavigationProp;
+
 const SigninSignupVoiceRecordingScreen = () => {
-    const navigation = useNavigation<ApplicationNavigationProp>();
+    const navigation = useNavigation<NavigationProp>();
 
     const key: string = useAuthenticationStore((state: any) => state.key);
     const user: User = useUserStore((state: any) => state.user);
@@ -131,7 +135,7 @@ const SigninSignupVoiceRecordingScreen = () => {
 
             setLocalStorageUserGroupPersonalExperience(userGroupPersonalExperience);
 
-            navigation.replace('MatcherNavigator', { screen: 'MatcherAdventureSelector' });
+            navigation.navigate('SigninSignupSignupOutro');
         } catch (err: any) {
             console.error("Component: Errore durante la trascrizione:", err);
         } finally {
@@ -228,7 +232,7 @@ const SigninSignupVoiceRecordingScreen = () => {
             console.log("Text note submitted:", userGroupPersonalExperience);
 
             setLocalStorageUserGroupPersonalExperience(userGroupPersonalExperience);
-            navigation.replace('MatcherNavigator', { screen: 'MatcherAdventureSelector' });
+            navigation.navigate('SigninSignupSignupOutro');
         } catch (err: any) {
             console.error("Error submitting text note:", err);
             Alert.alert("Error", "There was a problem submitting your note. Please try again.");
