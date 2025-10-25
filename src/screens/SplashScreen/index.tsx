@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ApplicationNavigationProp } from '../../stackNavigationProps/ApplicationNavigationProp';
 
 // Logo image from Figma
@@ -10,12 +11,28 @@ export default function SplashScreen() {
     const navigation = useNavigation<ApplicationNavigationProp>();
 
     useEffect(() => {
-        // Show splash screen for 2 seconds, then navigate to Init
-        const timer = setTimeout(() => {
-            navigation.replace("Init");
-        }, 2000);
+        const checkFirstLaunch = async () => {
+            try {
+                const hasSeenIntroduction = await AsyncStorage.getItem('hasSeenIntroduction');
+                
+                // Show splash screen for 2 seconds, then navigate based on first launch
+                setTimeout(() => {
+                    if (hasSeenIntroduction === 'true') {
+                        navigation.replace("Init");
+                    } else {
+                        navigation.replace("IntroductionCarousel");
+                    }
+                }, 2000);
+            } catch (error) {
+                console.error('Error checking first launch:', error);
+                // Default to showing introduction on error
+                setTimeout(() => {
+                    navigation.replace("IntroductionCarousel");
+                }, 2000);
+            }
+        };
 
-        return () => clearTimeout(timer);
+        checkFirstLaunch();
     }, [navigation]);
 
     return (

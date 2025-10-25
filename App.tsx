@@ -7,6 +7,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { ApplicationScreensList } from './src/screensList/ApplicationScreensList';
 
 import SplashScreen from './src/screens/SplashScreen';
+import IntroductionCarousel from './src/screens/IntroductionCarousel';
 import InitScreen from './src/screens/InitScreen';
 import SigninSignupNavigator from './src/screens/SigninSignup/Navigator';
 
@@ -34,6 +35,7 @@ export default function App(): React.ReactElement {
             <NavigationContainer>
                 <Stack.Navigator initialRouteName={"SplashScreen"}>
                     <Stack.Screen name="SplashScreen" component={SplashScreen} options={{ headerShown: false }} />
+                    <Stack.Screen name="IntroductionCarousel" component={IntroductionCarousel} options={{ headerShown: false }} />
                     <Stack.Screen name="Init" component={InitScreen} options={{ headerShown: false }} />
                     <Stack.Screen 
                         name="SigninSignupNavigator" 

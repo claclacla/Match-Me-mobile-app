@@ -6,6 +6,7 @@ import { MainScreensList } from './MainScreensList';
 
 export type ApplicationScreensList = {
     SplashScreen: undefined,
+    IntroductionCarousel: undefined,
     Init: undefined,
     SigninSignupNavigator: NavigatorScreenParams<SigninSignupScreensList>;
     MatcherNavigator: NavigatorScreenParams<MatcherScreensList>;
