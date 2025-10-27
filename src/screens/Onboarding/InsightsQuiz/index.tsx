@@ -6,6 +6,7 @@ import { ApplicationNavigationProp } from '../../../stackNavigationProps/Applica
 import { setUserGroupInsights } from '../../../repositories/api/setUserGroupInsights';
 import useAuthenticationStore from '../../../repositories/localStorage/useAuthenticationStore';
 import useUserStore from '../../../repositories/localStorage/useUserStore';
+import { PROFILE_SECTION_STATUS } from '../../../repositories/globalEntities/User';
 
 // Assets
 const logoImage = require('../../../../assets/images/logo.png');
@@ -19,8 +20,8 @@ const InsightsQuizScreen = () => {
     const [selectedAnswers, setSelectedAnswers] = useState<{ [key: number]: number }>({});
     
     // Get authentication and user data
-    const { key } = useAuthenticationStore();
-    const { user } = useUserStore();
+    const { key } = useAuthenticationStore((state: any) => state);
+    const { user, setUser } = useUserStore((state: any) => state);
 
     const slides = [
         {
@@ -108,7 +109,7 @@ const InsightsQuizScreen = () => {
             setCurrentSlide(currentSlide + 1);
         } else {
             // Quiz completed - navigate to main app
-            navigation.navigate('MainNavigator');
+            navigation.navigate('MainNavigator', { screen: 'MainHome' });
         }
     };
 
@@ -161,6 +162,18 @@ const InsightsQuizScreen = () => {
                     });
                     
                     console.log('Insights sent to backend:', insights);
+                    
+                    // Update user profile section status to completed
+                    if (user) {
+                        const updatedUser = {
+                            ...user,
+                            profileSectionsStatus: {
+                                ...user.profileSectionsStatus,
+                                groupInsights: PROFILE_SECTION_STATUS.COMPLETED
+                            }
+                        };
+                        setUser(updatedUser);
+                    }
                     
                     // Navigate to outro slide after successful API call
                     setCurrentSlide(6); // Outro slide is at index 6
@@ -284,7 +297,7 @@ const InsightsQuizScreen = () => {
             {/* Privacy Text - At the very bottom for intro slide */}
             {currentSlideData.isIntro && (
                 <View style={styles.privacyContainer}>
-                    <Text style={styles.privacyText}>Private. Edit anytime.</Text>
+                    <Text style={styles.privacyTextIntro}>Private. Edit anytime.</Text>
                 </View>
             )}
         </SafeAreaView>
@@ -402,7 +415,7 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         width: 300,
     },
-    privacyText: {
+    privacyTextIntro: {
         fontFamily: 'Rubik-Regular',
         fontSize: 14,
         fontWeight: '400',

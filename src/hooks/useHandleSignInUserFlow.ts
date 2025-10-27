@@ -20,7 +20,14 @@ export async function useHandleSignInUserFlow({ navigation, user }: { navigation
         }
 
         else {
-            navigation.replace('OnboardingNavigator', { screen: "OnboardingFork" });
+            // Check if user has completed the insights quiz
+            if (user.profileSectionsStatus.groupInsights === PROFILE_SECTION_STATUS.COMPLETED) {
+                // User has completed onboarding, redirect to main app
+                navigation.replace('MainNavigator', { screen: "MainHome" });
+            } else {
+                // User hasn't completed insights quiz, redirect to onboarding
+                navigation.replace('OnboardingNavigator', { screen: "OnboardingFork" });
+            }
         }
     }
 }
