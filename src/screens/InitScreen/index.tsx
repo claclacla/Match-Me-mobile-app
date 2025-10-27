@@ -25,7 +25,7 @@ export default function InitScreen() {
                 const key = await getIdTokenIfSignedIn();
 
                 if (key === undefined) {
-                    navigation.replace("SigninSignupNavigator");
+                    navigation.replace("SigninSignupNavigator", { screen: "SigninSignupMain" });
                     return;
                 }
 
@@ -37,7 +37,7 @@ export default function InitScreen() {
 
                 setUser(user);
 
-                useHandleSignInUserFlow({ navigation, user });
+                await useHandleSignInUserFlow({ navigation, user });
             };
 
             checkLogin();
