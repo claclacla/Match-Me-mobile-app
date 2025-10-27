@@ -124,9 +124,7 @@ const HowItWorksScreen = () => {
     };
 
     const handleStartQuiz = () => {
-        // TODO: Navigate to quiz when implemented
-        console.log('Start quiz pressed');
-        navigation.goBack();
+        navigation.navigate('OnboardingNavigator', { screen: 'InsightsQuiz' });
     };
 
     const handleBack = () => {
