@@ -30,7 +30,7 @@ const InsightsQuizScreen = () => {
         },
         {
             title: "The First Encounter",
-            subtitle: "You walk into a room. A small group is already chatting, soft and warm. No one has noticed you—yet. What do you do?",
+            subtitle: "You walk into a room. A small group is already chatting, soft and warm. No one has noticed you, yet. What do you do?",
             question: "Please choose one option.",
             options: [
                 "Hang back for a moment and observe.",
@@ -41,7 +41,7 @@ const InsightsQuizScreen = () => {
         },
         {
             title: "Finding comfort",
-            subtitle: "You settle into the group. The vibe is open and low-pressure. You could speak—or just listen. What helps you feel at ease?",
+            subtitle: "You settle into the group. The vibe is open and low-pressure. You could speak or just listen. What helps you feel at ease?",
             question: "Please choose one option.",
             options: [
                 "Knowing I can be quiet and still be myself.",
@@ -55,7 +55,7 @@ const InsightsQuizScreen = () => {
             subtitle: "Someone shares something vulnerable. The room softens, feels more real. Eyes turn to you. What do you bring in this moment?",
             question: "Please choose one option.",
             options: [
-                "A calm presence — I listen with care.",
+                "A calm presence. I listen with care.",
                 "I meet openness with openness.",
                 "I lighten the mood when it's heavy."
             ],
@@ -63,7 +63,7 @@ const InsightsQuizScreen = () => {
         },
         {
             title: "Something feels off",
-            subtitle: "Later, you sense a subtle shift. You feel slightly outside the flow—nothing major, but your energy changes. What happens inside you?",
+            subtitle: "Later, you sense a subtle shift. You feel slightly outside the flow, nothing major, but your energy changes. What happens inside you?",
             question: "Please choose one option.",
             options: [
                 "I go quiet and gently step back.",
@@ -118,6 +118,13 @@ const InsightsQuizScreen = () => {
             ...selectedAnswers,
             [currentSlide]: optionIndex
         });
+        
+        // Auto-advance to next slide after selecting an answer
+        setTimeout(() => {
+            if (currentSlide < slides.length - 1) {
+                setCurrentSlide(currentSlide + 1);
+            }
+        }, 300); // Small delay to show selection feedback
     };
 
     const currentSlideData = slides[currentSlide];
@@ -188,14 +195,6 @@ const InsightsQuizScreen = () => {
                     </View>
                 )}
 
-                {/* Progress Bar */}
-                {!currentSlideData.isIntro && !currentSlideData.isOutro && (
-                    <View style={styles.progressContainer}>
-                        <View style={styles.progressBar}>
-                            <View style={[styles.progressFill, { width: `${((currentSlide - 1) / 4) * 100}%` }]} />
-                        </View>
-                    </View>
-                )}
 
                 {/* Bottom Button - Inside ScrollView for intro slide */}
                 {currentSlideData.isIntro && (
@@ -208,24 +207,22 @@ const InsightsQuizScreen = () => {
                 )}
             </ScrollView>
 
-            {/* Bottom Button - Outside ScrollView for other slides */}
-            {!currentSlideData.isIntro && (
+            {/* Bottom Button - Only for outro slide */}
+            {currentSlideData.isOutro && (
                 <View style={styles.bottomButtons}>
-                    {currentSlideData.isOutro ? (
-                        <TouchableOpacity style={styles.joinButton} onPress={handleNext}>
-                            <Text style={styles.joinButtonText}>Join group now</Text>
-                        </TouchableOpacity>
-                    ) : (
-                        <TouchableOpacity 
-                            style={[styles.continueButton, !hasAnswer && styles.continueButtonDisabled]} 
-                            onPress={handleNext}
-                            disabled={!hasAnswer}
-                        >
-                            <Text style={[styles.continueButtonText, !hasAnswer && styles.continueButtonTextDisabled]}>
-                                Continue
-                            </Text>
-                        </TouchableOpacity>
-                    )}
+                    <TouchableOpacity style={styles.joinButton} onPress={handleNext}>
+                        <Text style={styles.joinButtonText}>Join group now</Text>
+                    </TouchableOpacity>
+                </View>
+            )}
+
+            {/* Progress Bar - Fixed position at bottom for quiz steps */}
+            {!currentSlideData.isIntro && !currentSlideData.isOutro && (
+                <View style={styles.fixedProgressSection}>
+                    <Text style={styles.stepText}>{currentSlideData.stepText}</Text>
+                    <View style={styles.progressBar}>
+                        <View style={[styles.progressFill, { width: `${(currentSlide / 5) * 100}%` }]} />
+                    </View>
                 </View>
             )}
 
@@ -307,9 +304,10 @@ const styles = StyleSheet.create({
     scrollContent: {
         paddingHorizontal: 32,
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         paddingBottom: 40,
         flexGrow: 1,
+        paddingTop: 20,
     },
     emoji: {
         fontSize: 64,
@@ -318,7 +316,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontFamily: 'SF Pro Rounded',
-        fontSize: 32,
+        fontSize: 28,
         fontWeight: '600',
         color: '#000000',
         textAlign: 'center',
@@ -327,12 +325,12 @@ const styles = StyleSheet.create({
     },
     subtitle: {
         fontFamily: 'Rubik-Regular',
-        fontSize: 18,
+        fontSize: 16,
         fontWeight: '400',
         color: '#000000',
         textAlign: 'center',
         marginBottom: 24,
-        lineHeight: 24,
+        lineHeight: 22,
         width: 300,
     },
     slideContent: {
@@ -364,17 +362,18 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         lineHeight: 24,
         width: 300,
+        marginTop: 16,
     },
     optionsContainer: {
         width: '100%',
         maxWidth: 329,
-        marginBottom: 20,
+        marginBottom: 0,
     },
     optionButton: {
         backgroundColor: '#FFFFFF',
         borderRadius: 8,
         paddingVertical: 16,
-        paddingHorizontal: 20,
+        paddingHorizontal: 12,
         marginBottom: 8,
         borderWidth: 1,
         borderColor: '#E5E5E5',
@@ -401,22 +400,38 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginTop: 20,
     },
-    progressContainer: {
+    progressSection: {
         width: '100%',
         alignItems: 'center',
         marginTop: 20,
+        marginBottom: 16,
+    },
+    fixedProgressSection: {
+        position: 'absolute',
+        bottom: 60,
+        left: 0,
+        right: 0,
+        alignItems: 'center',
+        paddingHorizontal: 32,
     },
     progressBar: {
         width: 244,
         height: 16,
-        backgroundColor: '#E5E5E5',
-        borderRadius: 8,
+        backgroundColor: '#EAEAEA',
+        borderRadius: 4,
         overflow: 'hidden',
     },
     progressFill: {
         height: '100%',
-        backgroundColor: '#E23D3D',
-        borderRadius: 8,
+        backgroundColor: '#FFC10A',
+        borderRadius: 2,
+        shadowColor: 'rgba(8, 32, 56, 0.1)',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 1,
+        shadowRadius: 0,
     },
     introButtonContainer: {
         alignItems: 'center',
@@ -468,10 +483,11 @@ const styles = StyleSheet.create({
         elevation: 4,
         justifyContent: 'center',
         alignItems: 'center',
+        paddingHorizontal: 20,
     },
     startButtonText: {
         fontFamily: 'Rubik-Regular',
-        fontSize: 20,
+        fontSize: 18,
         fontWeight: '400',
         color: '#FFFFFF',
         textAlign: 'center',
@@ -491,10 +507,11 @@ const styles = StyleSheet.create({
         elevation: 4,
         justifyContent: 'center',
         alignItems: 'center',
+        paddingHorizontal: 20,
     },
     joinButtonText: {
         fontFamily: 'Rubik-Regular',
-        fontSize: 20,
+        fontSize: 18,
         fontWeight: '400',
         color: '#FFFFFF',
         textAlign: 'center',
