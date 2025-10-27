@@ -3,6 +3,9 @@ import { View, StyleSheet, SafeAreaView, StatusBar, Image, TouchableOpacity, Scr
 import { Text } from '@ui-kitten/components';
 import { useNavigation } from '@react-navigation/native';
 import { ApplicationNavigationProp } from '../../../stackNavigationProps/ApplicationNavigationProp';
+import { setUserGroupInsights } from '../../../repositories/api/setUserGroupInsights';
+import useAuthenticationStore from '../../../repositories/localStorage/useAuthenticationStore';
+import useUserStore from '../../../repositories/localStorage/useUserStore';
 
 // Assets
 const logoImage = require('../../../../assets/images/logo.png');
@@ -14,6 +17,10 @@ const InsightsQuizScreen = () => {
     const navigation = useNavigation<ApplicationNavigationProp>();
     const [currentSlide, setCurrentSlide] = useState(0);
     const [selectedAnswers, setSelectedAnswers] = useState<{ [key: number]: number }>({});
+    
+    // Get authentication and user data
+    const { key } = useAuthenticationStore();
+    const { user } = useUserStore();
 
     const slides = [
         {
@@ -113,11 +120,59 @@ const InsightsQuizScreen = () => {
         }
     };
 
-    const handleOptionSelect = (optionIndex: number) => {
+    const handleOptionSelect = async (optionIndex: number) => {
         setSelectedAnswers({
             ...selectedAnswers,
             [currentSlide]: optionIndex
         });
+        
+        // Collect question and response data
+        const currentSlideData = slides[currentSlide];
+        if (currentSlideData.subtitle && currentSlideData.options) {
+            const question = currentSlideData.subtitle;
+            const response = currentSlideData.options[optionIndex];
+            const questionResponse = `${question} ${response}`;
+            
+            // Store the question-response pair
+            const updatedAnswers = {
+                ...selectedAnswers,
+                [currentSlide]: optionIndex
+            };
+            
+            // If this is the fifth question (slide 5, index 5), send data to backend
+            if (currentSlide === 5 && key && user?.id) {
+                try {
+                    // Collect all question-response pairs
+                    const insights: string[] = [];
+                    for (let i = 1; i <= 5; i++) { // Quiz steps are slides 1-5
+                        const slideData = slides[i];
+                        if (slideData.subtitle && slideData.options && updatedAnswers[i] !== undefined) {
+                            const q = slideData.subtitle;
+                            const r = slideData.options[updatedAnswers[i]];
+                            insights.push(`${q} ${r}`);
+                        }
+                    }
+                    
+                    // Send to backend
+                    await setUserGroupInsights({
+                        key,
+                        userId: user.id,
+                        insights
+                    });
+                    
+                    console.log('Insights sent to backend:', insights);
+                    
+                    // Navigate to outro slide after successful API call
+                    setCurrentSlide(6); // Outro slide is at index 6
+                    return; // Exit early to prevent the setTimeout below
+                } catch (error) {
+                    console.error('Error sending insights to backend:', error);
+                    // Still navigate to outro even if API call fails
+                    setCurrentSlide(6);
+                    return;
+                }
+            }
+        }
         
         // Auto-advance to next slide after selecting an answer
         setTimeout(() => {
@@ -147,7 +202,7 @@ const InsightsQuizScreen = () => {
             </View>
 
             {/* Back Button */}
-            {!currentSlideData.isIntro && (
+            {!currentSlideData.isIntro && !currentSlideData.isOutro && (
                 <TouchableOpacity style={styles.backButton} onPress={handleBack}>
                     <Image source={backArrowImage} style={styles.backIcon} />
                     <Text style={styles.backButtonText}>Back</Text>
