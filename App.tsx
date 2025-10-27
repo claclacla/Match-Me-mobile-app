@@ -10,10 +10,11 @@ import SplashScreen from './src/screens/SplashScreen';
 import IntroductionCarousel from './src/screens/IntroductionCarousel';
 import InitScreen from './src/screens/InitScreen';
 import SigninSignupNavigator from './src/screens/SigninSignup/Navigator';
+import OnboardingNavigator from './src/screens/Onboarding/Navigator';
+import MainNavigator from './src/screens/Main/Navigator';
 
 import { Amplify } from 'aws-amplify';
 import awsconfig from './src/aws-exports';
-import OnboardingNavigator from './src/screens/Onboarding/Navigator';
 
 Amplify.configure(awsconfig);
 
@@ -42,6 +43,7 @@ export default function App(): React.ReactElement {
                         options={{ headerShown: false }} 
                     />
                     <Stack.Screen name="OnboardingNavigator" component={OnboardingNavigator} options={{ headerShown: false }} />
+                    <Stack.Screen name="MainNavigator" component={MainNavigator} options={{ headerShown: false }} />
                 </Stack.Navigator>
             </NavigationContainer>
         </ApplicationProvider>

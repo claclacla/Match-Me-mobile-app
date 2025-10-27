@@ -107,8 +107,8 @@ const InsightsQuizScreen = () => {
         if (currentSlide < slides.length - 1) {
             setCurrentSlide(currentSlide + 1);
         } else {
-            // Quiz completed - navigate back or to next step
-            navigation.goBack();
+            // Quiz completed - navigate to main app
+            navigation.navigate('MainNavigator');
         }
     };
 
