@@ -12,6 +12,8 @@ import { ApplicationNavigationProp } from '../../../stackNavigationProps/Applica
 import { getUser } from "../../../repositories/api/getUser";
 import useUserStore from "../../../repositories/localStorage/useUserStore";
 import { User } from '../../../repositories/globalEntities/User';
+import { supabase } from '../../../repositories/supabase/supabaseClient';
+// import { testSupabaseAuth } from '../../../utils/testSupabaseAuth'; // Testing utility - import when needed
 
 // Assets
 const logoImage = require('../../../../assets/images/logo.png');
@@ -107,6 +109,11 @@ const SigninSignupMainScreen = () => {
                         }
 
                         console.log('User signed in successfully');
+                        
+                        // Supabase authentication is now handled automatically via the client configuration
+                        // The Supabase client is configured to use Cognito tokens automatically through
+                        // the accessToken function in supabaseClient.ts
+                        // See: https://supabase.com/docs/guides/auth/third-party/aws-cognito
                         
                         // User exists and signed in successfully
                         const user: User | undefined = await getUser({ key });

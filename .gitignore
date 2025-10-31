@@ -24,3 +24,8 @@ amplifytools.xcconfig
 .secret-*
 **.sample
 #amplify-do-not-edit-end
+
+# Environment variables
+.env
+.env.local
+.env.*.local
