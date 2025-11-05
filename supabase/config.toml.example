@@ -1,0 +1,11 @@
+# Supabase Configuration for Cognito OIDC
+# Copy this to supabase/config.toml and fill in your values
+
+[auth.external.cognito]
+enabled = true
+client_id = "2ukcg8blkn535slkr2q23krrd1"
+secret = ""  # Add your client secret here if you have one
+issuer = "https://cognito-idp.eu-west-1.amazonaws.com/eu-west-1_lJhNFwbms"
+scopes = "openid email profile"
+name = "cognito"
+

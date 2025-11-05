@@ -13,7 +13,7 @@ import { getUser } from "../../../repositories/api/getUser";
 import useUserStore from "../../../repositories/localStorage/useUserStore";
 import { User } from '../../../repositories/globalEntities/User';
 import { supabase } from '../../../repositories/supabase/supabaseClient';
-// import { testSupabaseAuth } from '../../../utils/testSupabaseAuth'; // Testing utility - import when needed
+import { testSupabaseMessages } from '../../../utils/testSupabaseMessages'; // Testing utility - import when needed
 
 // Assets
 const logoImage = require('../../../../assets/images/logo.png');
@@ -114,6 +114,23 @@ const SigninSignupMainScreen = () => {
                         // The Supabase client is configured to use Cognito tokens automatically through
                         // the accessToken function in supabaseClient.ts
                         // See: https://supabase.com/docs/guides/auth/third-party/aws-cognito
+                        
+                        // Test Supabase connection and messaging functionality after sign-in
+                        // This will verify:
+                        // - Supabase connection is working
+                        // - Authentication is properly configured
+                        // - Messages can be sent and received
+                        testSupabaseMessages()
+                            .then((result) => {
+                                if (result.success) {
+                                    console.log('\n✅ Supabase connection test PASSED');
+                                } else {
+                                    console.warn('\n⚠️ Supabase connection test had issues:', result.error);
+                                }
+                            })
+                            .catch((err) => {
+                                console.error('\n❌ Supabase connection test failed:', err);
+                            });
                         
                         // User exists and signed in successfully
                         const user: User | undefined = await getUser({ key });

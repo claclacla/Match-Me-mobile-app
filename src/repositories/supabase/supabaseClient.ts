@@ -1,8 +1,7 @@
 import 'react-native-url-polyfill/auto';
 
 import { createClient } from '@supabase/supabase-js';
-import { fetchAuthSession } from '@aws-amplify/auth';
-import { Hub } from 'aws-amplify/utils';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Get environment variables
 const supabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL;
@@ -17,52 +16,27 @@ if (!supabaseUrl || !supabaseAnonKey) {
   throw new Error('Supabase environment variables are required. Please check your .env file.');
 }
 
-// Configure Supabase client to use Cognito tokens automatically
-// This follows the Supabase Third Party Auth pattern for AWS Cognito
-// See: https://supabase.com/docs/guides/auth/third-party/aws-cognito
+// Configure Supabase client for Token Exchange pattern
+// With this approach:
+// 1. Cognito OIDC provider must be configured in Supabase Dashboard
+// 2. After Cognito sign-in, call supabase.auth.signInWithIdToken()
+// 3. Supabase creates users in auth.users table
+// 4. RLS policies use auth.uid() (Supabase UUID)
+// 5. Realtime works automatically (Supabase JWT has role: authenticated)
 export const supabase = createClient(
   supabaseUrl,
   supabaseAnonKey,
   {
-    // The accessToken function makes Supabase automatically use Cognito tokens for all requests
-    // Following the Supabase Third Party Auth pattern for AWS Cognito
-    accessToken: async () => {
-      try {
-        const session = await fetchAuthSession();
-        // In Amplify v6, tokens are accessed via session.tokens
-        // Prefer accessToken, fallback to idToken (both work with Supabase)
-        const token = session?.tokens?.accessToken?.toString() || session?.tokens?.idToken?.toString() || '';
-        return token;
-      } catch (error) {
-        console.warn('Failed to get Cognito token for Supabase:', error);
-        return '';
-      }
-    },
     auth: {
-      persistSession: false, // We're using Cognito sessions, not Supabase sessions
-      autoRefreshToken: false, // Cognito handles token refresh
+      persistSession: true, // Store Supabase sessions
+      autoRefreshToken: true, // Supabase handles token refresh
       detectSessionInUrl: false,
-      storage: undefined, // Don't store Supabase sessions
+      storage: AsyncStorage, // Use AsyncStorage for React Native
     },
     realtime: { 
       params: { eventsPerSecond: 5 },
     },
   }
 );
-
-// Set up Hub listener for Cognito auth changes (required for Realtime)
-// This ensures Supabase Realtime uses the latest Cognito token when auth state changes
-Hub.listen('auth', async () => {
-  try {
-    const session = await fetchAuthSession();
-    const token = session?.tokens?.accessToken?.toString() || session?.tokens?.idToken?.toString();
-    if (token) {
-      supabase.realtime.setAuth(token);
-      console.log('✓ Updated Supabase Realtime auth token');
-    }
-  } catch (error) {
-    console.warn('Failed to update Supabase Realtime auth token:', error);
-  }
-});
 
 
