@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "217486132047",
+    "project_id": "breakice-b612b",
+    "storage_bucket": "breakice-b612b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:217486132047:android:348e36dd711df014253b3a",
+        "android_client_info": {
+          "package_name": "com.mycompany.matchapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQ_edgU_OANO0TPudByLi1ALoH3ZaFJIk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

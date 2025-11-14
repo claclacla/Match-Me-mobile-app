@@ -1,3 +1,4 @@
+import 'react-native-gesture-handler';
 import * as eva from '@eva-design/eva';
 import { ApplicationProvider } from '@ui-kitten/components';
 
@@ -15,6 +16,9 @@ import MainNavigator from './src/screens/Main/Navigator';
 
 import { Amplify } from 'aws-amplify';
 import awsconfig from './src/aws-exports';
+
+// Initialize Firebase native SDK (automatically reads google-services.json and GoogleService-Info.plist)
+import './src/config/firebase';
 
 Amplify.configure(awsconfig);
 
